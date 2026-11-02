@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ruhsal Gelişim Atlası</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Psikanalitik, psikososyal, bilişsel, bağlanma, ahlak, yaşam boyu ve biyolojik gelişim kuramlarının yaş dönemlerine göre karşılaştırması; nörobiyolojik eşleştirme ve kanıta dayalı deneyler.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">Gelişim psikolojisi · Nörobiyoloji · Kanıt</p>
+    <h1>Ruhsal Gelişim Atlası</h1>
+    <p class="lead">Doğum öncesinden yaşlılığa kadar ruhsal gelişimi farklı kuramcıların gözünden okuyun. Her yaş döneminde temel gelişim basamaklarını, beyinde olan biteni, kuramların o döneme biçtiği görevi ve bu iddiaları sınayan deneyleri yan yana görün.</p>
+    <p class="stats" id="stats"></p>
+  </div>
+</header>
+
+<nav class="tabbar" aria-label="Görünümler">
+  <div class="wrap tabbar-inner">
+    <div class="tabs" role="tablist">
+      <a href="#yas" class="tab" role="tab" data-view="yas">Yaş görünümü</a>
+      <a href="#kuram" class="tab" role="tab" data-view="kuram">Kuram görünümü</a>
+      <a href="#cizelge" class="tab" role="tab" data-view="cizelge">Karşılaştırmalı çizelge</a>
+      <a href="#deneyler" class="tab" role="tab" data-view="deneyler">Deneyler ve kanıt</a>
+    </div>
+    <div class="families" id="familyFilter" aria-label="Kuram aileleri"></div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <section id="view-yas" class="view" aria-label="Yaş görünümü">
+    <div class="agestrip" id="ageStrip" role="listbox" aria-label="Yaş dönemleri"></div>
+    <div id="ageDetail"></div>
+  </section>
+
+  <section id="view-kuram" class="view" aria-label="Kuram görünümü" hidden>
+    <div class="theory-layout">
+      <aside class="theory-index" id="theoryIndex"></aside>
+      <article id="theoryDetail" class="theory-detail"></article>
+    </div>
+  </section>
+
+  <section id="view-cizelge" class="view" aria-label="Karşılaştırmalı çizelge" hidden>
+    <p class="hint">Her satır bir kuram, her çubuk bir basamak. Yaş ekseni bebeklikte genişletilmiştir: ilk yıllarda değişim çok hızlı olduğu için her sütun eşit genişlikte bir yaş dönemini temsil eder. Bir çubuğa tıklayınca kuramın ayrıntısı, bir sütun başlığına tıklayınca o yaşın ayrıntısı açılır.</p>
+    <div class="chart-scroll"><div id="chart" class="chart"></div></div>
+  </section>
+
+  <section id="view-deneyler" class="view" aria-label="Deneyler ve kanıt" hidden>
+    <div class="exp-toolbar">
+      <label class="search"><span class="sr">Deney ara</span>
+        <input id="expSearch" type="search" placeholder="Deney, araştırmacı ya da bulgu ara">
+      </label>
+      <div class="seg" id="expStatus" role="group" aria-label="Kanıt durumu"></div>
+    </div>
+    <div class="legend" id="statusLegend"></div>
+    <div id="expList" class="exp-grid"></div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Yaş aralıkları kuramcıların önerdiği yaklaşık değerlerdir; bireysel ve kültürel farklılıklar büyüktür. Gelişim basamakları için temel kaynak: CDC/AAP 2022 gelişim basamakları (çocukların en az %75'inin ulaştığı yaşlar), WHO motor gelişim standartları. Bu sayfa eğitim amaçlıdır, klinik değerlendirmenin yerini tutmaz.</p>
+  </div>
+</footer>
+
+<div id="tip" class="tip" role="tooltip" hidden></div>
+
+<script src="data/temel.js"></script>
+<script src="data/yaslar-1.js"></script>
+<script src="data/yaslar-2.js"></script>
+<script src="data/kuramlar-1.js"></script>
+<script src="data/kuramlar-2.js"></script>
+<script src="data/kuramlar-3.js"></script>
+<script src="data/kuramlar-4.js"></script>
+<script src="data/kuramlar-5.js"></script>
+<script src="data/kuramlar-6.js"></script>
+<script src="data/kuramlar-7.js"></script>
+<script src="data/deneyler-1.js"></script>
+<script src="data/deneyler-2.js"></script>
+<script src="data/deneyler-3.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
