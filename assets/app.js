@@ -5,7 +5,7 @@
   var A = window.ATLAS, U = A.U, $ = U.$, esc = U.esc;
   var thById = U.thById, expById = U.expById, famById = U.famById, NB = U.NB;
 
-  var state = A.state = { view: "yas", age: "a2", theory: "erikson", fams: {}, expStatus: 0, expKind: "", expQ: "", brainAge: 1, brainRegion: "dlpfc", compare: ["freud", "erikson"], compareNeuro: true };
+  var state = A.state = { view: "kapak", age: "a2", theory: "erikson", fams: {}, expStatus: 0, expKind: "", expQ: "", brainAge: 1, brainRegion: "dlpfc", compare: ["freud", "erikson"], compareNeuro: true };
   A.families.forEach(function (f) { state.fams[f.id] = true; });
   try {
     var saved = JSON.parse(localStorage.getItem("ruhsal-atlas") || "{}");
@@ -19,22 +19,6 @@
   var save = A.save = function () {
     try { localStorage.setItem("ruhsal-atlas", JSON.stringify({ age: state.age, theory: state.theory, fams: state.fams, compare: state.compare, brainAge: state.brainAge, brainRegion: state.brainRegion })); } catch (e) { /* yok say */ }
   };
-  /* Tasarım kaplaması (önizleme) */
-  var SKINS = ["", "gravur", "noro", "klinik"];
-  function applySkin(s) {
-    if (SKINS.indexOf(s) < 0) s = "";
-    if (s) document.documentElement.setAttribute("data-skin", s); else document.documentElement.removeAttribute("data-skin");
-    document.querySelectorAll("[data-skinbtn]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.skinbtn === s)); });
-    try { localStorage.setItem("ruhsal-skin", s); } catch (e) { /* yok say */ }
-  }
-  var initialSkin = "";
-  try { initialSkin = localStorage.getItem("ruhsal-skin") || ""; } catch (e) { /* yok say */ }
-  applySkin(initialSkin);
-  document.querySelector(".skin-switch").addEventListener("click", function (e) {
-    var b = e.target.closest("[data-skinbtn]");
-    if (b) { applySkin(b.dataset.skinbtn); if (state.view === "beyin" || state.view === "yas") renderCurrent(); }
-  });
-
   var visibleTheories = A.visibleTheories = function () { return A.theories.filter(function (t) { return state.fams[t.fam]; }); };
 
   var ICONS = {
@@ -56,7 +40,7 @@
     var all = A.families.every(function (f) { return state.fams[f.id]; });
     var html = '<button type="button" class="fam-chip" id="fam-all" aria-pressed="' + all + '" style="--c:var(--ink)"><span class="dot"></span>Tümü</button>';
     A.families.forEach(function (f) {
-      html += '<button type="button" class="fam-chip" data-fam="' + f.id + '" aria-pressed="' + !!state.fams[f.id] + '" style="--c:' + f.color + '"><span class="dot"></span>' + esc(f.short) + "</button>";
+      html += '<button type="button" class="fam-chip" data-fam="' + f.id + '" aria-pressed="' + !!state.fams[f.id] + '" style="--c:' + f.color + '">' + U.famIcon(f.id) + esc(f.short) + "</button>";
     });
     $("familyFilter").innerHTML = html;
   }
@@ -142,7 +126,7 @@
       var others = x.stages.filter(function (s) { return s !== primary; });
       var idx = x.t.stages.indexOf(primary);
       return '<button type="button" class="lens" data-theory="' + x.t.id + '" data-stage="' + idx + '" style="--c:' + U.famColor(x.t.fam) + '">' +
-        '<span class="who"><span class="dot"></span>' + esc(x.t.who) + (x.t.rare ? ' <span class="rare-dot" title="Az bilinen kuram">◆</span>' : "") + '<span class="yrs">' + esc(U.fmtRange(primary.from, primary.to)) + "</span></span>" +
+        '<span class="who">' + U.famIcon(x.t.fam) + esc(x.t.who) + (x.t.rare ? ' <span class="rare-dot" title="Az bilinen kuram">◆</span>' : "") + '<span class="yrs">' + esc(U.fmtRange(primary.from, primary.to)) + "</span></span>" +
         "<h4>" + esc(primary.name) + "</h4>" +
         '<span class="task">' + esc(primary.task) + "</span>" +
         (others.length ? '<span class="who">Bu dönemde ayrıca: ' + others.map(function (s) { return esc(s.name); }).join(", ") + "</span>" : "") +
@@ -155,7 +139,7 @@
     var brainMini = A.views.beyin && A.views.beyin.mini ? '<button type="button" class="mini-brain" id="openBrain" aria-label="Bu yaşı beyin haritasında aç">' + A.views.beyin.mini(U.bandAge(b)) + '<span>Beyin haritasında aç →</span></button>' : "";
     $("ageDetail").innerHTML =
       '<div class="age-head"><div><div class="range">' + esc(b.range.toLocaleUpperCase("tr")) + "</div><h2>" + esc(b.name) + "</h2></div>" +
-      '<div class="pager"><button type="button" id="agePrev"' + (i === 0 ? " disabled" : "") + '>← Önceki</button><button type="button" id="ageNext"' + (i === NB - 1 ? " disabled" : "") + ">Sonraki →</button></div>" +
+      '<div class="pager"><button type="button" id="agePrev"' + (i === 0 ? " disabled" : "") + '>← Önceki</button><button type="button" id="ageNext"' + (i === NB - 1 ? " disabled" : "") + '>Sonraki →</button><button type="button" class="btn" id="ageSun">▶ Bu dönemi sun</button></div>' +
       '<p class="gist">' + esc(b.gist) + "</p></div>" +
       '<div class="age-grid"><section class="panel"><div class="panel-title">Gelişim basamakları</div>' + milestonesHtml(b) + flags + "</section>" +
       '<aside class="age-side"><section class="panel neuro"><div class="panel-title">Beyinde neler oluyor</div>' + brainMini + '<ul class="clean">' + b.neuro.map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("") + "</ul>" +
@@ -164,7 +148,13 @@
       (lenses ? '<div class="lens-grid">' + lenses + "</div>" : '<p class="empty">Seçili kuram ailelerinde bu dönemi ele alan kuram yok. Üstteki filtreden aile ekleyin.</p>') +
       '<div class="section-h"><h3>Bu döneme ait deneyler</h3><span>' + b.exps.length + " çalışma</span></div>" + expMini(b.exps);
   }
-  function setAge(id) { state.age = id; save(); renderAgeStrip(); renderAgeDetail(); }
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function setAge(id) {
+    state.age = id; save();
+    var run = function () { renderAgeStrip(); renderAgeDetail(); };
+    if (document.startViewTransition && !reduceMotion) document.startViewTransition(run);
+    else { run(); var d = $("ageDetail"); d.classList.remove("swap"); void d.offsetWidth; d.classList.add("swap"); }
+  }
   $("ageStrip").addEventListener("click", function (e) { var b = e.target.closest("[data-age]"); if (b) setAge(b.dataset.age); });
   $("ageStrip").addEventListener("keydown", function (e) {
     if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
@@ -175,7 +165,8 @@
   });
   $("ageDetail").addEventListener("click", function (e) {
     var t;
-    if ((t = e.target.closest("#agePrev, #ageNext"))) {
+    if ((t = e.target.closest("#ageSun"))) { A.deck.open({ type: "age", id: state.age }); }
+    else if ((t = e.target.closest("#agePrev, #ageNext"))) {
       var i = A.ages.findIndex(function (a) { return a.id === state.age; }) + (t.id === "ageNext" ? 1 : -1);
       if (i >= 0 && i < NB) setAge(A.ages[i].id);
     } else if ((t = e.target.closest("#openBrain"))) {
@@ -193,7 +184,7 @@
     A.families.forEach(function (f) {
       var ts = vis.filter(function (t) { return t.fam === f.id; });
       if (!ts.length) return;
-      html += '<div class="ti-group" style="--c:' + f.color + '"><h5><span class="dot"></span>' + esc(f.name) + "</h5>" + ts.map(function (t) {
+      html += '<div class="ti-group" style="--c:' + f.color + '"><h5>' + U.famIcon(f.id) + esc(f.name) + "</h5>" + ts.map(function (t) {
         return '<button type="button" class="ti-btn" data-theory="' + t.id + '" aria-current="' + (t.id === state.theory) + '" style="--c:' + f.color + '"><span class="nm">' + esc(t.name) + '</span><span class="sb">' + esc(t.who) + (t.rare ? " · az bilinen" : "") + "</span></button>";
       }).join("") + "</div>";
     });
@@ -241,10 +232,10 @@
     var select = '<div class="theory-select"><label class="sr" for="theorySelect">Kuram seç</label><select id="theorySelect">' +
       visibleTheories().map(function (x) { return '<option value="' + x.id + '"' + (x.id === t.id ? " selected" : "") + ">" + esc(x.who + ": " + x.name) + "</option>"; }).join("") + "</select></div>";
     $("theoryDetail").innerHTML = select +
-      '<header class="td-head" style="--c:' + f.color + '"><div class="tags"><span class="tag fam-tag" style="--c:' + f.color + '">' + esc(f.name) + "</span>" +
+      '<header class="td-head" style="--c:' + f.color + '"><div class="tags"><span class="tag fam-tag" style="--c:' + f.color + '">' + U.famIcon(f.id) + esc(f.name) + "</span>" +
       (t.rare ? '<span class="tag rare">Ders kitaplarında az yer alır</span>' : "") + '<span class="tag">' + esc(t.years) + "</span></div>" +
       "<h2>" + esc(t.name) + '</h2><p class="by">' + esc(t.who) + '</p><p class="core">' + esc(t.core) + "</p>" +
-      '<div class="td-actions"><button type="button" class="btn" id="cmpAdd">Karşılaştırmaya ekle</button>' +
+      '<div class="td-actions"><button type="button" class="btn" id="thSun">▶ Bu kuramı sun</button><button type="button" class="btn ghost" id="cmpAdd">Karşılaştırmaya ekle</button>' +
       presets.map(function (c) { return '<button type="button" class="btn ghost" data-preset="' + c.ids.join(",") + '">' + esc(c.ids.map(function (id) { return thById[id] ? thById[id].who.split(/ ve |;|,/)[0] : id; }).join(" ↔ ")) + "</button>"; }).join("") + "</div></header>" +
       '<div class="td-facts"><div class="panel"><div class="panel-title">Gelişimin motoru</div><p>' + esc(t.engine) + '</p></div>' +
       '<div class="panel"><div class="panel-title">Yöntem</div><p>' + esc(t.method) + '</p></div>' +
@@ -276,6 +267,7 @@
   $("theoryDetail").addEventListener("click", function (e) {
     var t;
     if ((t = e.target.closest("[data-goage]"))) { state.age = t.dataset.goage; save(); location.hash = "yas"; }
+    else if ((t = e.target.closest("#thSun"))) A.deck.open({ type: "theory", id: state.theory });
     else if ((t = e.target.closest("#cmpAdd"))) {
       var c = state.compare.filter(function (id) { return id !== state.theory; });
       c.unshift(state.theory); state.compare = c.slice(0, 3); save(); location.hash = "karsilastir";
@@ -315,7 +307,7 @@
     A.families.forEach(function (f) {
       var ts = visibleTheories().filter(function (t) { return t.fam === f.id; });
       if (!ts.length) return;
-      html += '<div class="ch-group" style="--c:' + f.color + '">' + esc(f.name) + "</div>";
+      html += '<div class="ch-group" style="--c:' + f.color + '">' + U.famIcon(f.id) + esc(f.name) + "</div>";
       ts.forEach(function (t) {
         var items = t.stages.map(function (s, i) { return { from: s.from, to: s.to, label: s.name, i: i, s: s }; });
         html += lane("", '<button type="button" class="ch-label" data-theory="' + t.id + '"><span class="nm">' + esc(t.who) + (t.rare ? ' <span class="rare-dot">◆</span>' : "") + '</span><span class="sb">' + esc(t.name) + "</span></button>", items, function (it) {
@@ -324,9 +316,22 @@
       });
     });
     var chart = $("chart");
+    var band = A.ages.find(function (a) { return a.id === state.age; }) || A.ages[0];
+    var nowX = U.xPos(U.bandAge(band)) * 100;
+    html += '<div class="ch-over" aria-hidden="true"><div class="ch-now" style="left:' + nowX + '%"><span>' + esc(band.range) + '</span></div><div class="ch-hover" hidden><span></span></div></div>';
     chart.innerHTML = html;
     chart.style.setProperty("--gridlines", "repeating-linear-gradient(to right, transparent 0, transparent calc(100% / " + NB + " - 1px), var(--line) calc(100% / " + NB + " - 1px), var(--line) calc(100% / " + NB + "))");
   }
+  $("chart").addEventListener("mousemove", function (e) {
+    var over = $("chart").querySelector(".ch-over"); if (!over) return;
+    var r = over.getBoundingClientRect(), x = (e.clientX - r.left) / r.width;
+    var hv = over.querySelector(".ch-hover");
+    if (x < 0 || x > 1) { hv.hidden = true; return; }
+    hv.hidden = false; hv.style.left = (x * 100) + "%";
+    var age = U.ageAt(x);
+    hv.firstChild.textContent = U.fmtAge(age < 0 ? -0.3 : age);
+  });
+  $("chart").addEventListener("mouseleave", function () { var hv = $("chart").querySelector(".ch-hover"); if (hv) hv.hidden = true; });
   $("chart").addEventListener("click", function (e) {
     var t = e.target.closest("button");
     if (!t) return;
@@ -455,7 +460,7 @@
   };
 
   /* ---------- yönlendirme ---------- */
-  var VIEWS = ["yas", "kuram", "karsilastir", "beyin", "cizelge", "deneyler", "kaynakca"];
+  var VIEWS = ["kapak", "yas", "kuram", "karsilastir", "beyin", "cizelge", "deneyler", "ders", "kaynakca"];
   function renderCurrent() {
     var v = state.view;
     if (v === "yas") { renderAgeStrip(); renderAgeDetail(); }
@@ -467,7 +472,8 @@
   A.renderCurrent = renderCurrent;
   function route() {
     var h = location.hash.replace("#", "");
-    state.view = VIEWS.indexOf(h) > -1 ? h : "yas";
+    state.view = VIEWS.indexOf(h) > -1 ? h : "kapak";
+    document.body.setAttribute("data-view", state.view);
     VIEWS.forEach(function (v) { var el = $("view-" + v); if (el) el.hidden = v !== state.view; });
     document.querySelectorAll(".tab").forEach(function (t) { t.setAttribute("aria-selected", String(t.dataset.view === state.view)); });
     hideTip();

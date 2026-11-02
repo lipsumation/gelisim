@@ -1,44 +1,58 @@
-/* Beyin gelişimi haritası: şematik yan ve orta hat görünümleri, yaş kaydırıcısı, bölge ayrıntısı. */
+/* Beyin gelişimi haritası: Gray's Anatomy (1918) levhaları üzerinde renklenen bölgeler, yaş kaydırıcısı, bölge ayrıntısı. */
 (function () {
   "use strict";
   var A = window.ATLAS, U = A.U, esc = U.esc, B = A.brain;
   var rById = {};
   B.regions.forEach(function (r) { rById[r.id] = r; });
   var OUTSIDE = { cerebellum: true, brainstem: true };
-  var SULCI = {
-    lat: ["M 335 42 C 320 110, 300 170, 290 222", "M 188 292 C 230 262, 290 232, 335 216 C 365 206, 395 196, 420 200", "M 215 302 C 280 288, 360 268, 445 264", "M 262 40 C 258 90, 254 120, 250 140"],
-    med: ["M 140 214 C 150 122, 262 92, 360 110 C 400 118, 430 132, 442 152", "M 474 70 C 474 140, 470 200, 456 252", "M 600 252 C 548 246, 506 252, 470 264"]
-  };
   var uid = 0;
 
-  function fillFor(m) { return "color-mix(in oklab, var(--ramp-hi) " + Math.round(6 + 88 * m) + "%, var(--ramp-lo))"; }
+  function fillFor(m) { return "color-mix(in oklab, var(--ramp-hi) " + Math.round(4 + 86 * m) + "%, var(--ramp-lo))"; }
+  function centroid(sh) {
+    if (sh.ellipse) return [sh.ellipse[0], sh.ellipse[1]];
+    if (sh.poly) {
+      var pts = sh.poly.split(" ").map(function (p) { return p.split(",").map(Number); });
+      var x = 0, y = 0; pts.forEach(function (p) { x += p[0]; y += p[1]; });
+      return [x / pts.length, y / pts.length];
+    }
+    var nums = sh.path.match(/-?\d+(\.\d+)?/g).map(Number), sx = 0, sy = 0, n = 0;
+    for (var i = 0; i + 1 < nums.length; i += 2) { sx += nums[i]; sy += nums[i + 1]; n++; }
+    return [sx / n, sy / n];
+  }
   function shape(r, sh, age, opts) {
     var m = U.maturity(r, age);
     var cls = "br" + (r.deep ? " deep" : "") + (opts.sel === r.id ? " sel" : "");
     var attrs = ' class="' + cls + '" style="fill:' + fillFor(m) + '"';
     if (opts.interactive) attrs += ' data-region="' + r.id + '" tabindex="0" role="button" aria-label="' + esc(r.name) + '" data-tip="' + esc(r.name) + '" data-tip2="Olgunlaşma endeksi: ' + Math.round(m * 100) + ' / 100"';
-    if (sh.poly) return "<polygon points=\"" + sh.poly + "\"" + attrs + "/>";
+    if (sh.poly) return '<polygon points="' + sh.poly + '"' + attrs + "/>";
     if (sh.ellipse) return '<ellipse cx="' + sh.ellipse[0] + '" cy="' + sh.ellipse[1] + '" rx="' + sh.ellipse[2] + '" ry="' + sh.ellipse[3] + '"' + attrs + "/>";
     return '<path d="' + sh.path + '"' + attrs + "/>";
   }
+  /* Gravür levhası: renkli bölgeler altta, levha "multiply" ile üstte; levhada olmayan yapılar maskeyle dışarıda çizilir */
   function svg(v, age, opts) {
-    var id = "bc" + (++uid);
-    var outline = v === "lat" ? B.outline : B.medialOutline;
-    var under = "", clipped = "", deep = "", labels = "";
+    var id = "bp" + (++uid), P = B.plates[v];
+    var outside = "", cortex = "", deep = "", label = "";
     B.regions.forEach(function (r) {
       r.shapes.forEach(function (sh) {
         if (sh.v !== v) return;
-        if (OUTSIDE[r.id]) under += shape(r, sh, age, opts);
+        if (OUTSIDE[r.id]) outside += shape(r, sh, age, opts);
         else if (r.deep) deep += shape(r, sh, age, opts);
-        else clipped += shape(r, sh, age, opts);
+        else cortex += shape(r, sh, age, opts);
+        if (opts.labels && opts.sel === r.id && !label) {
+          var c = centroid(sh);
+          label = '<text x="' + c[0].toFixed(0) + '" y="' + (c[1] + (r.deep ? -14 : 5)).toFixed(0) + '" class="bl">' + esc(r.short) + "</text>";
+        }
       });
-      if (opts.labels && r.label && r.label.v === v) labels += '<text x="' + r.label.x + '" y="' + r.label.y + '" class="bl">' + esc(r.short) + "</text>";
     });
-    return '<svg viewBox="0 0 600 425" class="brain-svg" role="img" aria-label="' + (v === "lat" ? "Beynin yan görünümü" : "Beynin orta hat kesiti") + '">' +
-      '<defs><clipPath id="' + id + '"><path d="' + outline + '"/></clipPath></defs>' + under +
-      '<path d="' + outline + '" class="b-base"/>' +
-      '<g clip-path="url(#' + id + ')">' + clipped + SULCI[v].map(function (d) { return '<path d="' + d + '" class="b-sulcus"/>'; }).join("") + "</g>" +
-      '<path d="' + outline + '" class="b-outline"/>' + deep + labels + "</svg>";
+    var extra = P.extra.map(function (d) { return '<path d="' + d + '" class="b-ink"/>'; }).join("");
+    return '<svg viewBox="0 0 ' + P.w + " " + P.vh + '" class="brain-svg plate-' + v + '" role="img" aria-label="' + (v === "lat" ? "Sol hemisferin yan yüzü" : "Sol hemisferin orta hat yüzü") + '">' +
+      '<defs><clipPath id="c' + id + '"><polygon points="' + P.sil + '"/></clipPath>' +
+      '<mask id="m' + id + '"><rect width="' + P.w + '" height="' + P.vh + '" fill="#fff"/><polygon points="' + P.sil + '" fill="#000"/></mask></defs>' +
+      '<polygon points="' + P.sil + '" class="b-base"/>' +
+      (outside ? '<g mask="url(#m' + id + ')">' + outside + '<g class="b-inkg">' + extra + "</g></g>" : "") +
+      '<g clip-path="url(#c' + id + ')">' + cortex + "</g>" +
+      '<image href="' + P.src + '" width="' + P.w + '" height="' + P.h + '" class="plate" preserveAspectRatio="none"/>' +
+      deep + label + "</svg>";
   }
   function mini(age) {
     return '<span class="mini-brains">' + svg("lat", age, {}) + svg("med", age, {}) + "</span>";
@@ -78,7 +92,7 @@
       '<output id="brainAgeOut" for="brainAge"></output></div>' +
       '<div class="brain-grid"><div class="brain-figs" id="brainFigs"></div><aside class="panel region-panel" id="regionPanel"></aside></div>' +
       '<div class="brain-bottom"><section class="panel" id="brainNow"></section><section class="panel neuro" id="brainBand"></section></div>' +
-      '<p class="src-note">' + esc(B.note) + "</p>";
+      '<p class="src-note">' + esc(B.note) + " " + esc(B.credit) + "</p>";
     update();
   }
   function update() {
@@ -86,8 +100,8 @@
     var band = U.bandOf(age);
     U.$("brainAgeOut").textContent = U.fmtAge(age < 0 ? -0.3 : age) + " · " + band.name;
     U.$("brainFigs").innerHTML =
-      "<figure>" + svg("lat", age, { interactive: true, labels: true, sel: st.brainRegion }) + "<figcaption>Yan görünüm (sol hemisfer, ön taraf solda)</figcaption></figure>" +
-      "<figure>" + svg("med", age, { interactive: true, labels: true, sel: st.brainRegion }) + "<figcaption>Orta hat kesiti; kesikli çizgili yapılar derindedir ve izdüşüm olarak gösterilmiştir</figcaption></figure>" +
+      "<figure>" + svg("lat", age, { interactive: true, labels: true, sel: st.brainRegion }) + "<figcaption><b>" + esc(B.plates.lat.fig) + ".</b> " + esc(B.plates.lat.caption) + "</figcaption></figure>" +
+      "<figure>" + svg("med", age, { interactive: true, labels: true, sel: st.brainRegion }) + "<figcaption><b>" + esc(B.plates.med.fig) + ".</b> " + esc(B.plates.med.caption) + "</figcaption></figure>" +
       '<div class="ramp"><span>0</span><i></i><span>100</span><em>Şematik olgunlaşma endeksi</em></div>';
     var m = U.maturity(r, age);
     var near = 0.6 / U.NB;

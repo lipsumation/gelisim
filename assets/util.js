@@ -106,7 +106,28 @@
     }).join("") + "</ul>";
   }
 
+  /* Kuram ailesi simgeleri (gravür çizgisi): göz, kesişen daireler, basamak, zincir, terazi, kum saati, sarmal, dallanan yol */
+  var GLYPH = {
+    psa: '<path d="M1.5 8c2-3.2 4.2-4.6 6.5-4.6s4.5 1.4 6.5 4.6c-2 3.2-4.2 4.6-6.5 4.6S3.5 11.2 1.5 8z"/><circle cx="8" cy="8" r="2.1"/>',
+    pss: '<circle cx="5.8" cy="8" r="3.8"/><circle cx="10.2" cy="8" r="3.8"/>',
+    bil: '<path d="M1.5 14.5h4v-4h4v-4h4v-4"/>',
+    bag: '<rect x="1.2" y="5.3" width="7.6" height="5.4" rx="2.7"/><rect x="7.2" y="5.3" width="7.6" height="5.4" rx="2.7"/>',
+    ahl: '<path d="M8 2.2v11.6M4.5 13.8h7M2.8 4.6h10.4M2.8 4.6L1.2 8.4h3.2zM13.2 4.6l-1.6 3.8h3.2z"/>',
+    ymb: '<path d="M3.8 1.8h8.4M3.8 14.2h8.4M4.8 1.8c0 3.6 6.4 3.6 6.4 6.2s-6.4 2.6-6.4 6.2M11.2 1.8c0 3.6-6.4 3.6-6.4 6.2s6.4 2.6 6.4 6.2"/>',
+    biy: '<path d="M5 1.5c0 3.8 6 3.6 6 6.5s-6 2.7-6 6.5M11 1.5c0 3.8-6 3.6-6 6.5s6 2.7 6 6.5M5.8 4.5h4.4M5.8 11.5h4.4"/>',
+    gps: '<path d="M1.8 14.2c3.2 0 3-6.2 6.2-6.2s3-6 6.2-6M8 8c3.2 0 3 6.2 6.2 6.2"/><circle cx="1.8" cy="14.2" r="1.1"/>'
+  };
+  function famIcon(id, cls) {
+    return '<svg class="glyph' + (cls ? " " + cls : "") + '" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (GLYPH[id] || '<circle cx="8" cy="8" r="3"/>') + "</svg>";
+  }
+  function roman(n) {
+    var v = [[10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]], r = "";
+    v.forEach(function (p) { while (n >= p[0]) { r += p[1]; n -= p[0]; } });
+    return r;
+  }
+
   A.U = {
+    famIcon: famIcon, roman: roman,
     $: function (id) { return document.getElementById(id); },
     esc: esc, num: num, fmtAge: fmtAge, fmtRange: fmtRange, xPos: xPos, ageAt: ageAt, bandOf: bandOf, bandAge: bandAge,
     overlap: overlap, pack: pack, famColor: famColor, statusPill: statusPill, kindPill: kindPill, meter: meter,

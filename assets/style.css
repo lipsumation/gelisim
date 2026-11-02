@@ -1,62 +1,66 @@
-/* Atlas düzeni: soğuk kâğıt zemin, mürekkep metin; renk yalnızca kuram ailelerini kodlar.
-   Görünümler: yaş şeridi + ayrıntı, kuram dizini + ayrıntı, eşit-sütunlu yaş çizelgesi, deney kartları. */
+/* Gravür: 19. yüzyıl anatomi atlası. Sepya mürekkep, fildişi kâğıt, levha çerçeveleri, Garamond.
+   Koyu temada aynı atlas "gece levhası" olarak: isli kâğıt, bakır mürekkep. Renk yalnızca kuram ailelerini kodlar.
+   Düzen: kapak levhası, yaş şeridi + ayrıntı, kuram dizini + ayrıntı, karşılaştırma tablosu, beyin levhaları, ders sunumu. */
 :root {
-  --bg: #f2f4f6;
-  --surface: #ffffff;
-  --sunk: #e8ecf0;
-  --ink: #15212c;
-  --muted: #56636f;
-  --line: #d5dce3;
-  --accent: #2b4c9b;
-  --accent-ink: #ffffff;
+  --bg: #ece2cc;
+  --surface: #f7f0e1;
+  --sunk: #e4d8bf;
+  --ink: #2a1f16;
+  --muted: #6a5845;
+  --line: #c9b896;
+  --accent: #7b2d1e;
+  --accent-ink: #f7f0e1;
 
-  --f-psa: #9c3d5a;
-  --f-pss: #a86f0c;
-  --f-bil: #2c6db5;
-  --f-bag: #23805c;
-  --f-ahl: #6e4fb8;
-  --f-ymb: #b8542a;
-  --f-biy: #4b6276;
-  --f-gps: #6b7414;
-  --f-neu: #1f7f8a;
+  --f-psa: #8a3324;
+  --f-pss: #8d6418;
+  --f-bil: #2f4f7a;
+  --f-bag: #46613a;
+  --f-ahl: #5e3f6e;
+  --f-ymb: #9a5a2b;
+  --f-biy: #4f5a5e;
+  --f-gps: #6a6526;
+  --f-neu: #6b4a2b;
 
-  --ok: #23805c;
-  --ok-bg: #e2f2ea;
-  --mid: #9a6a00;
-  --mid-bg: #f7eccf;
-  --bad: #b23a3a;
-  --bad-bg: #f8e1e1;
+  --ok: #46613a;
+  --ok-bg: #e2dfc4;
+  --mid: #8d6418;
+  --mid-bg: #eddab0;
+  --bad: #8a2f22;
+  --bad-bg: #ebcfc1;
 
-  --display: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  --body: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --display: "Cormorant Garamond", "EB Garamond", Garamond, "Times New Roman", serif;
+  --body: "EB Garamond", Garamond, Georgia, serif;
+  --mono: "EB Garamond", Garamond, Georgia, serif;
 
-  --ramp-lo: var(--surface);
-  --ramp-hi: var(--f-neu);
+  --ramp-lo: #f3e8d2;
+  --ramp-hi: #a0683a;
+  --plate-filter: none;
+  --plate-blend: multiply;
   --grid: transparent;
-  --r: 10px;
-  --shadow: 0 1px 2px rgb(20 30 45 / 0.06), 0 4px 16px rgb(20 30 45 / 0.05);
+  --r: 0px;
+  --shadow: none;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0e141a; --surface: #161f28; --sunk: #1c2731; --ink: #e5ebf0; --muted: #9aa8b4; --line: #2a3743;
-    --accent: #8ea8ee; --accent-ink: #0e141a;
-    --f-psa: #e2809d; --f-pss: #e6b24f; --f-bil: #78aae8; --f-bag: #62c49a; --f-ahl: #a98ff0; --f-ymb: #ee9068; --f-biy: #9eb3c6; --f-gps: #c2cc6e; --f-neu: #5cc6cf;
-    --ok: #62c49a; --ok-bg: #173327; --mid: #e6b24f; --mid-bg: #33290f; --bad: #f08a8a; --bad-bg: #3a1c1c;
-    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 4px 16px rgb(0 0 0 / 0.25);
+    --bg: #15110c; --surface: #1d1811; --sunk: #262017; --ink: #ecdfc6; --muted: #a99678; --line: #3d3324;
+    --accent: #d9905e; --accent-ink: #15110c;
+    --f-psa: #e08a76; --f-pss: #ddb36a; --f-bil: #8fb0dc; --f-bag: #a8c58f; --f-ahl: #c3a3d6; --f-ymb: #e3a172; --f-biy: #aeb9bd; --f-gps: #cfc982; --f-neu: #d6a878;
+    --ok: #a8c58f; --ok-bg: #263020; --mid: #ddb36a; --mid-bg: #33280f; --bad: #e08a76; --bad-bg: #3a201a;
+    --ramp-lo: #211b13; --ramp-hi: #c98a52; --plate-filter: invert(1) sepia(0.4); --plate-blend: screen;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0e141a; --surface: #161f28; --sunk: #1c2731; --ink: #e5ebf0; --muted: #9aa8b4; --line: #2a3743;
-  --accent: #8ea8ee; --accent-ink: #0e141a;
-  --f-psa: #e2809d; --f-pss: #e6b24f; --f-bil: #78aae8; --f-bag: #62c49a; --f-ahl: #a98ff0; --f-ymb: #ee9068; --f-biy: #9eb3c6; --f-gps: #c2cc6e; --f-neu: #5cc6cf;
-  --ok: #62c49a; --ok-bg: #173327; --mid: #e6b24f; --mid-bg: #33290f; --bad: #f08a8a; --bad-bg: #3a1c1c;
-  --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 4px 16px rgb(0 0 0 / 0.25);
+  --bg: #15110c; --surface: #1d1811; --sunk: #262017; --ink: #ecdfc6; --muted: #a99678; --line: #3d3324;
+  --accent: #d9905e; --accent-ink: #15110c;
+  --f-psa: #e08a76; --f-pss: #ddb36a; --f-bil: #8fb0dc; --f-bag: #a8c58f; --f-ahl: #c3a3d6; --f-ymb: #e3a172; --f-biy: #aeb9bd; --f-gps: #cfc982; --f-neu: #d6a878;
+  --ok: #a8c58f; --ok-bg: #263020; --mid: #ddb36a; --mid-bg: #33280f; --bad: #e08a76; --bad-bg: #3a201a;
+  --ramp-lo: #211b13; --ramp-hi: #c98a52; --plate-filter: invert(1) sepia(0.4); --plate-blend: screen;
   color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
@@ -511,160 +515,227 @@ table.cmp.with-neu { min-width: 980px; }
   .rates .rate-bar { display: none; }
 }
 
-/* ===== Tasarım önizleme düğmeleri ===== */
-.skin-switch { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 4px; }
-.skin-lbl { font: 500 11px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
-.skin-switch button { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 13px; cursor: pointer; }
-.skin-switch button small { color: var(--muted); font-size: 11px; }
-.skin-switch button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--surface); }
-.skin-switch button[aria-pressed="true"] small { color: inherit; opacity: 0.7; }
-
-/* =====================================================================
-   KAPLAMA 1 · GRAVÜR — 19. yy anatomi atlası: sepya mürekkep, levha çerçeveleri,
-   Garamond ve küçük büyük harfler. Tek görünümlü (açık) tasarım.
-   ===================================================================== */
-:root[data-skin="gravur"] {
-  --bg: #ece2cc; --surface: #f7f0e1; --sunk: #e4d8bf; --ink: #2a1f16; --muted: #6a5845; --line: #c9b896;
-  --accent: #7b2d1e; --accent-ink: #f7f0e1;
-  --f-psa: #8a3324; --f-pss: #8d6418; --f-bil: #2f4f7a; --f-bag: #46613a; --f-ahl: #5e3f6e; --f-ymb: #9a5a2b; --f-biy: #4f5a5e; --f-gps: #6a6526; --f-neu: #6b4a2b;
-  --ok: #46613a; --ok-bg: #e2dfc4; --mid: #8d6418; --mid-bg: #eddab0; --bad: #8a2f22; --bad-bg: #ebcfc1;
-  --display: "Cormorant Garamond", "EB Garamond", Garamond, Georgia, serif;
-  --body: "EB Garamond", Garamond, Georgia, serif;
-  --mono: "EB Garamond", Garamond, Georgia, serif;
-  --ramp-lo: #f7f0e1; --ramp-hi: #4a2c14;
-  --r: 0px; --shadow: none;
-  color-scheme: light;
-}
-:root[data-skin="gravur"] body { font-size: 16.5px; background-image: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--surface) 70%, transparent), transparent 70%); }
-:root[data-skin="gravur"] body::before { background: var(--surface); }
-:root[data-skin="gravur"] .masthead { border-bottom: 4px double var(--ink); background-image: repeating-linear-gradient(135deg, transparent 0 7px, color-mix(in srgb, var(--ink) 4%, transparent) 7px 8px); }
-:root[data-skin="gravur"] .masthead h1 { font-weight: 700; font-style: italic; letter-spacing: 0; font-size: clamp(42px, 6vw, 72px); }
-:root[data-skin="gravur"] .masthead .wrap::before { content: "Levha I · Ruhun ve beynin gelişim anatomisi"; font: italic 500 15px/1 var(--display); color: var(--accent); }
-:root[data-skin="gravur"] h2, :root[data-skin="gravur"] h3, :root[data-skin="gravur"] h4 { font-weight: 600; }
-:root[data-skin="gravur"] .eyebrow, :root[data-skin="gravur"] .panel-title, :root[data-skin="gravur"] .skin-lbl, :root[data-skin="gravur"] .tag,
-:root[data-skin="gravur"] .status, :root[data-skin="gravur"] .stage .row .k, :root[data-skin="gravur"] .exp dt, :root[data-skin="gravur"] .ch-group,
-:root[data-skin="gravur"] .ti-group h5, :root[data-skin="gravur"] .cdc-badge, :root[data-skin="gravur"] .cmp-sel span, :root[data-skin="gravur"] .c-fam,
-:root[data-skin="gravur"] .exp .rel .lbl, :root[data-skin="gravur"] .cmp-presets .lbl, :root[data-skin="gravur"] .split b {
+/* ===== Gravür ayrıntıları: küçük büyük harfler, levha çerçeveleri, eski üslup rakamlar ===== */
+body { font-size: 16.5px; background-image: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--surface) 70%, transparent), transparent 70%); }
+body::before { background: var(--surface); }
+.masthead { border-bottom: 4px double var(--ink); background-image: repeating-linear-gradient(135deg, transparent 0 7px, color-mix(in srgb, var(--ink) 4%, transparent) 7px 8px); }
+.masthead h1 { font-weight: 700; font-style: italic; letter-spacing: 0; font-size: clamp(42px, 6vw, 72px); }
+h2, h3, h4 { font-weight: 600; }
+.eyebrow, .panel-title, .tag,
+.status, .stage .row .k, .exp dt, .ch-group,
+.ti-group h5, .cdc-badge, .cmp-sel span, .c-fam,
+.exp .rel .lbl, .cmp-presets .lbl, .split b {
   text-transform: none; font-variant-caps: all-small-caps; letter-spacing: 0.08em; font-size: 14px; }
-:root[data-skin="gravur"] .stats, :root[data-skin="gravur"] .agebtn .a, :root[data-skin="gravur"] .ms li .when, :root[data-skin="gravur"] .stage .when,
-:root[data-skin="gravur"] .exp .yr, :root[data-skin="gravur"] #brainAgeOut { font-variant-numeric: oldstyle-nums tabular-nums; font-size: 15px; }
-:root[data-skin="gravur"] .exp .yr { font-size: 26px; font-style: italic; }
-:root[data-skin="gravur"] .panel, :root[data-skin="gravur"] .lens, :root[data-skin="gravur"] .exp, :root[data-skin="gravur"] .brain-figs,
-:root[data-skin="gravur"] .chart-scroll, :root[data-skin="gravur"] .cmp-scroll {
+.stats, .agebtn .a, .ms li .when, .stage .when,
+.exp .yr, #brainAgeOut { font-variant-numeric: oldstyle-nums tabular-nums; font-size: 15px; }
+.exp .yr { font-size: 26px; font-style: italic; }
+.panel, .lens, .exp, .brain-figs,
+.chart-scroll, .cmp-scroll {
   border: 1px solid var(--ink); box-shadow: inset 0 0 0 3px var(--surface), inset 0 0 0 4px var(--line); border-radius: 0; }
-:root[data-skin="gravur"] .neuro, :root[data-skin="gravur"] .bio, :root[data-skin="gravur"] .crit, :root[data-skin="gravur"] .dxp,
-:root[data-skin="gravur"] .clinic-p, :root[data-skin="gravur"] .cmp-note { border-top-width: 1px; }
-:root[data-skin="gravur"] .tabbar { border-bottom: 1px solid var(--ink); }
-:root[data-skin="gravur"] .tab { border-radius: 0; font-size: 16px; font-style: italic; }
-:root[data-skin="gravur"] .tab[aria-selected="true"] { background: transparent; color: var(--accent); box-shadow: inset 0 -2px 0 var(--accent); }
-:root[data-skin="gravur"] .agebtn { border-radius: 0; border-color: var(--line); }
-:root[data-skin="gravur"] .agebtn[aria-selected="true"] { background: var(--ink); color: var(--surface); }
-:root[data-skin="gravur"] .fam-chip, :root[data-skin="gravur"] .skin-switch button, :root[data-skin="gravur"] .btn, :root[data-skin="gravur"] .th-chip { border-radius: 0; }
-:root[data-skin="gravur"] .b-base { fill: #efe5cf; }
-:root[data-skin="gravur"] .b-outline { stroke: var(--ink); stroke-width: 2.4; opacity: 1; }
-:root[data-skin="gravur"] .b-sulcus { stroke-width: 1.4; opacity: 0.55; }
-:root[data-skin="gravur"] .br { stroke: var(--ink); stroke-width: 0.8; stroke-opacity: 0.55; }
-:root[data-skin="gravur"] .bl { font-family: var(--display); font-style: italic; font-size: 16px; font-weight: 600; }
+.neuro, .bio, .crit, .dxp,
+.clinic-p, .cmp-note { border-top-width: 1px; }
+.tabbar { border-bottom: 1px solid var(--ink); }
+.tab { border-radius: 0; font-size: 16px; font-style: italic; }
+.tab[aria-selected="true"] { background: transparent; color: var(--accent); box-shadow: inset 0 -2px 0 var(--accent); }
+.agebtn { border-radius: 0; border-color: var(--line); }
+.agebtn[aria-selected="true"] { background: var(--ink); color: var(--surface); }
+.fam-chip, .btn, .th-chip { border-radius: 0; }
+.b-base { fill: var(--ramp-lo); }
+.b-outline { stroke: var(--ink); stroke-width: 2.4; opacity: 1; }
+.b-sulcus { stroke-width: 1.4; opacity: 0.55; }
+.br { stroke: var(--ink); stroke-width: 0.8; stroke-opacity: 0.55; }
+.bl { font-family: var(--display); font-style: italic; font-size: 16px; font-weight: 600; }
 
-/* =====================================================================
-   KAPLAMA 2 · NÖROGÖRÜNTÜLEME — tarayıcı konsolu: siyah zemin, ızgara, köşe işaretleri,
-   fMRI "sıcak" renk skalası. Tek görünümlü (koyu) tasarım.
-   ===================================================================== */
-:root[data-skin="noro"] {
-  --bg: #05080b; --surface: #0b1218; --sunk: #111c25; --ink: #e3ecf2; --muted: #8299aa; --line: #1e2c38;
-  --accent: #39c8f0; --accent-ink: #03121a;
-  --f-psa: #ff6f9e; --f-pss: #ffb547; --f-bil: #62aefc; --f-bag: #3ee0a1; --f-ahl: #b590ff; --f-ymb: #ff8a5c; --f-biy: #a3b8ca; --f-gps: #d4e157; --f-neu: #ff9b3d;
-  --ok: #3ee0a1; --ok-bg: #0c2a20; --mid: #ffc247; --mid-bg: #2d2410; --bad: #ff6b6b; --bad-bg: #321313;
-  --display: "IBM Plex Sans Condensed", "IBM Plex Sans", system-ui, sans-serif;
-  --ramp-lo: #1b0603; --ramp-hi: #ffe45c;
-  --grid: rgb(57 200 240 / 0.05);
-  --r: 2px; --shadow: none;
-  color-scheme: dark;
-}
-:root[data-skin="noro"] body { background-color: var(--bg); background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: 32px 32px; }
-:root[data-skin="noro"] body::before { background: var(--surface); }
-:root[data-skin="noro"] .masthead { background: linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface) 40%, transparent)); border-bottom-color: var(--line); }
-:root[data-skin="noro"] .masthead h1 { text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; font-size: clamp(34px, 5vw, 60px); }
-:root[data-skin="noro"] .masthead h1::after { content: " ▮"; color: var(--accent); font-size: 0.5em; vertical-align: middle; }
-:root[data-skin="noro"] .eyebrow { color: var(--accent); }
-:root[data-skin="noro"] h2, :root[data-skin="noro"] h3, :root[data-skin="noro"] h4 { font-weight: 600; letter-spacing: 0.01em; }
-:root[data-skin="noro"] .tabbar { background: color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter: blur(6px); }
-:root[data-skin="noro"] .tab { font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; border-radius: 2px; }
-:root[data-skin="noro"] .tab[aria-selected="true"] { background: transparent; color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent), 0 0 12px color-mix(in srgb, var(--accent) 30%, transparent); }
-:root[data-skin="noro"] .panel, :root[data-skin="noro"] .lens, :root[data-skin="noro"] .exp, :root[data-skin="noro"] .brain-figs {
-  border-radius: 2px;
-  background:
-    linear-gradient(var(--accent), var(--accent)) top left / 12px 1px no-repeat,
-    linear-gradient(var(--accent), var(--accent)) top left / 1px 12px no-repeat,
-    linear-gradient(var(--accent), var(--accent)) top right / 12px 1px no-repeat,
-    linear-gradient(var(--accent), var(--accent)) top right / 1px 12px no-repeat,
-    linear-gradient(var(--accent), var(--accent)) bottom left / 12px 1px no-repeat,
-    linear-gradient(var(--accent), var(--accent)) bottom left / 1px 12px no-repeat,
-    linear-gradient(var(--accent), var(--accent)) bottom right / 12px 1px no-repeat,
-    linear-gradient(var(--accent), var(--accent)) bottom right / 1px 12px no-repeat,
-    var(--surface);
-}
-:root[data-skin="noro"] .agebtn { border-radius: 2px; background: var(--surface); }
-:root[data-skin="noro"] .agebtn[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-:root[data-skin="noro"] .agebtn[aria-selected="true"] .n { color: var(--accent-ink); }
-:root[data-skin="noro"] .btn { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); border-radius: 2px; }
-:root[data-skin="noro"] .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
-:root[data-skin="noro"] .skin-switch button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-:root[data-skin="noro"] .b-base { fill: #0e1922; }
-:root[data-skin="noro"] .b-outline { stroke: var(--accent); stroke-width: 1.4; opacity: 0.7; }
-:root[data-skin="noro"] .b-sulcus { stroke: var(--accent); opacity: 0.25; }
-:root[data-skin="noro"] .br { stroke: var(--bg); stroke-width: 1.2; }
-:root[data-skin="noro"] .br.sel { stroke: var(--accent); }
-:root[data-skin="noro"] .bl { font-family: var(--mono); font-size: 12px; font-weight: 500; fill: var(--ink); stroke: var(--bg); }
-:root[data-skin="noro"] .mini-brain { background: var(--bg); }
+/* ===== Aile simgeleri ===== */
+.glyph { width: 15px; height: 15px; flex: none; color: var(--c, currentColor); vertical-align: -2px; }
+.fam-chip .glyph { width: 14px; height: 14px; }
+.fam-chip[aria-pressed="false"] .glyph { color: var(--muted); opacity: 0.7; }
+.lens .who .glyph, .ti-group h5 .glyph, .ch-group .glyph, .fam-tag .glyph, .c-fam .glyph { margin-right: 2px; }
+.ch-group { display: flex; align-items: center; gap: 6px; }
 
-/* =====================================================================
-   KAPLAMA 3 · KLİNİK — çocuk kliniğine uygun sıcak ve yumuşak: kayısı, nane, gök mavisi;
-   yuvarlak köşeler, yumuşak gölgeler, Nunito. Tek görünümlü (açık) tasarım.
-   ===================================================================== */
-:root[data-skin="klinik"] {
-  --bg: #fff7f0; --surface: #ffffff; --sunk: #fdece0; --ink: #3a2e2a; --muted: #85736b; --line: #f1dfd1;
-  --accent: #e0754a; --accent-ink: #ffffff;
-  --f-psa: #d35d7a; --f-pss: #d98a1f; --f-bil: #4a8fd4; --f-bag: #36a079; --f-ahl: #8f6ed6; --f-ymb: #e0754a; --f-biy: #6b8a99; --f-gps: #94a033; --f-neu: #2fa29c;
-  --ok: #2f9a72; --ok-bg: #e2f5ec; --mid: #c08310; --mid-bg: #fcefd6; --bad: #cf4f5a; --bad-bg: #fde4e5;
-  --display: "Nunito", "Segoe UI", system-ui, sans-serif;
-  --body: "Nunito", "Segoe UI", system-ui, sans-serif;
-  --mono: "Nunito", "Segoe UI", system-ui, sans-serif;
-  --ramp-lo: #ffffff; --ramp-hi: #2a9a95;
-  --r: 18px; --shadow: 0 2px 4px rgb(224 117 74 / 0.06), 0 12px 30px rgb(58 46 42 / 0.07);
-  color-scheme: light;
+/* ===== Sade üst başlık (kapak dışındaki görünümlerde) ===== */
+.masthead .wrap { padding-block: 14px 12px; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 6px 24px; }
+.mast-title { display: grid; gap: 4px; text-decoration: none; color: var(--ink); }
+.mast-name { font: italic 700 clamp(26px, 3.4vw, 38px)/1 var(--display); letter-spacing: 0; }
+.masthead .stats { justify-content: flex-end; font-size: 14px; }
+body[data-view="kapak"] .masthead { display: none; }
+@media (max-width: 760px) { .masthead .wrap { grid-template-columns: minmax(0, 1fr); } .masthead .stats { justify-content: flex-start; } }
+
+/* ===== KAPAK ===== */
+.cover { display: grid; gap: 26px; }
+.cover-plate { border: 1px solid var(--ink); box-shadow: inset 0 0 0 5px var(--surface), inset 0 0 0 6px var(--ink); background: var(--surface);
+  padding: clamp(22px, 4vw, 48px) clamp(18px, 4vw, 56px); display: grid; gap: 14px; position: relative;
+  background-image: repeating-linear-gradient(135deg, transparent 0 9px, color-mix(in srgb, var(--ink) 3.5%, transparent) 9px 10px); }
+.cover-top { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font: 500 15px/1 var(--body); font-variant-caps: all-small-caps; letter-spacing: 0.12em; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+.cover-top span:first-child { color: var(--accent); }
+.cover-title { font: italic 700 clamp(48px, 9vw, 116px)/0.95 var(--display); letter-spacing: -0.01em; text-align: center; margin-top: 6px; }
+.cover-sub { text-align: center; font: italic 500 clamp(17px, 2.2vw, 23px)/1.35 var(--display); color: var(--muted); max-width: 52ch; margin: 0 auto; }
+.cover-fig { margin: 8px 0 0; }
+.cover-fig figcaption { font-size: 14px; color: var(--muted); text-align: center; max-width: 80ch; margin: 6px auto 0; font-style: italic; }
+.stream-wrap { position: relative; cursor: crosshair; touch-action: pan-y; }
+.stream-svg { width: 100%; height: auto; display: block; overflow: visible; }
+.stream { stroke-width: 0.9; transition: opacity 0.2s; }
+.stream-wrap:hover .stream { opacity: 0.85; }
+.stream-wrap .stream:hover { opacity: 1; }
+.stream-l { font: italic 600 17px/1 var(--display); text-anchor: middle; paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; pointer-events: none; }
+.tick-l { stroke: var(--line); stroke-width: 1; stroke-dasharray: 2 4; }
+.tick-t { font: 500 13px/1 var(--body); font-variant-numeric: oldstyle-nums; fill: var(--muted); text-anchor: middle; }
+.mat-line { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-dasharray: 5 3; }
+.mat-t { font: italic 500 13px/1 var(--display); fill: var(--accent); }
+.sweep { position: absolute; top: 14%; bottom: 8%; left: 0; width: 1px; background: var(--ink); opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: no-preference) {
+  body[data-view="kapak"] .sweep { animation: sweep 3.2s cubic-bezier(.45,.05,.35,1) 0.4s 1 both; }
+  @keyframes sweep { 0% { left: 0; opacity: 0; } 8% { opacity: 0.8; } 92% { opacity: 0.8; } 100% { left: 100%; opacity: 0; } }
 }
-:root[data-skin="klinik"] body { font-size: 15.5px; }
-:root[data-skin="klinik"] body::before { background: var(--surface); }
-:root[data-skin="klinik"] h1, :root[data-skin="klinik"] h2, :root[data-skin="klinik"] h3, :root[data-skin="klinik"] h4 { font-weight: 800; letter-spacing: -0.01em; }
-:root[data-skin="klinik"] .masthead {
-  background:
-    radial-gradient(circle at 88% 18%, color-mix(in srgb, var(--f-bil) 22%, transparent) 0, transparent 34%),
-    radial-gradient(circle at 74% 92%, color-mix(in srgb, var(--accent) 20%, transparent) 0, transparent 38%),
-    radial-gradient(circle at 98% 70%, color-mix(in srgb, var(--f-bag) 18%, transparent) 0, transparent 26%),
-    var(--surface);
-  border-bottom: 0;
+.guide { position: absolute; top: 0; bottom: 6%; width: 1px; background: var(--ink); pointer-events: none; }
+.guide span { position: absolute; top: 8px; left: 8px; background: var(--ink); color: var(--surface); font-size: 13px; line-height: 1.35; padding: 6px 9px; width: max-content; max-width: 300px; }
+.guide.flip span { left: auto; right: 8px; }
+.cover-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 4px; }
+.cover-actions .btn { text-decoration: none; font-size: 16px; padding: 9px 16px; }
+.cover-cols { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 26px; }
+.cover-cols h2 { font: italic 600 28px/1.1 var(--display); border-bottom: 1px solid var(--ink); padding-bottom: 8px; margin-bottom: 12px; }
+.cover-cols h3 { font: italic 600 20px/1.2 var(--display); margin: 18px 0 8px; }
+.toc { list-style: none; margin: 0; padding: 0; display: grid; }
+.toc a { display: grid; grid-template-columns: 3.2em minmax(0, 1fr); gap: 2px 10px; padding: 9px 4px; border-bottom: 1px dotted var(--line); text-decoration: none; color: var(--ink); }
+.toc a:hover { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+.toc-n { grid-row: span 2; font: 600 20px/1.2 var(--display); color: var(--accent); }
+.toc-t { font: 600 19px/1.2 var(--display); }
+.toc-d { font-size: 14.5px; color: var(--muted); }
+.cover-stats { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 14px; align-items: baseline; }
+.cover-stats dt { font: italic 700 32px/1 var(--display); color: var(--accent); font-variant-numeric: oldstyle-nums; text-align: right; }
+.cover-stats dd { margin: 0; font-size: 15.5px; }
+.fam-legend { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 6px 14px; }
+.fam-legend li { display: flex; gap: 8px; align-items: center; font-size: 15px; }
+.fam-legend .glyph { width: 18px; height: 18px; }
+.cover-credit { text-align: center; margin: 0 auto; }
+@media (max-width: 860px) { .cover-cols { grid-template-columns: minmax(0, 1fr); } }
+
+/* ===== Gravür beyin levhaları ===== */
+.plate { mix-blend-mode: var(--plate-blend); filter: var(--plate-filter); pointer-events: none; }
+.brain-svg .b-base { fill: var(--ramp-lo); stroke: none; }
+.brain-svg .br { stroke: none; transition: fill 0.2s linear; }
+.brain-svg .br[data-region]:hover, .brain-svg .br[data-region]:focus-visible { stroke: var(--accent); stroke-width: 3; }
+.brain-svg .br.sel { stroke: var(--accent); stroke-width: 3.5; stroke-linejoin: round; }
+.brain-svg .br.deep { fill-opacity: 0.88; stroke: var(--ink); stroke-width: 1.4; stroke-dasharray: 4 3; }
+.brain-svg .br.deep.sel { stroke: var(--accent); stroke-width: 2.6; stroke-dasharray: none; }
+.b-ink { fill: none; stroke: var(--ink); stroke-width: 1.3; opacity: 0.75; }
+.brain-svg .bl { font: italic 700 22px/1 var(--display); fill: var(--accent); paint-order: stroke; stroke: var(--surface); stroke-width: 5px; stroke-linejoin: round; text-anchor: middle; pointer-events: none; }
+.brain-figs figcaption b { font-style: italic; font-family: var(--display); }
+.brain-figs { background: var(--surface); }
+.mini-brains .brain-svg .br { stroke: none; }
+
+/* ===== Çizelgede yaş çizgisi ve imleç ===== */
+.chart { position: relative; }
+.ch-over { position: absolute; top: 0; bottom: 0; left: 210px; right: 0; pointer-events: none; z-index: 2; }
+.ch-now { position: absolute; top: 0; bottom: 0; width: 0; border-left: 1.5px solid var(--accent); }
+.ch-now span { position: absolute; top: 4px; left: 4px; background: var(--accent); color: var(--accent-ink); font: 500 12px/1 var(--body); padding: 3px 6px; white-space: nowrap; }
+.ch-hover { position: absolute; top: 0; bottom: 0; width: 0; border-left: 1px dashed var(--ink); opacity: 0.6; }
+.ch-hover span { position: absolute; bottom: 6px; left: 4px; background: var(--ink); color: var(--surface); font: 500 12px/1 var(--body); padding: 3px 6px; white-space: nowrap; }
+
+/* ===== Yumuşak geçişler ===== */
+@media (prefers-reduced-motion: no-preference) {
+  #ageDetail.swap { animation: swapIn 0.35s ease-out; }
+  @keyframes swapIn { from { opacity: 0.5; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.28s; }
+  .lens, .exp-mini button, .toc a, .btn { transition: background-color 0.15s, border-color 0.15s, transform 0.15s; }
+  .lens:hover { transform: translateY(-1px); }
 }
-:root[data-skin="klinik"] .masthead h1 { color: var(--ink); }
-:root[data-skin="klinik"] .eyebrow { color: var(--accent); font-weight: 800; letter-spacing: 0.04em; }
-:root[data-skin="klinik"] .panel-title, :root[data-skin="klinik"] .skin-lbl, :root[data-skin="klinik"] .cmp-sel span, :root[data-skin="klinik"] .ch-group,
-:root[data-skin="klinik"] .ti-group h5, :root[data-skin="klinik"] .stage .row .k, :root[data-skin="klinik"] .exp dt {
-  text-transform: none; letter-spacing: 0; font-weight: 800; font-size: 13px; }
-:root[data-skin="klinik"] .panel-title { color: var(--accent); }
-:root[data-skin="klinik"] .tabbar { border-bottom: 0; box-shadow: 0 6px 20px rgb(58 46 42 / 0.06); }
-:root[data-skin="klinik"] .tab { font-weight: 700; }
-:root[data-skin="klinik"] .tab[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); }
-:root[data-skin="klinik"] .panel, :root[data-skin="klinik"] .lens, :root[data-skin="klinik"] .exp, :root[data-skin="klinik"] .brain-figs,
-:root[data-skin="klinik"] .chart-scroll, :root[data-skin="klinik"] .cmp-scroll { border-color: transparent; box-shadow: var(--shadow); border-radius: var(--r); }
-:root[data-skin="klinik"] .agebtn { border-radius: 14px; border-color: var(--line); box-shadow: 0 1px 2px rgb(58 46 42 / 0.04); }
-:root[data-skin="klinik"] .agebtn[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-:root[data-skin="klinik"] .agebtn[aria-selected="true"] .n { color: rgb(255 255 255 / 0.85); }
-:root[data-skin="klinik"] .btn { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); border-radius: 999px; }
-:root[data-skin="klinik"] .btn.ghost { background: var(--surface); color: var(--ink); border-color: var(--line); }
-:root[data-skin="klinik"] .skin-switch button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); }
-:root[data-skin="klinik"] .cdc-badge { background: var(--f-bag); }
-:root[data-skin="klinik"] .mini-brain { border-radius: 14px; }
-:root[data-skin="klinik"] .b-base { fill: #f7efe8; }
-:root[data-skin="klinik"] .b-outline { stroke: var(--ink); stroke-width: 1.6; opacity: 0.45; }
-:root[data-skin="klinik"] .br { stroke: #ffffff; stroke-width: 2.2; stroke-linejoin: round; }
-:root[data-skin="klinik"] .bl { font-weight: 800; font-size: 13.5px; }
+
+/* ===== DERS KURUCU ===== */
+.ls-types { margin-bottom: 14px; }
+.ls-row { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: end; margin-bottom: 16px; }
+.ls-row .cmp-sel { flex: 1 1 320px; }
+.ls-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.ls-outline { margin: 0; padding-left: 26px; display: grid; gap: 4px; columns: 2; column-gap: 28px; }
+.ls-outline li { break-inside: avoid; font-size: 15px; }
+.ls-outline li::marker { font-variant-numeric: oldstyle-nums; color: var(--muted); }
+@media (max-width: 860px) { .ls-grid { grid-template-columns: minmax(0, 1fr); } .ls-outline { columns: 1; } }
+
+/* ===== SUNUM ===== */
+html.deck-open, html.deck-open body { overflow: hidden; }
+.deck { position: fixed; inset: 0; z-index: 30; background: var(--bg); display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto;
+  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px); outline: none; }
+.deck-bar { display: flex; align-items: center; gap: 12px; padding: 8px max(14px, env(safe-area-inset-left, 0px)); border-bottom: 1px solid var(--line); background: var(--surface); }
+.deck-title { font: italic 600 18px/1.2 var(--display); flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.deck-count { font-variant-numeric: oldstyle-nums tabular-nums; color: var(--muted); }
+.deck-btns { display: flex; gap: 4px; flex-wrap: wrap; }
+.deck-btns button { border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 6px 10px; font: inherit; font-size: 14px; cursor: pointer; }
+.deck-btns button:hover, .deck-btns button[aria-pressed="true"] { border-color: var(--ink); background: var(--sunk); }
+.deck-stage { display: grid; place-items: center; padding: 14px; min-height: 0; }
+.slide { --sw: min(calc(100vw - 28px), calc((100vh - 120px) * 16 / 9)); width: var(--sw); aspect-ratio: 16 / 9; max-width: 100%; container-type: inline-size;
+  background: var(--surface); border: 1px solid var(--ink); box-shadow: inset 0 0 0 6px var(--surface), inset 0 0 0 7px var(--line);
+  padding: 4.2cqw 5.4cqw 6cqw; position: relative; overflow: hidden; font-size: 1.85cqw; line-height: 1.4; display: flex; flex-direction: column; gap: 1.4cqw; }
+.deck.with-notes .slide { --sw: min(calc(100vw - 28px), calc((100vh - 120px - 24vh) * 16 / 9)); }
+.deck-notes { max-height: 24vh; overflow-y: auto; padding: 10px max(16px, env(safe-area-inset-left, 0px)); border-top: 1px solid var(--line); background: var(--surface); font-size: 15px; }
+.deck-notes .muted { color: var(--muted); font-style: italic; }
+.deck-prog { height: 3px; background: var(--line); }
+.deck-prog i { display: block; height: 100%; background: var(--accent); transition: width 0.25s; }
+.sl-kicker { font-variant-caps: all-small-caps; letter-spacing: 0.1em; color: var(--accent); font-size: 1.05em; }
+.sl-h { font: italic 600 2.5em/1.05 var(--display); text-wrap: balance; }
+.sl-title { font: italic 700 4.6em/0.95 var(--display); text-wrap: balance; }
+.sl-plate { margin: auto 0; display: grid; gap: 1.2cqw; border-left: 2px solid var(--ink); padding-left: 3cqw; }
+.sl-sub { font: italic 500 1.5em/1.2 var(--display); color: var(--muted); }
+.sl-lead { font-size: 1.15em; max-width: 60ch; }
+.sl-lead2 { font-size: 1.1em; max-width: 70ch; }
+.slide ul { margin: 0; padding-left: 1.2em; display: grid; gap: 0.45em; }
+.slide cite { font-style: italic; color: var(--muted); font-size: 0.85em; }
+.sl-cols { display: grid; gap: 2.4cqw; min-height: 0; }
+.sl-cols.n2 { grid-template-columns: 1fr 1fr; } .sl-cols.n3 { grid-template-columns: repeat(3, 1fr); } .sl-cols.n4 { grid-template-columns: repeat(4, 1fr); }
+.sl-cols h3 { font: italic 600 1.2em/1.15 var(--display); border-bottom: 1px solid var(--line); padding-bottom: 0.3em; margin-bottom: 0.5em; display: flex; gap: 0.4em; align-items: center; }
+.sl-cols.dense { font-size: 0.86em; }
+.sl-cols .glyph { width: 1.1em; height: 1.1em; }
+.sl-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4cqw; font-size: 0.82em; }
+.sl-cards article { border: 1px solid var(--line); border-top: 3px solid var(--c); padding: 0.8em 0.9em; display: grid; gap: 0.35em; align-content: start; }
+.sl-who { display: flex; gap: 0.4em; align-items: center; color: var(--muted); font-size: 0.9em; }
+.sl-who .glyph { width: 1.1em; height: 1.1em; }
+.sl-who span { margin-left: auto; font-variant-numeric: oldstyle-nums; white-space: nowrap; }
+.sl-cards h3 { font: italic 600 1.3em/1.1 var(--display); color: var(--c); }
+.sl-table { border-collapse: collapse; width: 100%; font-size: 0.82em; }
+.sl-table th { text-align: left; font-variant-caps: all-small-caps; letter-spacing: 0.08em; color: var(--muted); border-bottom: 1.5px solid var(--ink); padding: 0.35em 0.6em; }
+.sl-table td { border-bottom: 1px solid var(--line); padding: 0.45em 0.6em; vertical-align: top; }
+.sl-table td span { color: var(--muted); }
+.sl-brain { display: grid; grid-template-columns: 1.25fr 1fr; gap: 2.6cqw; align-items: center; }
+.sl-q { margin: 0; padding-left: 1.4em; display: grid; gap: 0.9em; font: italic 500 1.35em/1.3 var(--display); }
+.sl-refs { list-style: none; padding: 0 !important; font-size: 0.8em; gap: 0.5em !important; }
+.sl-refs span { color: var(--muted); }
+.sl-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4cqw; }
+.sl-split > div { padding: 0.6em 0.8em; border: 1px solid var(--line); }
+.sl-split > div:first-child { background: var(--ok-bg); } .sl-split > div:last-child { background: var(--bad-bg); }
+.sl-split b { display: block; font-variant-caps: all-small-caps; letter-spacing: 0.08em; color: var(--muted); }
+.sl-tlw { margin-top: auto; margin-bottom: auto; }
+.sl-timeline { width: 100%; height: auto; }
+.sl-timeline rect { stroke-width: 1.2; }
+.tl-t { font: italic 600 19px/1 var(--display); fill: var(--ink); }
+.tl-a { font: 500 15px/1 var(--body); fill: var(--muted); text-anchor: middle; }
+.tl-g { stroke: var(--line); stroke-dasharray: 2 4; }
+.sl-tour { display: grid; grid-template-columns: 1.3fr 1fr; gap: 1.6cqw 2.6cqw; align-items: start; }
+.sl-tour .sl-fig .mini-brains { grid-template-columns: 1fr 1fr; }
+.sl-chips { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 0.5em; font-size: 0.85em; }
+.sl-chips span { border: 1px solid var(--c); color: var(--c); padding: 0.2em 0.6em; display: inline-flex; gap: 0.35em; align-items: center; }
+.sl-chips .glyph { width: 1em; height: 1em; }
+.sl-foot { position: absolute; left: 5.4cqw; right: 5.4cqw; bottom: 2.2cqw; display: flex; justify-content: space-between; font-size: 0.72em; color: var(--muted); border-top: 1px solid var(--line); padding-top: 0.5em; font-variant-caps: all-small-caps; letter-spacing: 0.08em; }
+.slide .status { font-size: 0.8em; }
+.slide .meter i { width: 1.2em; height: 0.45em; }
+@media (max-width: 640px) {
+  .deck-btns button[data-d="fs"] { display: none; }
+  .slide { font-size: 2.2cqw; }
+  .sl-cards { grid-template-columns: repeat(2, 1fr); }
+}
+/* Sunum: içeriğin slayta sığması */
+.slide > * { min-height: 0; }
+.sl-cols, .sl-cards, .sl-table, .sl-brain, .sl-tour { flex: 1 1 auto; min-height: 0; overflow: hidden; }
+.sl-cols.dense { font-size: 0.74em; }
+.sl-cols.dense ul { gap: 0.3em; }
+.sl-cards { font-size: 0.68em; grid-auto-rows: minmax(0, 1fr); }
+.sl-cards article { overflow: hidden; }
+.sl-cards h3 { font-size: 1.4em; }
+.sl-cards p { display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+.sl-who { white-space: nowrap; overflow: hidden; }
+.sl-who > :not(span):not(svg) { overflow: hidden; text-overflow: ellipsis; }
+.sl-table { font-size: 0.74em; }
+.sl-brain { grid-template-columns: 1.45fr 1fr; align-items: start; }
+.sl-brain .sl-fig .mini-brains { grid-template-columns: 1fr 1fr; gap: 1cqw; }
+.sl-brain ul { font-size: 0.86em; }
+.sl-tour { font-size: 0.86em; }
+.sl-tour .sl-lead2 { font-size: 1em; }
+.sl-cols.xdense { font-size: 0.68em; }

@@ -24,7 +24,7 @@
     var preset = (A.comparisons || []).find(function (c) { return sameSet(c.ids, ids); });
     var controls = '<div class="cmp-controls">' + [0, 1, 2].map(function (i) {
       return '<label class="cmp-sel"><span>' + (i + 1) + '. kuram</span><select id="cmp' + i + '" data-i="' + i + '">' + options(ids[i] || "", i === 2) + "</select></label>";
-    }).join("") + '<label class="chk"><input type="checkbox" id="cmpNeuro"' + (st.compareNeuro ? " checked" : "") + "> Nörobiyoloji sütunu</label></div>" +
+    }).join("") + '<label class="chk"><input type="checkbox" id="cmpNeuro"' + (st.compareNeuro ? " checked" : "") + "> Nörobiyoloji sütunu</label><button type=\"button\" class=\"btn\" id=\"cmpSun\">▶ Karşılaştırmayı sun</button></div>" +
       '<div class="cmp-presets"><span class="lbl">Hazır karşılaştırmalar</span>' + (A.comparisons || []).map(function (c) {
         return '<button type="button" class="btn ghost' + (preset === c ? " on" : "") + '" data-preset="' + c.ids.join(",") + '">' + esc(c.title) + "</button>";
       }).join("") + "</div>";
@@ -32,7 +32,7 @@
 
     var neuro = st.compareNeuro;
     var head = '<thead><tr><th class="c-age">Yaş dönemi</th>' + (neuro ? '<th class="c-neu">Nörobiyoloji</th>' : "") + ts.map(function (t) {
-      return '<th style="--c:' + U.famColor(t.fam) + '"><button type="button" class="c-th" data-theory="' + t.id + '"><span class="c-fam">' + esc(U.famById[t.fam].short) + "</span><b>" + esc(t.name) + "</b><span>" + esc(t.who) + " · " + esc(t.years) + "</span>" + U.meter(t.ev) + "</button></th>";
+      return '<th style="--c:' + U.famColor(t.fam) + '"><button type="button" class="c-th" data-theory="' + t.id + '"><span class="c-fam">' + U.famIcon(t.fam) + esc(U.famById[t.fam].short) + "</span><b>" + esc(t.name) + "</b><span>" + esc(t.who) + " · " + esc(t.years) + "</span>" + U.meter(t.ev) + "</button></th>";
     }).join("") + "</tr></thead>";
     function infoRow(label, fn) {
       return '<tr class="c-info"><th scope="row">' + esc(label) + "</th>" + (neuro ? "<td></td>" : "") + ts.map(function (t) { return "<td>" + fn(t) + "</td>"; }).join("") + "</tr>";
@@ -76,7 +76,8 @@
   });
   view.addEventListener("click", function (e) {
     var t;
-    if ((t = e.target.closest("[data-preset]"))) { A.state.compare = t.dataset.preset.split(","); A.save(); render(); }
+    if ((t = e.target.closest("#cmpSun"))) A.deck.open({ type: "compare", ids: A.state.compare });
+    else if ((t = e.target.closest("[data-preset]"))) { A.state.compare = t.dataset.preset.split(","); A.save(); render(); }
     else if ((t = e.target.closest("[data-goage]"))) A.nav.age(t.dataset.goage);
     else if ((t = e.target.closest("[data-theory]"))) A.nav.theory(t.dataset.theory, t.dataset.stage != null ? +t.dataset.stage : null);
   });
