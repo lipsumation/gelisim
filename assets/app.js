@@ -19,6 +19,22 @@
   var save = A.save = function () {
     try { localStorage.setItem("ruhsal-atlas", JSON.stringify({ age: state.age, theory: state.theory, fams: state.fams, compare: state.compare, brainAge: state.brainAge, brainRegion: state.brainRegion })); } catch (e) { /* yok say */ }
   };
+  /* Tasarım kaplaması (önizleme) */
+  var SKINS = ["", "gravur", "noro", "klinik"];
+  function applySkin(s) {
+    if (SKINS.indexOf(s) < 0) s = "";
+    if (s) document.documentElement.setAttribute("data-skin", s); else document.documentElement.removeAttribute("data-skin");
+    document.querySelectorAll("[data-skinbtn]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.skinbtn === s)); });
+    try { localStorage.setItem("ruhsal-skin", s); } catch (e) { /* yok say */ }
+  }
+  var initialSkin = "";
+  try { initialSkin = localStorage.getItem("ruhsal-skin") || ""; } catch (e) { /* yok say */ }
+  applySkin(initialSkin);
+  document.querySelector(".skin-switch").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-skinbtn]");
+    if (b) { applySkin(b.dataset.skinbtn); if (state.view === "beyin" || state.view === "yas") renderCurrent(); }
+  });
+
   var visibleTheories = A.visibleTheories = function () { return A.theories.filter(function (t) { return state.fams[t.fam]; }); };
 
   var ICONS = {

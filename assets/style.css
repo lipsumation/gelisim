@@ -31,6 +31,9 @@
   --body: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
+  --ramp-lo: var(--surface);
+  --ramp-hi: var(--f-neu);
+  --grid: transparent;
   --r: 10px;
   --shadow: 0 1px 2px rgb(20 30 45 / 0.06), 0 4px 16px rgb(20 30 45 / 0.05);
 }
@@ -422,7 +425,7 @@ ol.refs { margin: 0; padding-left: 26px; display: grid; gap: 10px; font-size: 13
 .br.sel { stroke: var(--ink); stroke-width: 2.6; }
 .bl { font: 600 13px/1 var(--body); fill: var(--ink); paint-order: stroke; stroke: var(--surface); stroke-width: 3.5px; stroke-linejoin: round; text-anchor: middle; pointer-events: none; }
 .ramp { display: flex; align-items: center; gap: 8px; font: 11px/1 var(--mono); color: var(--muted); flex-wrap: wrap; }
-.ramp i { flex: 0 1 200px; height: 9px; border-radius: 5px; background: linear-gradient(to right, color-mix(in srgb, var(--f-neu) 6%, var(--surface)), var(--f-neu)); border: 1px solid var(--line); }
+.ramp i { flex: 0 1 200px; height: 9px; border-radius: 5px; background: linear-gradient(in oklab to right, color-mix(in oklab, var(--ramp-hi) 6%, var(--ramp-lo)), var(--ramp-hi)); border: 1px solid var(--line); }
 .ramp em { font-style: normal; }
 .region-panel h3 { font-size: 22px; margin-bottom: 8px; }
 .region-panel .panel-title { margin: 14px 0 8px; }
@@ -507,3 +510,161 @@ table.cmp.with-neu { min-width: 980px; }
   .rates li { grid-template-columns: minmax(0, 1fr) auto; }
   .rates .rate-bar { display: none; }
 }
+
+/* ===== Tasarım önizleme düğmeleri ===== */
+.skin-switch { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 4px; }
+.skin-lbl { font: 500 11px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+.skin-switch button { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 13px; cursor: pointer; }
+.skin-switch button small { color: var(--muted); font-size: 11px; }
+.skin-switch button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--surface); }
+.skin-switch button[aria-pressed="true"] small { color: inherit; opacity: 0.7; }
+
+/* =====================================================================
+   KAPLAMA 1 · GRAVÜR — 19. yy anatomi atlası: sepya mürekkep, levha çerçeveleri,
+   Garamond ve küçük büyük harfler. Tek görünümlü (açık) tasarım.
+   ===================================================================== */
+:root[data-skin="gravur"] {
+  --bg: #ece2cc; --surface: #f7f0e1; --sunk: #e4d8bf; --ink: #2a1f16; --muted: #6a5845; --line: #c9b896;
+  --accent: #7b2d1e; --accent-ink: #f7f0e1;
+  --f-psa: #8a3324; --f-pss: #8d6418; --f-bil: #2f4f7a; --f-bag: #46613a; --f-ahl: #5e3f6e; --f-ymb: #9a5a2b; --f-biy: #4f5a5e; --f-gps: #6a6526; --f-neu: #6b4a2b;
+  --ok: #46613a; --ok-bg: #e2dfc4; --mid: #8d6418; --mid-bg: #eddab0; --bad: #8a2f22; --bad-bg: #ebcfc1;
+  --display: "Cormorant Garamond", "EB Garamond", Garamond, Georgia, serif;
+  --body: "EB Garamond", Garamond, Georgia, serif;
+  --mono: "EB Garamond", Garamond, Georgia, serif;
+  --ramp-lo: #f7f0e1; --ramp-hi: #4a2c14;
+  --r: 0px; --shadow: none;
+  color-scheme: light;
+}
+:root[data-skin="gravur"] body { font-size: 16.5px; background-image: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--surface) 70%, transparent), transparent 70%); }
+:root[data-skin="gravur"] body::before { background: var(--surface); }
+:root[data-skin="gravur"] .masthead { border-bottom: 4px double var(--ink); background-image: repeating-linear-gradient(135deg, transparent 0 7px, color-mix(in srgb, var(--ink) 4%, transparent) 7px 8px); }
+:root[data-skin="gravur"] .masthead h1 { font-weight: 700; font-style: italic; letter-spacing: 0; font-size: clamp(42px, 6vw, 72px); }
+:root[data-skin="gravur"] .masthead .wrap::before { content: "Levha I · Ruhun ve beynin gelişim anatomisi"; font: italic 500 15px/1 var(--display); color: var(--accent); }
+:root[data-skin="gravur"] h2, :root[data-skin="gravur"] h3, :root[data-skin="gravur"] h4 { font-weight: 600; }
+:root[data-skin="gravur"] .eyebrow, :root[data-skin="gravur"] .panel-title, :root[data-skin="gravur"] .skin-lbl, :root[data-skin="gravur"] .tag,
+:root[data-skin="gravur"] .status, :root[data-skin="gravur"] .stage .row .k, :root[data-skin="gravur"] .exp dt, :root[data-skin="gravur"] .ch-group,
+:root[data-skin="gravur"] .ti-group h5, :root[data-skin="gravur"] .cdc-badge, :root[data-skin="gravur"] .cmp-sel span, :root[data-skin="gravur"] .c-fam,
+:root[data-skin="gravur"] .exp .rel .lbl, :root[data-skin="gravur"] .cmp-presets .lbl, :root[data-skin="gravur"] .split b {
+  text-transform: none; font-variant-caps: all-small-caps; letter-spacing: 0.08em; font-size: 14px; }
+:root[data-skin="gravur"] .stats, :root[data-skin="gravur"] .agebtn .a, :root[data-skin="gravur"] .ms li .when, :root[data-skin="gravur"] .stage .when,
+:root[data-skin="gravur"] .exp .yr, :root[data-skin="gravur"] #brainAgeOut { font-variant-numeric: oldstyle-nums tabular-nums; font-size: 15px; }
+:root[data-skin="gravur"] .exp .yr { font-size: 26px; font-style: italic; }
+:root[data-skin="gravur"] .panel, :root[data-skin="gravur"] .lens, :root[data-skin="gravur"] .exp, :root[data-skin="gravur"] .brain-figs,
+:root[data-skin="gravur"] .chart-scroll, :root[data-skin="gravur"] .cmp-scroll {
+  border: 1px solid var(--ink); box-shadow: inset 0 0 0 3px var(--surface), inset 0 0 0 4px var(--line); border-radius: 0; }
+:root[data-skin="gravur"] .neuro, :root[data-skin="gravur"] .bio, :root[data-skin="gravur"] .crit, :root[data-skin="gravur"] .dxp,
+:root[data-skin="gravur"] .clinic-p, :root[data-skin="gravur"] .cmp-note { border-top-width: 1px; }
+:root[data-skin="gravur"] .tabbar { border-bottom: 1px solid var(--ink); }
+:root[data-skin="gravur"] .tab { border-radius: 0; font-size: 16px; font-style: italic; }
+:root[data-skin="gravur"] .tab[aria-selected="true"] { background: transparent; color: var(--accent); box-shadow: inset 0 -2px 0 var(--accent); }
+:root[data-skin="gravur"] .agebtn { border-radius: 0; border-color: var(--line); }
+:root[data-skin="gravur"] .agebtn[aria-selected="true"] { background: var(--ink); color: var(--surface); }
+:root[data-skin="gravur"] .fam-chip, :root[data-skin="gravur"] .skin-switch button, :root[data-skin="gravur"] .btn, :root[data-skin="gravur"] .th-chip { border-radius: 0; }
+:root[data-skin="gravur"] .b-base { fill: #efe5cf; }
+:root[data-skin="gravur"] .b-outline { stroke: var(--ink); stroke-width: 2.4; opacity: 1; }
+:root[data-skin="gravur"] .b-sulcus { stroke-width: 1.4; opacity: 0.55; }
+:root[data-skin="gravur"] .br { stroke: var(--ink); stroke-width: 0.8; stroke-opacity: 0.55; }
+:root[data-skin="gravur"] .bl { font-family: var(--display); font-style: italic; font-size: 16px; font-weight: 600; }
+
+/* =====================================================================
+   KAPLAMA 2 · NÖROGÖRÜNTÜLEME — tarayıcı konsolu: siyah zemin, ızgara, köşe işaretleri,
+   fMRI "sıcak" renk skalası. Tek görünümlü (koyu) tasarım.
+   ===================================================================== */
+:root[data-skin="noro"] {
+  --bg: #05080b; --surface: #0b1218; --sunk: #111c25; --ink: #e3ecf2; --muted: #8299aa; --line: #1e2c38;
+  --accent: #39c8f0; --accent-ink: #03121a;
+  --f-psa: #ff6f9e; --f-pss: #ffb547; --f-bil: #62aefc; --f-bag: #3ee0a1; --f-ahl: #b590ff; --f-ymb: #ff8a5c; --f-biy: #a3b8ca; --f-gps: #d4e157; --f-neu: #ff9b3d;
+  --ok: #3ee0a1; --ok-bg: #0c2a20; --mid: #ffc247; --mid-bg: #2d2410; --bad: #ff6b6b; --bad-bg: #321313;
+  --display: "IBM Plex Sans Condensed", "IBM Plex Sans", system-ui, sans-serif;
+  --ramp-lo: #1b0603; --ramp-hi: #ffe45c;
+  --grid: rgb(57 200 240 / 0.05);
+  --r: 2px; --shadow: none;
+  color-scheme: dark;
+}
+:root[data-skin="noro"] body { background-color: var(--bg); background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: 32px 32px; }
+:root[data-skin="noro"] body::before { background: var(--surface); }
+:root[data-skin="noro"] .masthead { background: linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface) 40%, transparent)); border-bottom-color: var(--line); }
+:root[data-skin="noro"] .masthead h1 { text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; font-size: clamp(34px, 5vw, 60px); }
+:root[data-skin="noro"] .masthead h1::after { content: " ▮"; color: var(--accent); font-size: 0.5em; vertical-align: middle; }
+:root[data-skin="noro"] .eyebrow { color: var(--accent); }
+:root[data-skin="noro"] h2, :root[data-skin="noro"] h3, :root[data-skin="noro"] h4 { font-weight: 600; letter-spacing: 0.01em; }
+:root[data-skin="noro"] .tabbar { background: color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter: blur(6px); }
+:root[data-skin="noro"] .tab { font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; border-radius: 2px; }
+:root[data-skin="noro"] .tab[aria-selected="true"] { background: transparent; color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent), 0 0 12px color-mix(in srgb, var(--accent) 30%, transparent); }
+:root[data-skin="noro"] .panel, :root[data-skin="noro"] .lens, :root[data-skin="noro"] .exp, :root[data-skin="noro"] .brain-figs {
+  border-radius: 2px;
+  background:
+    linear-gradient(var(--accent), var(--accent)) top left / 12px 1px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) top left / 1px 12px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) top right / 12px 1px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) top right / 1px 12px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) bottom left / 12px 1px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) bottom left / 1px 12px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) bottom right / 12px 1px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) bottom right / 1px 12px no-repeat,
+    var(--surface);
+}
+:root[data-skin="noro"] .agebtn { border-radius: 2px; background: var(--surface); }
+:root[data-skin="noro"] .agebtn[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+:root[data-skin="noro"] .agebtn[aria-selected="true"] .n { color: var(--accent-ink); }
+:root[data-skin="noro"] .btn { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); border-radius: 2px; }
+:root[data-skin="noro"] .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+:root[data-skin="noro"] .skin-switch button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+:root[data-skin="noro"] .b-base { fill: #0e1922; }
+:root[data-skin="noro"] .b-outline { stroke: var(--accent); stroke-width: 1.4; opacity: 0.7; }
+:root[data-skin="noro"] .b-sulcus { stroke: var(--accent); opacity: 0.25; }
+:root[data-skin="noro"] .br { stroke: var(--bg); stroke-width: 1.2; }
+:root[data-skin="noro"] .br.sel { stroke: var(--accent); }
+:root[data-skin="noro"] .bl { font-family: var(--mono); font-size: 12px; font-weight: 500; fill: var(--ink); stroke: var(--bg); }
+:root[data-skin="noro"] .mini-brain { background: var(--bg); }
+
+/* =====================================================================
+   KAPLAMA 3 · KLİNİK — çocuk kliniğine uygun sıcak ve yumuşak: kayısı, nane, gök mavisi;
+   yuvarlak köşeler, yumuşak gölgeler, Nunito. Tek görünümlü (açık) tasarım.
+   ===================================================================== */
+:root[data-skin="klinik"] {
+  --bg: #fff7f0; --surface: #ffffff; --sunk: #fdece0; --ink: #3a2e2a; --muted: #85736b; --line: #f1dfd1;
+  --accent: #e0754a; --accent-ink: #ffffff;
+  --f-psa: #d35d7a; --f-pss: #d98a1f; --f-bil: #4a8fd4; --f-bag: #36a079; --f-ahl: #8f6ed6; --f-ymb: #e0754a; --f-biy: #6b8a99; --f-gps: #94a033; --f-neu: #2fa29c;
+  --ok: #2f9a72; --ok-bg: #e2f5ec; --mid: #c08310; --mid-bg: #fcefd6; --bad: #cf4f5a; --bad-bg: #fde4e5;
+  --display: "Nunito", "Segoe UI", system-ui, sans-serif;
+  --body: "Nunito", "Segoe UI", system-ui, sans-serif;
+  --mono: "Nunito", "Segoe UI", system-ui, sans-serif;
+  --ramp-lo: #ffffff; --ramp-hi: #2a9a95;
+  --r: 18px; --shadow: 0 2px 4px rgb(224 117 74 / 0.06), 0 12px 30px rgb(58 46 42 / 0.07);
+  color-scheme: light;
+}
+:root[data-skin="klinik"] body { font-size: 15.5px; }
+:root[data-skin="klinik"] body::before { background: var(--surface); }
+:root[data-skin="klinik"] h1, :root[data-skin="klinik"] h2, :root[data-skin="klinik"] h3, :root[data-skin="klinik"] h4 { font-weight: 800; letter-spacing: -0.01em; }
+:root[data-skin="klinik"] .masthead {
+  background:
+    radial-gradient(circle at 88% 18%, color-mix(in srgb, var(--f-bil) 22%, transparent) 0, transparent 34%),
+    radial-gradient(circle at 74% 92%, color-mix(in srgb, var(--accent) 20%, transparent) 0, transparent 38%),
+    radial-gradient(circle at 98% 70%, color-mix(in srgb, var(--f-bag) 18%, transparent) 0, transparent 26%),
+    var(--surface);
+  border-bottom: 0;
+}
+:root[data-skin="klinik"] .masthead h1 { color: var(--ink); }
+:root[data-skin="klinik"] .eyebrow { color: var(--accent); font-weight: 800; letter-spacing: 0.04em; }
+:root[data-skin="klinik"] .panel-title, :root[data-skin="klinik"] .skin-lbl, :root[data-skin="klinik"] .cmp-sel span, :root[data-skin="klinik"] .ch-group,
+:root[data-skin="klinik"] .ti-group h5, :root[data-skin="klinik"] .stage .row .k, :root[data-skin="klinik"] .exp dt {
+  text-transform: none; letter-spacing: 0; font-weight: 800; font-size: 13px; }
+:root[data-skin="klinik"] .panel-title { color: var(--accent); }
+:root[data-skin="klinik"] .tabbar { border-bottom: 0; box-shadow: 0 6px 20px rgb(58 46 42 / 0.06); }
+:root[data-skin="klinik"] .tab { font-weight: 700; }
+:root[data-skin="klinik"] .tab[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); }
+:root[data-skin="klinik"] .panel, :root[data-skin="klinik"] .lens, :root[data-skin="klinik"] .exp, :root[data-skin="klinik"] .brain-figs,
+:root[data-skin="klinik"] .chart-scroll, :root[data-skin="klinik"] .cmp-scroll { border-color: transparent; box-shadow: var(--shadow); border-radius: var(--r); }
+:root[data-skin="klinik"] .agebtn { border-radius: 14px; border-color: var(--line); box-shadow: 0 1px 2px rgb(58 46 42 / 0.04); }
+:root[data-skin="klinik"] .agebtn[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+:root[data-skin="klinik"] .agebtn[aria-selected="true"] .n { color: rgb(255 255 255 / 0.85); }
+:root[data-skin="klinik"] .btn { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); border-radius: 999px; }
+:root[data-skin="klinik"] .btn.ghost { background: var(--surface); color: var(--ink); border-color: var(--line); }
+:root[data-skin="klinik"] .skin-switch button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); }
+:root[data-skin="klinik"] .cdc-badge { background: var(--f-bag); }
+:root[data-skin="klinik"] .mini-brain { border-radius: 14px; }
+:root[data-skin="klinik"] .b-base { fill: #f7efe8; }
+:root[data-skin="klinik"] .b-outline { stroke: var(--ink); stroke-width: 1.6; opacity: 0.45; }
+:root[data-skin="klinik"] .br { stroke: #ffffff; stroke-width: 2.2; stroke-linejoin: round; }
+:root[data-skin="klinik"] .bl { font-weight: 800; font-size: 13.5px; }

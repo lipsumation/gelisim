@@ -11,7 +11,7 @@
   };
   var uid = 0;
 
-  function fillFor(m) { return "color-mix(in srgb, var(--f-neu) " + Math.round(6 + 84 * m) + "%, var(--surface))"; }
+  function fillFor(m) { return "color-mix(in oklab, var(--ramp-hi) " + Math.round(6 + 88 * m) + "%, var(--ramp-lo))"; }
   function shape(r, sh, age, opts) {
     var m = U.maturity(r, age);
     var cls = "br" + (r.deep ? " deep" : "") + (opts.sel === r.id ? " sel" : "");
