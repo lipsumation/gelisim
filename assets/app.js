@@ -204,7 +204,9 @@
     return '<div class="mini-axis" style="height:' + (16 + rows * 18) + 'px">' + segs + '<div class="ticks">' + ticks + "</div></div>";
   }
   function relatedExps(t) {
+    var P = A.profiles && A.profiles[t.id];
     var related = t.exps.slice();
+    if (P && P.exps) P.exps.forEach(function (id) { if (related.indexOf(id) < 0) related.push(id); });
     A.experiments.forEach(function (e) {
       if ((e.sup.indexOf(t.id) > -1 || e.ch.indexOf(t.id) > -1) && related.indexOf(e.id) < 0) related.push(e.id);
     });
@@ -214,16 +216,19 @@
   function renderTheoryDetail() {
     var t = thById[state.theory];
     var f = famById[t.fam];
+    var P = A.profiles && A.profiles[t.id];
     var labels = t.labels || ["Olumlu çözüm", "Risk"];
+    var pf = P && P.stageFields;
     var stages = t.stages.map(function (s, i) {
       var split = (s.good && s.good !== "-") || (s.risk && s.risk !== "-") ?
         '<div class="split"><div class="good"><b>' + esc(labels[0]) + "</b>" + esc(s.good || "-") + '</div><div class="risk"><b>' + esc(labels[1]) + "</b>" + esc(s.risk || "-") + "</div></div>" : "";
+      var extra = pf && pf.rows[i] ? '<dl class="pf">' + pf.labels.map(function (l, k) { return "<dt>" + esc(l) + "</dt><dd>" + esc(pf.rows[i][k]) + "</dd>"; }).join("") + "</dl>" : "";
       return '<article class="stage" id="st-' + t.id + "-" + i + '">' +
         '<div class="when">' + esc(U.fmtRange(s.from, s.to)) + '<small><button type="button" class="linkish" data-goage="' + U.bandOf(Math.max(s.from, -0.5)).id + '">Bu yaşa git →</button></small></div>' +
         "<div><h4>" + esc(s.name) + "</h4>" + (s.sub ? '<p class="sub">' + esc(s.sub) + "</p>" : "") +
         '<div class="body"><div class="row"><span class="k">Görev</span><p>' + esc(s.task) + "</p></div>" +
         (s.ms && s.ms.length ? '<div class="row"><span class="k">Basamaklar</span><ul class="ticks">' + s.ms.map(function (m) { return "<li>" + esc(m) + "</li>"; }).join("") + "</ul></div>" : "") +
-        split +
+        extra + split +
         (s.neuro && s.neuro !== "-" ? '<div class="row neuro-row"><span class="k">Nörobiyoloji</span><p>' + esc(s.neuro) + "</p></div>" : "") +
         "</div></div></article>";
     }).join("");
@@ -231,22 +236,64 @@
     var presets = (A.comparisons || []).filter(function (c) { return c.ids.indexOf(t.id) > -1; });
     var select = '<div class="theory-select"><label class="sr" for="theorySelect">Kuram seç</label><select id="theorySelect">' +
       visibleTheories().map(function (x) { return '<option value="' + x.id + '"' + (x.id === t.id ? " selected" : "") + ">" + esc(x.who + ": " + x.name) + "</option>"; }).join("") + "</select></div>";
+    function sec(id, title, inner, aside) { return '<section class="td-sec" id="ts-' + id + '"><div class="section-h"><h3>' + esc(title) + "</h3>" + (aside ? "<span>" + aside + "</span>" : "") + "</div>" + inner + "</section>"; }
+    var navItems = [];
+    function nav(id, title) { navItems.push([id, title]); }
+    var html = "";
+    if (P) {
+      nav("kuramci", "Kuramcı ve dönemi");
+      html += sec("kuramci", "Kuramcı ve dönemi", '<div class="bio-grid"><div><p class="life">' + esc(P.life) + "</p>" + P.bio.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("") + "</div>" +
+        '<ol class="tl">' + P.timeline.map(function (y) { return '<li><span class="tl-y">' + y[0] + "</span><span>" + esc(y[1]) + "</span></li>"; }).join("") + "</ol></div>");
+      nav("kavramlar", "Temel kavramlar");
+      html += sec("kavramlar", "Temel kavramlar", '<dl class="concepts">' + P.concepts.map(function (c) { return "<div><dt>" + esc(c[0]) + "</dt><dd>" + esc(c[1]) + "</dd></div>"; }).join("") + "</dl>", P.concepts.length + " kavram");
+    }
+    nav("evreler", "Evreler");
+    var summary = pf ? '<details class="stage-sum"><summary>Evre özet tablosu</summary><div class="cmp-scroll"><table class="cmp sum"><thead><tr><th>Evre</th><th>Yaş</th>' + pf.labels.map(function (l) { return "<th>" + esc(l) + "</th>"; }).join("") + "</tr></thead><tbody>" +
+      t.stages.map(function (s, i) { return "<tr><th scope=\"row\">" + esc(s.name) + "</th><td>" + esc(U.fmtRange(s.from, s.to)) + "</td>" + (pf.rows[i] || []).map(function (c) { return "<td>" + esc(c) + "</td>"; }).join("") + "</tr>"; }).join("") + "</tbody></table></div></details>" : "";
+    html += sec("evreler", "Evreler", '<div class="panel-title">Yaş ekseninde basamaklar</div><div style="--c:' + f.color + '">' + miniAxis(t) + "</div>" + summary + '<div class="stages" style="--c:' + f.color + '">' + stages + "</div>", t.stages.length + " evre");
+    if (P && P.evolution) {
+      nav("gelisim", "Kuramın gelişimi");
+      html += sec("gelisim", "Kuramın gelişimi", '<ol class="tl evo">' + P.evolution.map(function (y) { return '<li><span class="tl-y">' + y[0] + "</span><span>" + esc(y[1]) + "</span></li>"; }).join("") + "</ol>");
+    }
+    if (P && P.classic) {
+      nav("klasik", "Klasik vaka ve deney");
+      html += sec("klasik", P.classic.title, '<div class="classic"><div class="classic-text">' + P.classic.text.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("") + "</div>" +
+        '<aside class="panel crit"><div class="panel-title">Eleştiri ve yeniden değerlendirme</div>' + P.classic.critique.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("") + "</aside></div>" +
+        (P.classic.exps && P.classic.exps.length ? expMini(P.classic.exps, t.id) : ""), "Klasik vaka ve deney");
+    }
+    nav("biyoloji", "Biyoloji ve eleştiri");
+    html += sec("biyoloji", "Biyolojik bakış ve eleştiriler", '<div class="td-cols"><section class="panel bio"><div class="panel-title">Biyolojik bakış açısı</div>' + t.bio.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("") + "</section>" +
+      '<section class="panel crit"><div class="panel-title">Eleştiriler ve sınırlılıklar</div>' + t.crit.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("") + "</section></div>");
+    if (t.clinic) { nav("klinik", "Klinik uygulama"); html += sec("klinik", "Klinik uygulama", '<section class="panel clinic-p"><p>' + esc(t.clinic) + "</p></section>"); }
+    if (P && P.vignette) {
+      var v = P.vignette;
+      nav("vinyet", "Klinik vinyet");
+      html += sec("vinyet", "Klinik vinyet: " + v.title, '<div class="vignette"><section class="v-case"><div class="panel-title">Vaka</div><p>' + esc(v.case) + "</p></section>" +
+        '<section class="v-classic" style="--c:' + f.color + '"><div class="panel-title">Kuramın formülasyonu</div><p>' + esc(v.classic) + "</p></section>" +
+        '<section class="v-modern"><div class="panel-title">Güncel kanıta dayalı yaklaşım</div><p>' + esc(v.modern) + "</p></section></div>", "Eğitim amaçlı kurgusal vaka");
+    }
+    if (P && P.misconceptions) {
+      nav("yanlis", "Yanlış anlamalar");
+      html += sec("yanlis", "Sık yapılan yanlış anlamalar", '<ul class="miscon">' + P.misconceptions.map(function (m) { return "<li>" + esc(m) + "</li>"; }).join("") + "</ul>");
+    }
+    if (P && P.measures) {
+      nav("olcum", "Ölçüm araçları");
+      html += sec("olcum", "Kurama dayalı ölçüm ve değerlendirme araçları", '<dl class="measures">' + P.measures.map(function (m) { return "<div><dt>" + esc(m[0]) + "</dt><dd>" + esc(m[1]) + "</dd></div>"; }).join("") + "</dl>");
+    }
+    nav("kanit", "Kanıtlar");
+    html += sec("kanit", "Kanıtlar ve deneyler", expMini(related, t.id), related.length + " çalışma");
+    if (t.primary && t.primary.length) { nav("kaynak", "Temel kaynaklar"); html += sec("kaynak", "Temel kaynaklar", '<ul class="refs primary">' + t.primary.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul>"); }
+
     $("theoryDetail").innerHTML = select +
       '<header class="td-head" style="--c:' + f.color + '"><div class="tags"><span class="tag fam-tag" style="--c:' + f.color + '">' + U.famIcon(f.id) + esc(f.name) + "</span>" +
-      (t.rare ? '<span class="tag rare">Ders kitaplarında az yer alır</span>' : "") + '<span class="tag">' + esc(t.years) + "</span></div>" +
+      (t.rare ? '<span class="tag rare">Ders kitaplarında az yer alır</span>' : "") + '<span class="tag">' + esc(t.years) + "</span>" + (P ? '<span class="tag rare">Ayrıntılı profil</span>' : "") + "</div>" +
       "<h2>" + esc(t.name) + '</h2><p class="by">' + esc(t.who) + '</p><p class="core">' + esc(t.core) + "</p>" +
       '<div class="td-actions"><button type="button" class="btn" id="thSun">▶ Bu kuramı sun</button><button type="button" class="btn ghost" id="cmpAdd">Karşılaştırmaya ekle</button>' +
       presets.map(function (c) { return '<button type="button" class="btn ghost" data-preset="' + c.ids.join(",") + '">' + esc(c.ids.map(function (id) { return thById[id] ? thById[id].who.split(/ ve |;|,/)[0] : id; }).join(" ↔ ")) + "</button>"; }).join("") + "</div></header>" +
+      '<nav class="td-nav" aria-label="Bu sayfada"><span>Bu sayfada</span>' + navItems.map(function (n) { return '<button type="button" data-jump="ts-' + n[0] + '">' + esc(n[1]) + "</button>"; }).join("") + "</nav>" +
       '<div class="td-facts"><div class="panel"><div class="panel-title">Gelişimin motoru</div><p>' + esc(t.engine) + '</p></div>' +
       '<div class="panel"><div class="panel-title">Yöntem</div><p>' + esc(t.method) + '</p></div>' +
-      '<div class="panel"><div class="panel-title">Kanıt düzeyi ' + U.meter(t.ev) + "</div><p><b>" + esc(A.evidenceScale[t.ev]) + ".</b> " + esc(t.evNote) + "</p></div></div>" +
-      '<div class="panel-title">Yaş ekseninde basamaklar</div><div style="--c:' + f.color + '">' + miniAxis(t) + "</div>" +
-      '<div class="stages" style="--c:' + f.color + '">' + stages + "</div>" +
-      '<div class="td-cols"><section class="panel bio"><div class="panel-title">Biyolojik bakış açısı</div>' + t.bio.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("") + "</section>" +
-      '<section class="panel crit"><div class="panel-title">Eleştiriler ve sınırlılıklar</div>' + t.crit.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("") + "</section></div>" +
-      (t.clinic ? '<section class="panel clinic-p"><div class="panel-title">Klinik uygulama</div><p>' + esc(t.clinic) + "</p></section>" : "") +
-      '<div class="section-h"><h3>Kanıtlar ve deneyler</h3><span>' + related.length + " çalışma</span></div>" + expMini(related, t.id) +
-      (t.primary && t.primary.length ? '<div class="section-h"><h3>Temel kaynaklar</h3></div><ul class="refs primary">' + t.primary.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul>" : "");
+      '<div class="panel"><div class="panel-title">Kanıt düzeyi ' + U.meter(t.ev) + "</div><p><b>" + esc(A.evidenceScale[t.ev]) + ".</b> " + esc(t.evNote) + "</p></div></div>" + html;
   }
   var pendingStage = null;
   function focusStage(i) {
@@ -266,7 +313,8 @@
   });
   $("theoryDetail").addEventListener("click", function (e) {
     var t;
-    if ((t = e.target.closest("[data-goage]"))) { state.age = t.dataset.goage; save(); location.hash = "yas"; }
+    if ((t = e.target.closest("[data-jump]"))) { var el = $(t.dataset.jump); if (el) el.scrollIntoView({ block: "start" }); }
+    else if ((t = e.target.closest("[data-goage]"))) { state.age = t.dataset.goage; save(); location.hash = "yas"; }
     else if ((t = e.target.closest("#thSun"))) A.deck.open({ type: "theory", id: state.theory });
     else if ((t = e.target.closest("#cmpAdd"))) {
       var c = state.compare.filter(function (id) { return id !== state.theory; });

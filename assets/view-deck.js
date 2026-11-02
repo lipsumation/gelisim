@@ -160,17 +160,39 @@
       { h: "Gelişimin motoru", items: [esc(t.engine)] }, { h: "Yöntem", items: [esc(t.method)] },
       { h: "Kanıt düzeyi", items: [U.meter(t.ev) + " <b>" + esc(A.evidenceScale[t.ev]) + "</b>", esc(t.evNote)] }
     ], ""));
+    var P = A.profiles && A.profiles[t.id], pf = P && P.stageFields;
+    if (P) {
+      S.push(tBul("Kuramcı", "Kuramcı ve dönemi", P.timeline.map(function (y) { return "<b>" + y[0] + "</b> " + esc(y[1]); }), P.life + "\n" + P.bio.join("\n")));
+      var cs = P.concepts.map(function (c) { return "<b>" + esc(c[0]) + ":</b> " + esc(c[1]); }), ch = halves(cs);
+      S.push(tCols("Kavramlar", "Temel kavramlar", [{ h: "Kavramlar", items: ch[0] }, { h: "Kavramlar (devam)", items: ch[1] }], "", "dense"));
+    }
     S.push(slide("tl", "Yaş ekseninde evreler", head("Evreler", "Yaş ekseninde evreler") + '<div class="sl-tlw">' + timelineSvg(t) + "</div>", t.stages.map(function (s) { return s.name + " (" + U.fmtRange(s.from, s.to) + ")"; }).join(" · ")));
     var labels = t.labels || ["Olumlu çözüm", "Risk"];
-    t.stages.forEach(function (s) {
+    t.stages.forEach(function (s, si) {
+      var pfNotes = pf && pf.rows[si] ? pf.labels.map(function (l, k) { return l + ": " + pf.rows[si][k]; }).join("\n") + "\n" : "";
       var parts = '<p class="sl-lead2">' + esc(s.task) + "</p>" + (s.ms && s.ms.length ? li(s.ms.map(esc)) : "") +
         ((s.good && s.good !== "-") || (s.risk && s.risk !== "-") ? '<div class="sl-split"><div><b>' + esc(labels[0]) + "</b>" + esc(s.good || "-") + "</div><div><b>" + esc(labels[1]) + "</b>" + esc(s.risk || "-") + "</div></div>" : "");
       S.push(slide("stage", s.name, '<div class="sl-kicker">' + esc(U.fmtRange(s.from, s.to)) + (s.sub ? " · " + esc(s.sub) : "") + '</div><h2 class="sl-h" style="color:' + f.color + '">' + esc(s.name) + "</h2>" + parts,
-        s.neuro && s.neuro !== "-" ? "Nörobiyoloji: " + s.neuro : ""));
+        pfNotes + (s.neuro && s.neuro !== "-" ? "Nörobiyoloji: " + s.neuro : "")));
     });
+    if (pf) {
+      S.push(tTable("Özet", "Evrelerin karşılaştırmalı tablosu", ["Evre"].concat(pf.labels), t.stages.map(function (s, i) {
+        return ["<b>" + esc(s.name) + "</b><br><span>" + esc(U.fmtRange(s.from, s.to)) + "</span>"].concat((pf.rows[i] || []).map(esc));
+      }), ""));
+    }
+    if (P && P.evolution) S.push(tBul("Tarihçe", "Kuramın gelişimi", P.evolution.map(function (y) { return "<b>" + y[0] + "</b> " + esc(y[1]); }), ""));
+    if (P && P.classic) {
+      S.push(tBul("Klasik vaka ve deney", P.classic.title, P.classic.text.map(esc), ""));
+      S.push(tBul("Eleştiri", P.classic.title + ": eleştiri ve yeniden değerlendirme", P.classic.critique.map(esc), ""));
+    }
     S.push(tCols("Değerlendirme", "Biyolojik bakış ve eleştiriler", [{ h: "Biyolojik bakış açısı", items: t.bio.map(function (x) { return esc(firstTwo(x)); }) }, { h: "Eleştiriler ve sınırlılıklar", items: t.crit.map(function (x) { return esc(firstTwo(x)); }) }],
       "Biyolojik bakış: " + t.bio.join(" ") + "\nEleştiriler: " + t.crit.join(" "), "dense"));
     if (t.clinic) S.push(tProse("Klinik", "Klinik uygulama", t.clinic, ""));
+    if (P && P.vignette) S.push(tCols("Klinik vinyet", P.vignette.title, [
+      { h: "Vaka", items: [esc(P.vignette.case)] }, { h: "Kuramın formülasyonu", items: [esc(P.vignette.classic)] }, { h: "Güncel kanıta dayalı yaklaşım", items: [esc(P.vignette.modern)] }
+    ], "Eğitim amaçlı kurgusal vaka.", "dense"));
+    if (P && P.misconceptions) S.push(tBul("Sık yapılan yanlış anlamalar", "Sık yapılan yanlış anlamalar", P.misconceptions.map(esc), ""));
+    if (P && P.measures) S.push(tBul("Ölçüm", "Kurama dayalı ölçüm araçları", P.measures.map(function (m) { return "<b>" + esc(m[0]) + ":</b> " + esc(m[1]); }), ""));
     var rel = A.relatedExps(t).map(function (id) { return expById[id]; });
     chunk(rel, 6).forEach(function (part, k, all) {
       S.push(tTable("Kanıt", "Kanıtlar ve deneyler", ["Yıl", "Çalışma", "İlişki", "Durum"],
@@ -186,6 +208,7 @@
       if (sup || ch) qs.push("Kuramın en güçlü görgül dayanağı" + (sup ? " (“" + sup.title + "”)" : "") + " ve en ciddi itiraz" + (ch ? " (“" + ch.title + "”)" : "") + " nedir?");
       qs.push("Kuramın klinik karşılığı kanıta dayalı mı? Hangi tedaviyi ya da değerlendirme yaklaşımını etkiledi?");
       if (st) qs.push("“" + st.name + "” evresinin nörobiyolojik karşılığı ile kuramın açıklaması arasında nasıl bir ilişki kurarsınız?");
+      if (P && P.vignette) qs.push("Vinyetteki vakada kuramın formülasyonu ile güncel yaklaşım nerede örtüşüyor, nerede ayrışıyor?");
       qs.push("Kuramın varsayımları Türkiye'deki aile ve kültür bağlamında nasıl sınanmalı ya da uyarlanmalı?");
       S.push(tQuestions("Tartışma", qs));
     }

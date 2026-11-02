@@ -11,7 +11,7 @@ Açmak için `index.html` dosyasını tarayıcıda açmanız yeterlidir (sunucu 
 | --- | --- |
 | **Kapak** | Başlık levhası; kuram ailelerinin yaşam boyu akış grafiği (her şeridin kalınlığı o yaşta evre tanımlayan kuram sayısı) ve ortalama kortikal olgunlaşma çizgisi; içindekiler ve atlasın özeti. |
 | **Yaş** | 15 yaş dönemi. 0-5 yaş için CDC 2022 kontrol listelerinin tamamı (12 yaş noktası, 159 basamak, Türkçe), araştırma literatüründen ek basamaklar, değerlendirme gerektiren durumlar, beyin gelişimi ve küçük beyin haritası, DSM-5-TR / DC:0-5 psikopatoloji penceresi, tarama ve değerlendirme araçları, kuramların o döneme bakışı, deneyler. |
-| **Kuram** | 42 kuram. Ana fikir, gelişimin motoru, yöntem, kanıt düzeyi; evrelerin görevi, basamakları, olumlu ve olumsuz sonucu, nörobiyolojik karşılığı; biyolojik bakış; eleştiriler; klinik uygulama; deneyler (destekler / sorgular); temel kaynaklar. |
+| **Kuram** | 42 kuram. Freud, Erikson, Piaget, Kohlberg, Bowlby ve Vygotsky için ayrıntılı profil: kuramcının yaşamı ve zaman çizelgesi, temel kavramlar sözlüğü, evre başına ek alanlar ve özet tablo (Kohlberg'de Heinz ikilemine evrelere göre yanıtlar), kuramın gelişimi, klasik vaka ya da deney ve eleştirisi, klinik vinyet (kuramın formülasyonu ve güncel kanıta dayalı yaklaşım), sık yapılan yanlış anlamalar, ölçüm araçları. Ana fikir, gelişimin motoru, yöntem, kanıt düzeyi; evrelerin görevi, basamakları, olumlu ve olumsuz sonucu, nörobiyolojik karşılığı; biyolojik bakış; eleştiriler; klinik uygulama; deneyler (destekler / sorgular); temel kaynaklar. |
 | **Karşılaştır** | 2-3 kuramı aynı yaş satırlarında yan yana gösterir; isteğe bağlı nörobiyoloji sütunu; akademik notlu 13 hazır karşılaştırma. |
 | **Beyin levhaları** | Gray's Anatomy (1918) Şekil 726 ve 727 gravürleri üzerinde 18 bölge (serebellum ve beyin sapı aynı üslupta eklenmiş); yaş kaydırıcısı ve yaşam boyu oynatma; bölge işlevi, olgunlaşma eğrisi, zaman çizelgesi, ilgili kuramlar, çalışmalar ve klinik bağlantı; o yaşta en hızlı değişen bölgeler. |
 | **Çizelge** | Tüm kuramların evreleri ve yedi nörobiyolojik iz aynı yaş ekseninde. |
@@ -61,6 +61,7 @@ data/cdc.js              CDC 2022 basamakları (Türkçe)
 data/yas-klinik.js       Ek basamaklar, psikopatoloji penceresi, tarama araçları
 data/kuramlar-*.js       Kuramlar ve evreleri
 data/kuram-klinik.js     İlk 29 kuramın klinik uygulaması ve temel eserleri
+data/profil-*.js         Ayrıntılı kuram profilleri (Freud, Erikson, Piaget, Kohlberg, Bowlby, Vygotsky)
 data/deneyler-*.js       Deneyler ve müdahale çalışmaları
 data/kaynaklar.js        Doğrulanmış kaynaklar (DOI / PMID)
 data/beyin.js            Beyin bölgeleri ve olgunlaşma eğrileri
