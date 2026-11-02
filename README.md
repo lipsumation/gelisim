@@ -11,13 +11,14 @@ Açmak için `index.html` dosyasını tarayıcıda açmanız yeterlidir (sunucu 
 | --- | --- |
 | **Kapak** | Başlık levhası; kuram ailelerinin yaşam boyu akış grafiği (her şeridin kalınlığı o yaşta evre tanımlayan kuram sayısı) ve ortalama kortikal olgunlaşma çizgisi; içindekiler ve atlasın özeti. |
 | **Yaş** | 15 yaş dönemi. 0-5 yaş için CDC 2022 kontrol listelerinin tamamı (12 yaş noktası, 159 basamak, Türkçe), araştırma literatüründen ek basamaklar, değerlendirme gerektiren durumlar, beyin gelişimi ve küçük beyin haritası, DSM-5-TR / DC:0-5 psikopatoloji penceresi, tarama ve değerlendirme araçları, kuramların o döneme bakışı, deneyler. |
-| **Kuram** | 42 kuram. Freud, Erikson, Piaget, Kohlberg, Bowlby ve Vygotsky için ayrıntılı profil: kuramcının yaşamı ve zaman çizelgesi, temel kavramlar sözlüğü, evre başına ek alanlar ve özet tablo (Kohlberg'de Heinz ikilemine evrelere göre yanıtlar), kuramın gelişimi, klasik vaka ya da deney ve eleştirisi, klinik vinyet (kuramın formülasyonu ve güncel kanıta dayalı yaklaşım), sık yapılan yanlış anlamalar, ölçüm araçları. Ana fikir, gelişimin motoru, yöntem, kanıt düzeyi; evrelerin görevi, basamakları, olumlu ve olumsuz sonucu, nörobiyolojik karşılığı; biyolojik bakış; eleştiriler; klinik uygulama; deneyler (destekler / sorgular); temel kaynaklar. |
+| **Kuram** | 42 kuram. Kuramcının Wikimedia Commons'ta kamu malı ya da CC0 olarak kayıtlı portresi (Freud, Klein, Anna Freud, Kohut, Erikson, Piaget, Vygotsky, Jung, Fonagy); kamu malı portresi bulunmayan kuramcılar için monogram levhası. Freud, Erikson, Piaget, Kohlberg, Bowlby ve Vygotsky için ayrıntılı profil: kuramcının yaşamı ve zaman çizelgesi, temel kavramlar sözlüğü, evre başına ek alanlar ve özet tablo (Kohlberg'de Heinz ikilemine evrelere göre yanıtlar), kuramın gelişimi, klasik vaka ya da deney ve eleştirisi, klinik vinyet (kuramın formülasyonu ve güncel kanıta dayalı yaklaşım), sık yapılan yanlış anlamalar, ölçüm araçları. Ana fikir, gelişimin motoru, yöntem, kanıt düzeyi; evrelerin görevi, basamakları, olumlu ve olumsuz sonucu, nörobiyolojik karşılığı; biyolojik bakış; eleştiriler; klinik uygulama; deneyler (destekler / sorgular); temel kaynaklar. |
+| **Vaka** | Bebeklikten yaşlılığa 9 eğitim vakası (4 aylık bebekte ilişki sorunu ve annede doğum sonrası depresyon; 14 ayda otizm riski; 2,5 yaşta öfke nöbetleri; 4 yaşta seçici dilsizlik; 6 yaşta dikkat ve okuma güçlüğü; 9 yaşta yas ve ayrılık kaygısı; 14 yaşta kendine zarar verme; 19 yaşta kimlik arayışı ve klinik yüksek psikoz riski; 76 yaşta yas, depresyon ve bilişsel yakınma). Vaka adım adım açılır (başvuru, öykü, gözlem, ek bilgi; her adımda düşünme sorusu, öğrencinin ön formülasyonu için not alanı). Ardından bulguların gelişimsel okuması (beklenen / izlenmeli / kırmızı bayrak, 0-5 yaşta CDC kontrol listeleriyle karşılaştırma), 6 kuramın vakayı o yaştaki evresiyle okuması, beyin levhası, DSM-5-TR / DC:0-5 ayırıcı tanı tablosu, değerlendirme ve tarama araçları, kanıta dayalı yaklaşım, bütünleştirici formülasyon, klinik incelikler, ilgili çalışmalar, tartışma soruları ve doğrulanmış kaynaklar. Her vaka sunum olarak da açılır; yaş ve kuram sayfaları ilgili vakalara bağlanır. |
 | **Karşılaştır** | 2-3 kuramı aynı yaş satırlarında yan yana gösterir; isteğe bağlı nörobiyoloji sütunu; akademik notlu 13 hazır karşılaştırma. |
 | **Beyin levhaları** | Gray's Anatomy (1918) Şekil 726 ve 727 gravürleri üzerinde 18 bölge (serebellum ve beyin sapı aynı üslupta eklenmiş); yaş kaydırıcısı ve yaşam boyu oynatma; bölge işlevi, olgunlaşma eğrisi, zaman çizelgesi, ilgili kuramlar, çalışmalar ve klinik bağlantı; o yaşta en hızlı değişen bölgeler. |
 | **Çizelge** | Tüm kuramların evreleri ve yedi nörobiyolojik iz aynı yaş ekseninde. |
-| **Deneyler** | 95 çalışma (9'u kurama dayalı müdahale denemesi): yöntem, bulgu, desteklediği ve sorguladığı kuramlar, kanıt durumu, DOI ve PubMed bağlantıları. |
-| **Ders ve sunum** | Yaş dönemi, kuram, karşılaştırma ve yaşam boyu turu dersleri; 16:9 sunum, konuşmacı notları, otomatik tartışma soruları; klavye (←/→, N, F, Esc) ve kaydırma ile gezinme. Yaş, kuram ve karşılaştırma ekranlarında "Sun" düğmesi. |
-| **Kaynakça** | 141 doğrulanmış kaynak (DOI: Crossref, PMID: PubMed) ve kuramların temel eserleri. |
+| **Deneyler** | 105 çalışma (10'u kurama dayalı müdahale denemesi): yöntem, bulgu, desteklediği ve sorguladığı kuramlar, kanıt durumu, DOI ve PubMed bağlantıları. |
+| **Ders ve sunum** | Yaş dönemi, kuram, karşılaştırma, vaka ve yaşam boyu turu dersleri; 16:9 sunum, konuşmacı notları, otomatik tartışma soruları; klavye (←/→, N, F, Esc) ve kaydırma ile gezinme. Yaş, kuram, karşılaştırma ve vaka ekranlarında "Sun" düğmesi. |
+| **Kaynakça** | 181 doğrulanmış kaynak (DOI: Crossref, PMID: PubMed) ve kuramların temel eserleri. |
 
 ## Kuramlar
 
@@ -39,6 +40,8 @@ Gravür: 19. yüzyıl anatomi atlası üslubu (sepya mürekkep, fildişi kâğı
 - 0-5 yaş basamakları CDC "Learn the Signs. Act Early." sayfalarından kelimesi kelimesine çevrilmiştir. Basamaklar çocukların en az %75'inin ulaşması beklenen becerilerdir: Zubler ve ark. (2022), *Pediatrics*, 149(3), e2021052138, https://doi.org/10.1542/peds.2021-052138
 - Deney kaynaklarının DOI ve PMID numaraları tek tek doğrulanmıştır.
 - Beyin haritasındaki olgunlaşma endeksi şematiktir. Her bölge için yaş-değer çapa noktaları Gogtay ve ark. (2004), Bethlehem ve ark. (2022), Huttenlocher ve Dabholkar (1997) ile Casey ve ark. (2008) bulgularının nitel özetidir; ölçülmüş bir değer değildir.
+- Kuramcı portreleri: yalnızca Wikimedia Commons'ta lisansı "Public domain", "PDM" ya da "CC0" olarak kayıtlı fotoğraflar kullanılmıştır (lisans bilgisi Commons dosya kayıtlarından okunmuştur). Görseller kırpılmış, gri tonlamaya çevrilmiş ve küçültülmüştür; her portrenin altında Commons sayfasına bağlantı vardır. Winnicott, Bowlby, Mahler, Kohlberg ve diğer birçok kuramcının Commons'taki fotoğrafları CC BY / CC BY-SA lisanslıdır ya da hiç yoktur; bunlar için monogram levhası gösterilir.
+- Vakalar eğitim amacıyla kurgulanmıştır; gerçek kişilerle ilgisi yoktur.
 - Beyin levhaları: Henry Vandyke Carter, *Gray's Anatomy of the Human Body*, 20. baskı (1918), Şekil 726 ve 727; kamu malı (Wikimedia Commons).
 - Tanı ölçütleri için DSM-5-TR ve DC:0-5 el kitaplarının kendisine başvurulmalıdır.
 
@@ -54,7 +57,9 @@ assets/view-compare.js   Karşılaştırma modu
 assets/view-refs.js      Kaynakça
 assets/view-cover.js     Kapak ve akış grafiği
 assets/view-deck.js      Ders kurucu ve sunum modu
+assets/view-case.js      Vaka modu
 assets/img/              Gray's Anatomy levhaları (kamu malı)
+assets/img/portraits/    Kuramcı portreleri (Wikimedia Commons, kamu malı / CC0)
 data/temel.js            Kuram aileleri, kanıt ölçeği, nörobiyolojik izler
 data/yaslar-*.js         Yaş dönemleri
 data/cdc.js              CDC 2022 basamakları (Türkçe)
@@ -66,6 +71,8 @@ data/deneyler-*.js       Deneyler ve müdahale çalışmaları
 data/kaynaklar.js        Doğrulanmış kaynaklar (DOI / PMID)
 data/beyin.js            Beyin bölgeleri ve olgunlaşma eğrileri
 data/karsilastirma.js    Hazır karşılaştırmalar ve notlar
+data/vakalar-*.js        Eğitim vakaları ve vaka kaynakları
+data/portreler.js        Kuramcı portrelerinin kaynak ve lisans bilgileri
 ```
 
 İçerik eklemek için ilgili `data/` dosyasına aynı biçimde yeni bir kayıt eklemek yeterlidir; sayfa yeni kaydı tüm görünümlere otomatik olarak yerleştirir.

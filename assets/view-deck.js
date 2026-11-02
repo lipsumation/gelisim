@@ -156,6 +156,12 @@
   function theoryDeck(id, o) {
     var t = thById[id] || A.theories[0], f = U.famById[t.fam], S = [];
     S.push(tTitle(f.name + " · " + t.years, t.name, t.who, t.core, "Kanıt düzeyi: " + A.evidenceScale[t.ev] + ". " + t.evNote));
+    var P = A.portraits, ppl = P && P.theories[t.id] ? P.theories[t.id].map(function (k) { return P.people[k]; }).filter(function (p) { return p && p.img; }) : [];
+    if (ppl.length) {
+      S[0].html = '<div class="sl-titlerow">' + S[0].html + '<div class="sl-pors">' + ppl.slice(0, 2).map(function (p) {
+        return '<figure class="sl-por"><img src="' + esc(p.img) + '" alt="' + esc(p.name) + '"><figcaption>' + esc(p.name) + (p.year ? " · " + esc(p.year) : "") + "<br>" + esc(p.license) + " · Wikimedia Commons</figcaption></figure>";
+      }).join("") + "</div></div>";
+    }
     S.push(tCols("Çerçeve", "Gelişimin motoru, yöntem ve kanıt", [
       { h: "Gelişimin motoru", items: [esc(t.engine)] }, { h: "Yöntem", items: [esc(t.method)] },
       { h: "Kanıt düzeyi", items: [U.meter(t.ev) + " <b>" + esc(A.evidenceScale[t.ev]) + "</b>", esc(t.evNote)] }
@@ -254,11 +260,44 @@
     });
     return { title: "Yaşam boyu turu", slides: S };
   }
+  function caseDeck(id, o) {
+    var V = A.views.vaka, c = V && V.byId[id];
+    if (!c) return { title: "Vaka", slides: [tTitle("Vaka", "Vaka bulunamadı", "", "", "")] };
+    var b = A.ages.find(function (a) { return a.id === c.band; });
+    var n = A.cases.indexOf(c) + 1, kick = "Vaka " + U.roman(n) + " · " + c.ageLabel;
+    var S = [tTitle(kick, c.title, c.ask, (b ? b.name + " · " + b.range : "") + " · Eğitim amaçlı kurgusal vaka",
+      "Vaka adım adım açılır. Her adımda katılımcılardan önce kendi düşüncelerini söylemelerini isteyin; çözümleme slaytlarına geçmeden ön formülasyonları tahtaya yazılabilir.")];
+    c.steps.forEach(function (st, i) {
+      S.push(slide("case", "Adım " + (i + 1) + ": " + st.h, head(kick, "Adım " + (i + 1) + ": " + st.h) + '<div class="sl-case"><p class="sl-lead2">' + esc(st.text) + "</p>" +
+        (st.q ? '<p class="sl-think"><b>Durun ve düşünün.</b> ' + esc(st.q) + "</p>" : "") + "</div>",
+        st.q ? "Tartışma için 2-3 dakika ayırın. Soru: " + st.q : "Son bilgiyle birlikte ön formülasyonları toplayın."));
+    });
+    var lv = V.levels;
+    S.push(tTable(kick, "Bulguların gelişimsel okuması", ["Bulgu", "Değerlendirme", "Gerekçe"],
+      c.findings.map(function (f) { var L = lv[f[1]] || lv.izle; return [esc(f[0]), '<span class="lv lv-' + L[1] + '">' + esc(L[0]) + "</span>", esc(f[2])]; }), c.synth));
+    S.push(tCards(kick, "Kuramlar bu vakayı nasıl okur?", c.lenses.map(function (l) {
+      var t = thById[l[0]]; if (!t) return null;
+      var st = V.stageAt(t, c.age, l[2]);
+      return { color: U.famColor(t.fam), glyph: U.famIcon(t.fam), who: shortWho(t), range: st ? st.s.name : "Kavram düzeyinde", name: t.name, text: l[1] };
+    }).filter(Boolean), "Kartlar kuramın bu yaştaki evresini ve vakaya uygulanışını gösterir. Kuramların kanıt düzeyleri farklıdır; bkz. kuram sayfaları."));
+    S.push(tBrain(kick, "Nörobiyolojik bağlam", c.age, [esc(c.brain.text)].concat(c.brain.regions.map(function (r) { return "<b>" + esc(V.regionName(r)) + "</b>"; })), "Olgunlaşma endeksi şematiktir; grup düzeyindeki bulgular bireysel tanı için kullanılmaz."));
+    S.push(tTable(kick, "Ayırıcı tanı", ["Olasılık", "Sınıflama", "Lehine", "Aleyhine ya da dikkat"],
+      c.ddx.map(function (d) { return ["<b>" + esc(d[0]) + "</b>", esc(d[1]), esc(d[2]), esc(d[3])]; }), "Tanı ölçütleri için DSM-5-TR ve DC:0-5 el kitaplarının kendisine başvurulmalıdır."));
+    S.push(tBul(kick, "Değerlendirme ve tarama", c.tools.map(function (t) { return "<b>" + esc(t[0]) + ".</b> " + esc(t[1]); })));
+    S.push(tBul(kick, "Kanıta dayalı yaklaşım", c.plan.map(esc)));
+    S.push(tProse(kick, "Bütünleştirici formülasyon", c.synth, c.pearls.join("\n")));
+    S.push(tBul(kick, "Klinik incelikler", c.pearls.map(esc)));
+    if (o.q) S.push(tQuestions(kick, c.qs));
+    var r = tRefs(kick, (c.refs || []).concat((c.exps || []).filter(function (k) { return c.refs.indexOf(k) < 0; })), "");
+    if (r) S.push(r);
+    return { title: c.title, slides: S };
+  }
   function build(spec) {
     var o = { q: spec.q !== false };
     if (spec.type === "theory") return theoryDeck(spec.id, o);
     if (spec.type === "compare") return compareDeck(spec.ids, o);
     if (spec.type === "tour") return tourDeck(o);
+    if (spec.type === "case") return caseDeck(spec.id, o);
     return ageDeck(spec.id, o);
   }
 
@@ -395,12 +434,13 @@
 
   /* ---------- ders kurucu (#ders) ---------- */
   var view = document.getElementById("view-ders");
-  var L = { type: "age", age: "a4", theory: "bowlby", compare: "mahler,stern", q: true, notes: false };
-  var TYPES = [["age", "Yaş dönemi dersi"], ["theory", "Kuram dersi"], ["compare", "Karşılaştırma dersi"], ["tour", "Yaşam boyu turu"]];
+  var L = { type: "age", age: "a4", theory: "bowlby", compare: "mahler,stern", kase: (A.cases && A.cases[2] ? A.cases[2].id : ""), q: true, notes: false };
+  var TYPES = [["age", "Yaş dönemi dersi"], ["theory", "Kuram dersi"], ["compare", "Karşılaştırma dersi"], ["case", "Vaka dersi"], ["tour", "Yaşam boyu turu"]];
   function spec() {
     if (L.type === "theory") return { type: "theory", id: L.theory, q: L.q, notes: L.notes };
     if (L.type === "compare") return { type: "compare", ids: L.compare.split(","), q: L.q, notes: L.notes };
     if (L.type === "tour") return { type: "tour", q: L.q, notes: L.notes };
+    if (L.type === "case") return { type: "case", id: L.kase, q: L.q, notes: L.notes };
     return { type: "age", id: L.age, q: L.q, notes: L.notes };
   }
   function picker() {
@@ -409,6 +449,7 @@
       return '<optgroup label="' + esc(f.name) + '">' + A.theories.filter(function (t) { return t.fam === f.id; }).map(function (t) { return '<option value="' + t.id + '"' + (t.id === L.theory ? " selected" : "") + ">" + esc(shortWho(t) + ": " + t.name) + "</option>"; }).join("") + "</optgroup>";
     }).join("") + "</select></label>";
     if (L.type === "compare") return '<label class="cmp-sel"><span>Karşılaştırma</span><select id="lsPick">' + (A.comparisons || []).map(function (c) { var v = c.ids.join(","); return '<option value="' + v + '"' + (v === L.compare ? " selected" : "") + ">" + esc(c.title + " (" + c.ids.map(function (id) { return shortWho(thById[id]); }).join(", ") + ")") + "</option>"; }).join("") + "</select></label>";
+    if (L.type === "case") return '<label class="cmp-sel"><span>Vaka</span><select id="lsPick">' + (A.cases || []).map(function (c, i) { return '<option value="' + c.id + '"' + (c.id === L.kase ? " selected" : "") + ">" + esc(U.roman(i + 1) + ". " + c.ageLabel + " · " + c.title) + "</option>"; }).join("") + "</select></label>";
     return '<p class="hint">Bütün yaş dönemlerini birer slaytta özetleyen kısa bir tur.</p>';
   }
   function render() {
@@ -418,7 +459,7 @@
       '<div class="ls-row">' + picker() + '<label class="chk"><input type="checkbox" id="lsQ"' + (L.q ? " checked" : "") + '> Tartışma soruları</label><label class="chk"><input type="checkbox" id="lsN"' + (L.notes ? " checked" : "") + '> Konuşmacı notlarını açık başlat</label><button type="button" class="btn" id="lsStart">▶ Sunumu başlat</button></div>' +
       '<div class="ls-grid"><section class="panel"><div class="panel-title">Ders akışı · ' + b.slides.length + ' slayt</div><ol class="ls-outline">' + b.slides.map(function (s, i) { return '<li><button type="button" class="linkish" data-goto="' + i + '">' + esc(s.label) + "</button></li>"; }).join("") + "</ol></section>" +
       '<section class="panel"><div class="panel-title">Kullanım</div><ul class="ticks"><li><b>→</b>, <b>boşluk</b> ya da sağa kaydırma: sonraki slayt</li><li><b>←</b> ya da sola kaydırma: önceki slayt</li><li><b>N</b>: konuşmacı notları (ek ayrıntılar, kaynaklar)</li><li><b>F</b>: tam ekran (tarayıcı izin verirse)</li><li><b>Esc</b>: sunumdan çık</li></ul>' +
-      '<p class="hint">Slaytlar sayfadaki verilerden üretilir; veri dosyalarındaki her güncelleme derslere de yansır. Yaş, kuram ve karşılaştırma ekranlarındaki "Sun" düğmeleriyle de doğrudan sunum açılabilir.</p></section></div>';
+      '<p class="hint">Slaytlar sayfadaki verilerden üretilir; veri dosyalarındaki her güncelleme derslere de yansır. Yaş, kuram, karşılaştırma ve vaka ekranlarındaki "Sun" düğmeleriyle de doğrudan sunum açılabilir.</p></section></div>';
   }
   view.addEventListener("click", function (e) {
     var t;
@@ -428,7 +469,7 @@
   });
   view.addEventListener("change", function (e) {
     var id = e.target.id;
-    if (id === "lsPick") { if (L.type === "age") L.age = e.target.value; else if (L.type === "theory") L.theory = e.target.value; else L.compare = e.target.value; render(); }
+    if (id === "lsPick") { if (L.type === "age") L.age = e.target.value; else if (L.type === "theory") L.theory = e.target.value; else if (L.type === "case") L.kase = e.target.value; else L.compare = e.target.value; render(); }
     else if (id === "lsQ") { L.q = e.target.checked; render(); }
     else if (id === "lsN") L.notes = e.target.checked;
   });

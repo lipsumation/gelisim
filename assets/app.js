@@ -34,7 +34,7 @@
     var rare = A.theories.filter(function (t) { return t.rare; }).length;
     var rct = A.experiments.filter(function (e) { return e.kind === "mudahale"; }).length;
     var cdcN = (A.cdc || []).reduce(function (n, c) { return n + c.sosyal.length + c.dil.length + c.bilis.length + c.motor.length; }, 0);
-    $("stats").innerHTML = "<span><b>" + A.theories.length + "</b> kuram (" + rare + " tanesi az bilinen)</span><span><b>" + NB + "</b> yaş dönemi</span><span><b>" + cdcN + "</b> CDC basamağı</span><span><b>" + A.experiments.length + "</b> çalışma (" + rct + " müdahale)</span><span><b>" + A.brain.regions.length + "</b> beyin bölgesi</span>";
+    $("stats").innerHTML = "<span><b>" + A.theories.length + "</b> kuram (" + rare + " tanesi az bilinen)</span><span><b>" + NB + "</b> yaş dönemi</span><span><b>" + cdcN + "</b> CDC basamağı</span><span><b>" + A.experiments.length + "</b> çalışma (" + rct + " müdahale)</span><span><b>" + A.brain.regions.length + "</b> beyin bölgesi</span>" + (A.cases ? "<span><b>" + A.cases.length + "</b> vaka</span>" : "");
   }
   function renderFamilies() {
     var all = A.families.every(function (f) { return state.fams[f.id]; });
@@ -146,7 +146,15 @@
       (b.clinic ? '<div class="clin">' + b.clinic + "</div>" : "") + "</section>" + dx + tools + "</aside></div>" +
       '<div class="section-h"><h3>Kuramlar bu dönemi nasıl okur?</h3><span>' + bands.length + " kuram · ◆ az bilinen · ayrıntı için karta dokunun</span></div>" +
       (lenses ? '<div class="lens-grid">' + lenses + "</div>" : '<p class="empty">Seçili kuram ailelerinde bu dönemi ele alan kuram yok. Üstteki filtreden aile ekleyin.</p>') +
+      ageCases(b) +
       '<div class="section-h"><h3>Bu döneme ait deneyler</h3><span>' + b.exps.length + " çalışma</span></div>" + expMini(b.exps);
+  }
+  function ageCases(b) {
+    var bc = (A.cases || []).filter(function (c) { return c.band === b.id; });
+    if (!bc.length) return "";
+    return '<div class="section-h"><h3>Bu dönemden vaka</h3><span>Vaka modu</span></div><div class="age-cases">' + bc.map(function (c) {
+      return '<button type="button" class="age-case" data-case="' + c.id + '"><span class="ac-k">' + esc(c.ageLabel) + "</span><b>" + esc(c.title) + "</b><span>" + esc(c.ask) + '</span><span class="linkish">Vakayı adım adım aç →</span></button>';
+    }).join("") + "</div>";
   }
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   function setAge(id) {
@@ -172,7 +180,8 @@
     } else if ((t = e.target.closest("#openBrain"))) {
       var b = A.ages.find(function (a) { return a.id === state.age; });
       nav.brain(U.bandAge(b));
-    } else if ((t = e.target.closest(".lens"))) nav.theory(t.dataset.theory, +t.dataset.stage);
+    } else if ((t = e.target.closest("[data-case]"))) nav["case"](t.dataset.case);
+    else if ((t = e.target.closest(".lens"))) nav.theory(t.dataset.theory, +t.dataset.stage);
     else if ((t = e.target.closest("[data-exp]"))) nav.exp(t.dataset.exp);
   });
 
@@ -280,21 +289,53 @@
       nav("olcum", "Ölçüm araçları");
       html += sec("olcum", "Kurama dayalı ölçüm ve değerlendirme araçları", '<dl class="measures">' + P.measures.map(function (m) { return "<div><dt>" + esc(m[0]) + "</dt><dd>" + esc(m[1]) + "</dd></div>"; }).join("") + "</dl>");
     }
+    var tcases = A.views.vaka ? A.views.vaka.casesForTheory(t.id) : [];
+    if (tcases.length) {
+      nav("vakalar", "Vakalarda");
+      html += sec("vakalar", "Bu kuram vakalarda", '<div class="cf-lenses">' + tcases.map(function (c) {
+        var l = c.lenses.filter(function (x) { return x[0] === t.id; })[0];
+        return '<button type="button" class="cf-lens as-btn" data-case="' + c.id + '" style="--c:' + f.color + '"><div class="who">' + esc(c.ageLabel) + "</div><h4>" + esc(c.title) + "</h4><p>" + esc(l[1]) + '</p><span class="linkish">Vakayı aç →</span></button>';
+      }).join("") + "</div>", tcases.length + " vaka · Vaka modu");
+    }
     nav("kanit", "Kanıtlar");
     html += sec("kanit", "Kanıtlar ve deneyler", expMini(related, t.id), related.length + " çalışma");
     if (t.primary && t.primary.length) { nav("kaynak", "Temel kaynaklar"); html += sec("kaynak", "Temel kaynaklar", '<ul class="refs primary">' + t.primary.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul>"); }
 
+    var por = portraits(t);
     $("theoryDetail").innerHTML = select +
-      '<header class="td-head" style="--c:' + f.color + '"><div class="tags"><span class="tag fam-tag" style="--c:' + f.color + '">' + U.famIcon(f.id) + esc(f.name) + "</span>" +
+      '<header class="td-head' + (por ? " has-por" : "") + '" style="--c:' + f.color + '"><div class="td-main"><div class="tags"><span class="tag fam-tag" style="--c:' + f.color + '">' + U.famIcon(f.id) + esc(f.name) + "</span>" +
       (t.rare ? '<span class="tag rare">Ders kitaplarında az yer alır</span>' : "") + '<span class="tag">' + esc(t.years) + "</span>" + (P ? '<span class="tag rare">Ayrıntılı profil</span>' : "") + "</div>" +
       "<h2>" + esc(t.name) + '</h2><p class="by">' + esc(t.who) + '</p><p class="core">' + esc(t.core) + "</p>" +
       '<div class="td-actions"><button type="button" class="btn" id="thSun">▶ Bu kuramı sun</button><button type="button" class="btn ghost" id="cmpAdd">Karşılaştırmaya ekle</button>' +
-      presets.map(function (c) { return '<button type="button" class="btn ghost" data-preset="' + c.ids.join(",") + '">' + esc(c.ids.map(function (id) { return thById[id] ? thById[id].who.split(/ ve |;|,/)[0] : id; }).join(" ↔ ")) + "</button>"; }).join("") + "</div></header>" +
+      presets.map(function (c) { return '<button type="button" class="btn ghost" data-preset="' + c.ids.join(",") + '">' + esc(c.ids.map(function (id) { return thById[id] ? thById[id].who.split(/ ve |;|,/)[0] : id; }).join(" ↔ ")) + "</button>"; }).join("") + "</div></div>" + por + "</header>" +
       '<nav class="td-nav" aria-label="Bu sayfada"><span>Bu sayfada</span>' + navItems.map(function (n) { return '<button type="button" data-jump="ts-' + n[0] + '">' + esc(n[1]) + "</button>"; }).join("") + "</nav>" +
       '<div class="td-facts"><div class="panel"><div class="panel-title">Gelişimin motoru</div><p>' + esc(t.engine) + '</p></div>' +
       '<div class="panel"><div class="panel-title">Yöntem</div><p>' + esc(t.method) + '</p></div>' +
       '<div class="panel"><div class="panel-title">Kanıt düzeyi ' + U.meter(t.ev) + "</div><p><b>" + esc(A.evidenceScale[t.ev]) + ".</b> " + esc(t.evNote) + "</p></div></div>" + html;
   }
+  /* Kuramcı portreleri: yalnızca Wikimedia Commons'ta kamu malı ya da CC0 olarak işaretli görseller; yoksa monogram levhası */
+  function initials(name) {
+    var w = name.replace(/\(.*?\)/g, "").split(/\s+/).filter(function (x) { return x && !/^[A-ZÇĞİÖŞÜ]\.$/.test(x); });
+    if (!w.length) return "?";
+    return (w[0].charAt(0) + (w.length > 1 ? w[w.length - 1].charAt(0) : "")).toLocaleUpperCase("tr");
+  }
+  function portraits(t) {
+    var P = A.portraits;
+    if (!P || !P.theories[t.id]) return "";
+    var ppl = P.theories[t.id].map(function (k) { return P.people[k] && Object.assign({ key: k }, P.people[k]); }).filter(Boolean).slice(0, 4);
+    if (!ppl.length) return "";
+    var monoOnly = ppl.every(function (p) { return !p.img; });
+    return '<div class="por-row n' + ppl.length + (monoOnly ? " mono-only" : "") + '">' + ppl.map(function (p) {
+      var life = p.life ? " (" + esc(p.life) + ")" : "";
+      if (p.img) {
+        return '<figure class="por"><a class="por-frame" href="' + esc(p.page) + '" target="_blank" rel="noopener" aria-label="' + esc(p.name) + ' portresinin Wikimedia Commons sayfası"><img src="' + esc(p.img) + '" alt="' + esc(p.name + (p.year ? ", " + p.year : "")) + '" loading="lazy" width="' + (p.w || 240) + '" height="' + (p.h || 300) + '"></a>' +
+          '<figcaption><b>' + esc(p.name) + "</b>" + life + "<span>" + esc([p.year, p.author].filter(Boolean).join(" · ")) + '</span><span class="por-lic">' + esc(p.license) + ' · <a href="' + esc(p.page) + '" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption></figure>';
+      }
+      return '<figure class="por none"><div class="por-frame mono" aria-hidden="true"><span>' + esc(initials(p.name)) + "</span></div>" +
+        '<figcaption><b>' + esc(p.name) + "</b>" + life + '<span class="por-lic">Commons\'ta kamu malı portresi yok</span></figcaption></figure>';
+    }).join("") + "</div>";
+  }
+  A.portraitsHtml = portraits;
   var pendingStage = null;
   function focusStage(i) {
     if (i == null || isNaN(i)) { window.scrollTo(0, 0); return; }
@@ -321,6 +362,7 @@
       c.unshift(state.theory); state.compare = c.slice(0, 3); save(); location.hash = "karsilastir";
     }
     else if ((t = e.target.closest("[data-preset]"))) nav.compare(t.dataset.preset.split(","));
+    else if ((t = e.target.closest("[data-case]"))) nav["case"](t.dataset.case);
     else if ((t = e.target.closest(".seg"))) focusStage(+t.dataset.stage);
     else if ((t = e.target.closest("[data-exp]"))) nav.exp(t.dataset.exp);
   });
@@ -501,6 +543,7 @@
       state.brainAge = age; if (region) state.brainRegion = region; save();
       if (location.hash !== "#beyin") location.hash = "beyin"; else renderCurrent();
     },
+    "case": function (id) { if (A.views.vaka) A.views.vaka.go(id); },
     compare: function (ids) {
       state.compare = ids.filter(function (id) { return thById[id]; }).slice(0, 3); save();
       if (location.hash !== "#karsilastir") location.hash = "karsilastir"; else renderCurrent();
@@ -508,7 +551,7 @@
   };
 
   /* ---------- yönlendirme ---------- */
-  var VIEWS = ["kapak", "yas", "kuram", "karsilastir", "beyin", "cizelge", "deneyler", "ders", "kaynakca"];
+  var VIEWS = ["kapak", "yas", "kuram", "karsilastir", "vaka", "beyin", "cizelge", "deneyler", "ders", "kaynakca"];
   function renderCurrent() {
     var v = state.view;
     if (v === "yas") { renderAgeStrip(); renderAgeDetail(); }
