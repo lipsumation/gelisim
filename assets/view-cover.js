@@ -107,7 +107,7 @@
       '<div class="cover-cols"><section><h2>İçindekiler</h2>' + contents() + "</section>" +
       '<section><h2>Bu atlasta</h2><dl class="cover-stats"><dt>' + A.theories.length + "</dt><dd>kuram; " + rare + " tanesi ders kitaplarında az yer alır</dd><dt>" + cdcN + "</dt><dd>CDC 2022 gelişim basamağı (0-5 yaş, Türkçe)</dd><dt>" + A.experiments.length + "</dt><dd>deney ve çalışma; " + rct + " müdahale denemesi</dd><dt>" + Object.keys(A.refs || {}).length + "</dt><dd>DOI ve PubMed ile doğrulanmış kaynak</dd><dt>" + A.brain.regions.length + "</dt><dd>beyin bölgesi, iki gravür levhası üzerinde</dd></dl>" +
       '<h3>Kuram aileleri</h3><ul class="fam-legend">' + A.families.map(function (f) { return '<li style="--c:' + f.color + '">' + U.famIcon(f.id) + "<span>" + esc(f.name) + "</span></li>"; }).join("") + "</ul></section></div>" +
-      '<p class="src-note cover-credit">' + esc(A.brain.credit) + " Kuramcı portreleri: Wikimedia Commons'ta kamu malı ya da CC0 olarak kayıtlı fotoğraflar; kaynakları kuram sayfalarında. Gelişim basamakları: " + esc(A.cdcMeta ? A.cdcMeta.citation : "") + "</p>";
+      '<p class="src-note cover-credit">' + esc(A.brain.credit) + " Kuramcı portreleri: Wikimedia Commons'tan kamu malı, CC0, CC BY ve CC BY-SA lisanslı fotoğraflar; atıfları kuram sayfalarında ve kaynakçada. Gelişim basamakları: " + esc(A.cdcMeta ? A.cdcMeta.citation : "") + "</p>";
   }
 
   function onMove(e) {

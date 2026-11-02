@@ -159,7 +159,7 @@
     var P = A.portraits, ppl = P && P.theories[t.id] ? P.theories[t.id].map(function (k) { return P.people[k]; }).filter(function (p) { return p && p.img; }) : [];
     if (ppl.length) {
       S[0].html = '<div class="sl-titlerow">' + S[0].html + '<div class="sl-pors">' + ppl.slice(0, 2).map(function (p) {
-        return '<figure class="sl-por"><img src="' + esc(p.img) + '" alt="' + esc(p.name) + '"><figcaption>' + esc(p.name) + (p.year ? " · " + esc(p.year) : "") + "<br>" + esc(p.license) + " · Wikimedia Commons</figcaption></figure>";
+        return '<figure class="sl-por"><img src="' + esc(p.img) + '" alt="' + esc(p.name) + '"><figcaption>' + esc(p.name) + (p.year ? " · " + esc(p.year) : "") + "<br>" + (p.cc ? "Fotoğraf: " + esc(p.author) + " · " : "") + esc(p.license) + " · Wikimedia Commons" + (p.cc ? " · uyarlandı" : "") + "</figcaption></figure>";
       }).join("") + "</div></div>";
     }
     S.push(tCols("Çerçeve", "Gelişimin motoru, yöntem ve kanıt", [

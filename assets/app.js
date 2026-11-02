@@ -313,7 +313,9 @@
       '<div class="panel"><div class="panel-title">Yöntem</div><p>' + esc(t.method) + '</p></div>' +
       '<div class="panel"><div class="panel-title">Kanıt düzeyi ' + U.meter(t.ev) + "</div><p><b>" + esc(A.evidenceScale[t.ev]) + ".</b> " + esc(t.evNote) + "</p></div></div>" + html;
   }
-  /* Kuramcı portreleri: yalnızca Wikimedia Commons'ta kamu malı ya da CC0 olarak işaretli görseller; yoksa monogram levhası */
+  /* Kuramcı portreleri: Wikimedia Commons'ta kamu malı, CC0, CC BY ya da CC BY-SA lisanslı fotoğraflar (atıfla); yoksa monogram levhası */
+  function licLink(p) { return p.licenseUrl ? '<a href="' + esc(p.licenseUrl) + '" target="_blank" rel="noopener">' + esc(p.license) + "</a>" : esc(p.license); }
+  A.portraitLicense = licLink;
   function initials(name) {
     var w = name.replace(/\(.*?\)/g, "").split(/\s+/).filter(function (x) { return x && !/^[A-ZÇĞİÖŞÜ]\.$/.test(x); });
     if (!w.length) return "?";
@@ -329,10 +331,12 @@
       var life = p.life ? " (" + esc(p.life) + ")" : "";
       if (p.img) {
         return '<figure class="por"><a class="por-frame" href="' + esc(p.page) + '" target="_blank" rel="noopener" aria-label="' + esc(p.name) + ' portresinin Wikimedia Commons sayfası"><img src="' + esc(p.img) + '" alt="' + esc(p.name + (p.year ? ", " + p.year : "")) + '" loading="lazy" width="' + (p.w || 240) + '" height="' + (p.h || 300) + '"></a>' +
-          '<figcaption><b>' + esc(p.name) + "</b>" + life + "<span>" + esc([p.year, p.author].filter(Boolean).join(" · ")) + '</span><span class="por-lic">' + esc(p.license) + ' · <a href="' + esc(p.page) + '" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption></figure>';
+          '<figcaption><b>' + esc(p.name) + "</b>" + life + "<span>" + esc([p.year, p.cc ? "Fotoğraf: " + p.author : p.author].filter(Boolean).join(" · ")) + "</span>" +
+          '<span class="por-lic">' + licLink(p) + ' · <a href="' + esc(p.page) + '" target="_blank" rel="noopener">Wikimedia Commons</a>' +
+          (p.cc ? ' · <abbr title="' + esc((p.note ? p.note + ". " : "") + "Kırpıldı, gri tonlamaya çevrildi ve küçültüldü.") + '">uyarlandı</abbr>' : "") + "</span></figcaption></figure>";
       }
       return '<figure class="por none"><div class="por-frame mono" aria-hidden="true"><span>' + esc(initials(p.name)) + "</span></div>" +
-        '<figcaption><b>' + esc(p.name) + "</b>" + life + '<span class="por-lic">Commons\'ta kamu malı portresi yok</span></figcaption></figure>';
+        '<figcaption><b>' + esc(p.name) + "</b>" + life + '<span class="por-lic">Uygun açık lisanslı portre yok</span></figcaption></figure>';
     }).join("") + "</div>";
   }
   A.portraitsHtml = portraits;
