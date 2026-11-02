@@ -8,7 +8,8 @@ window.ATLAS = {
     { id: "bag", name: "Bağlanma ve öznelerarasılık", short: "Bağlanma", color: "var(--f-bag)" },
     { id: "ahl", name: "Ahlak, ego ve anlam", short: "Ahlak ve ego", color: "var(--f-ahl)" },
     { id: "ymb", name: "Yetişkinlik ve yaşlanma", short: "Yaşam boyu", color: "var(--f-ymb)" },
-    { id: "biy", name: "Biyolojik ve evrimsel", short: "Biyolojik", color: "var(--f-biy)" }
+    { id: "biy", name: "Biyolojik ve evrimsel", short: "Biyolojik", color: "var(--f-biy)" },
+    { id: "gps", name: "Gelişimsel psikopatoloji", short: "Gelişimsel psikopatoloji", color: "var(--f-gps)" }
   ],
 
   /* Deneylerin kanıt durumu */

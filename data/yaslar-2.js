@@ -3,12 +3,6 @@ ATLAS.ages.push(
 {
   id: "a5", from: 3, to: 6, range: "3–6 yaş", name: "Okul öncesi: oyun ve zihin",
   gist: "Hayali oyun, kurallar ve rol yapma çağı. Çocuk başkalarının da kendi inançları olduğunu anlar (zihin kuramı), dürtülerini erteleyebilmeye başlar ve cinsiyet kimliğini pekiştirir.",
-  ms: {
-    motor: [["4 yaş", "Büyük bir topu çoğunlukla yakalar"], ["4 yaş", "Kendi yemeğini alır, su döker; boya kalemini parmaklarıyla tutar"], ["5 yaş", "Tek ayak üstünde sıçrar"], ["5 yaş", "Bazı düğmeleri ilikler"]],
-    dil: [["4 yaş", "Dört ya da daha fazla kelimelik cümleler"], ["4 yaş", "Gün içinde olan bir şeyi anlatır"], ["5 yaş", "Başı ve sonu olan bir hikâye anlatır"], ["5 yaş", "Basit kafiyeleri tanır"], ["3-7 yaş", "Kendi kendine yüksek sesle konuşma (özel konuşma) zirve yapar"]],
-    sosyal: [["4 yaş", "Oyunda başka biri olur (anne, kahraman)"], ["4 yaş", "Üzülen birini teselli eder"], ["5 yaş", "Kurallara uyar, sırasını bekler"], ["3-6 yaş", "Cinsiyet kimliği, ardından cinsiyet sabitliği kazanılır"]],
-    bilis: [["4 yaş", "Birkaç rengi adlandırır; bildiği hikâyede sırada ne olacağını söyler"], ["4 yaş", "Üç ya da daha fazla vücut parçası olan insan çizer"], ["4-5 yaş", "Yanlış inanç görevini geçer"], ["5 yaş", "10'a kadar sayar; bazı harfleri tanır"]]
-  },
   flags: ["4 yaşta üç kelimelik cümle yok", "Hayali oyun yok, başka çocuklarla ilgilenmiyor", "5 yaşta aşırı içe kapanma ya da sürekli saldırganlık", "Kazanılmış becerilerin kaybı"],
   neuro: [
     "Gri cevher hacmi yaklaşık 6 yaşta zirve yapar (Bethlehem ve ark., 2022); beyin hacmi yetişkinin yaklaşık %90'ına ulaşır.",

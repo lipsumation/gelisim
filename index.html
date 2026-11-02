@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ruhsal Gelişim Atlası</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Psikanalitik, psikososyal, bilişsel, bağlanma, ahlak, yaşam boyu ve biyolojik gelişim kuramlarının yaş dönemlerine göre karşılaştırması; nörobiyolojik eşleştirme ve kanıta dayalı deneyler.">
+<meta name="description" content="Psikiyatri ve çocuk psikiyatrisi için gelişim kuramlarının yaş dönemlerine göre karşılaştırması: CDC basamakları, nörobiyolojik eşleştirme, beyin haritası, psikopatoloji penceresi ve doğrulanmış kaynaklarla deneyler.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap">
@@ -14,9 +14,9 @@
 <body>
 <header class="masthead">
   <div class="wrap">
-    <p class="eyebrow">Gelişim psikolojisi · Nörobiyoloji · Kanıt</p>
+    <p class="eyebrow">Psikiyatri ve çocuk psikiyatrisi için gelişim kaynağı</p>
     <h1>Ruhsal Gelişim Atlası</h1>
-    <p class="lead">Doğum öncesinden yaşlılığa kadar ruhsal gelişimi farklı kuramcıların gözünden okuyun. Her yaş döneminde temel gelişim basamaklarını, beyinde olan biteni, kuramların o döneme biçtiği görevi ve bu iddiaları sınayan deneyleri yan yana görün.</p>
+    <p class="lead">Klasik ve az bilinen gelişim kuramlarını aynı yaş ekseninde karşılaştırır. Her dönem için CDC 2022 gelişim basamakları, beyin gelişimi, DSM-5-TR ve DC:0-5'e göre psikopatoloji penceresi, tarama araçları ve kuramları sınayan deneyler yer alır. Deney kaynakları DOI ve PubMed üzerinden doğrulanmıştır.</p>
     <p class="stats" id="stats"></p>
   </div>
 </header>
@@ -24,10 +24,13 @@
 <nav class="tabbar" aria-label="Görünümler">
   <div class="wrap tabbar-inner">
     <div class="tabs" role="tablist">
-      <a href="#yas" class="tab" role="tab" data-view="yas">Yaş görünümü</a>
-      <a href="#kuram" class="tab" role="tab" data-view="kuram">Kuram görünümü</a>
-      <a href="#cizelge" class="tab" role="tab" data-view="cizelge">Karşılaştırmalı çizelge</a>
-      <a href="#deneyler" class="tab" role="tab" data-view="deneyler">Deneyler ve kanıt</a>
+      <a href="#yas" class="tab" role="tab" data-view="yas">Yaş</a>
+      <a href="#kuram" class="tab" role="tab" data-view="kuram">Kuram</a>
+      <a href="#karsilastir" class="tab" role="tab" data-view="karsilastir">Karşılaştır</a>
+      <a href="#beyin" class="tab" role="tab" data-view="beyin">Beyin haritası</a>
+      <a href="#cizelge" class="tab" role="tab" data-view="cizelge">Çizelge</a>
+      <a href="#deneyler" class="tab" role="tab" data-view="deneyler">Deneyler</a>
+      <a href="#kaynakca" class="tab" role="tab" data-view="kaynakca">Kaynakça</a>
     </div>
     <div class="families" id="familyFilter" aria-label="Kuram aileleri"></div>
   </div>
@@ -46,8 +49,18 @@
     </div>
   </section>
 
+  <section id="view-karsilastir" class="view" aria-label="Karşılaştırma" hidden>
+    <div class="view-head"><h2>Kuramları karşılaştır</h2><p class="hint">İki ya da üç kuram seçin; evreleri aynı yaş satırlarında yan yana görünür. Hazır karşılaştırmalarda kısa bir akademik not da yer alır.</p></div>
+    <div id="cmpWrap"></div>
+  </section>
+
+  <section id="view-beyin" class="view" aria-label="Beyin haritası" hidden>
+    <div class="view-head"><h2>Beyin gelişimi haritası</h2><p class="hint">Yaşı kaydırıcıyla değiştirin ya da yaşam boyu oynatın. Bir bölgeye dokunduğunuzda işlevi, gelişim zaman çizelgesi, ilgili kuramlar, çalışmalar ve klinik bağlantısı açılır.</p></div>
+    <div id="brainWrap"></div>
+  </section>
+
   <section id="view-cizelge" class="view" aria-label="Karşılaştırmalı çizelge" hidden>
-    <p class="hint">Her satır bir kuram, her çubuk bir basamak. Yaş ekseni bebeklikte genişletilmiştir: ilk yıllarda değişim çok hızlı olduğu için her sütun eşit genişlikte bir yaş dönemini temsil eder. Bir çubuğa tıklayınca kuramın ayrıntısı, bir sütun başlığına tıklayınca o yaşın ayrıntısı açılır.</p>
+    <p class="hint">Her satır bir kuram, her çubuk bir basamak. Yaş ekseni bebeklikte genişletilmiştir: ilk yıllarda değişim çok hızlı olduğu için her sütun eşit genişlikte bir yaş dönemini temsil eder. Bir çubuğa tıklayınca kuramın ayrıntısı, bir sütun başlığına tıklayınca o yaşın ayrıntısı açılır. ◆ işareti az bilinen kuramları gösterir.</p>
     <div class="chart-scroll"><div id="chart" class="chart"></div></div>
   </section>
 
@@ -59,13 +72,19 @@
       <div class="seg" id="expStatus" role="group" aria-label="Kanıt durumu"></div>
     </div>
     <div class="legend" id="statusLegend"></div>
+    <p class="hint" id="expCount"></p>
     <div id="expList" class="exp-grid"></div>
+  </section>
+
+  <section id="view-kaynakca" class="view" aria-label="Kaynakça" hidden>
+    <div class="view-head"><h2>Kaynakça</h2></div>
+    <div id="refWrap"></div>
   </section>
 </main>
 
 <footer class="foot">
   <div class="wrap">
-    <p>Yaş aralıkları kuramcıların önerdiği yaklaşık değerlerdir; bireysel ve kültürel farklılıklar büyüktür. Gelişim basamakları için temel kaynak: CDC/AAP 2022 gelişim basamakları (çocukların en az %75'inin ulaştığı yaşlar), WHO motor gelişim standartları. Bu sayfa eğitim amaçlıdır, klinik değerlendirmenin yerini tutmaz.</p>
+    <p>0-5 yaş gelişim basamakları CDC'nin 2022'de revize edilen kontrol listelerinden çevrilmiştir (Zubler ve ark., 2022): basamaklar, çocukların en az %75'inin o yaşta ulaşması beklenen becerilerdir. Kuramların yaş aralıkları kuramcıların önerdiği yaklaşık değerlerdir; bireysel ve kültürel farklılıklar büyüktür. Beyin haritasındaki olgunlaşma endeksi şematiktir. Tanı ölçütleri için DSM-5-TR ve DC:0-5 el kitaplarının kendisine başvurulmalıdır. Bu kaynak eğitim amaçlıdır ve klinik değerlendirmenin yerini tutmaz.</p>
   </div>
 </footer>
 
@@ -74,6 +93,8 @@
 <script src="data/temel.js"></script>
 <script src="data/yaslar-1.js"></script>
 <script src="data/yaslar-2.js"></script>
+<script src="data/cdc.js"></script>
+<script src="data/yas-klinik.js"></script>
 <script src="data/kuramlar-1.js"></script>
 <script src="data/kuramlar-2.js"></script>
 <script src="data/kuramlar-3.js"></script>
@@ -81,9 +102,21 @@
 <script src="data/kuramlar-5.js"></script>
 <script src="data/kuramlar-6.js"></script>
 <script src="data/kuramlar-7.js"></script>
+<script src="data/kuramlar-8.js"></script>
+<script src="data/kuramlar-9.js"></script>
+<script src="data/kuramlar-10.js"></script>
+<script src="data/kuram-klinik.js"></script>
 <script src="data/deneyler-1.js"></script>
 <script src="data/deneyler-2.js"></script>
 <script src="data/deneyler-3.js"></script>
+<script src="data/deneyler-4.js"></script>
+<script src="data/kaynaklar.js"></script>
+<script src="data/beyin.js"></script>
+<script src="data/karsilastirma.js"></script>
+<script src="assets/util.js"></script>
+<script src="assets/view-brain.js"></script>
+<script src="assets/view-compare.js"></script>
+<script src="assets/view-refs.js"></script>
 <script src="assets/app.js"></script>
 </body>
 </html>
