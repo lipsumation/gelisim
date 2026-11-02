@@ -19,39 +19,67 @@
     }).filter(Boolean);
   }
   function li(items) { return "<ul>" + items.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>"; }
-  function slide(kind, label, html, notes) { return { kind: kind, label: label, html: html, notes: notes || "" }; }
-  function head(kicker, title) { return '<div class="sl-kicker">' + esc(kicker) + '</div><h2 class="sl-h">' + esc(title) + "</h2>"; }
+  /* Slayt nesnesi: başlıktaki %%PART%% yer tutucusu, aynı başlıklı slaytlar için "(k/n)" ile doldurulur.
+     split: içerik sığmazsa slaytı ikiye bölen işlev (otomatik sığdırma düzeni kullanır). */
+  function slide(kind, label, html, notes, split) { return { kind: kind, label: label, html: html, notes: notes || "", group: kind + "|" + label, split: split || null }; }
+  function head(kicker, title) { return '<div class="sl-kicker">' + esc(kicker) + '</div><h2 class="sl-h">' + esc(title) + '<span class="sl-part">%%PART%%</span></h2>'; }
+  function halves(arr) { var h = Math.ceil(arr.length / 2); return [arr.slice(0, h), arr.slice(h)]; }
 
   /* ---------- slayt şablonları ---------- */
   function tTitle(kicker, title, sub, lead, notes) {
     return slide("title", title, '<div class="sl-plate"><div class="sl-kicker">' + esc(kicker) + '</div><h1 class="sl-title">' + esc(title) + "</h1>" + (sub ? '<p class="sl-sub">' + esc(sub) + "</p>" : "") + (lead ? '<p class="sl-lead">' + esc(lead) + "</p>" : "") + "</div>", notes);
   }
   function tCols(kicker, title, cols, notes, cls) {
-    return slide("cols", title, head(kicker, title) + '<div class="sl-cols n' + cols.length + (cls ? " " + cls : "") + '">' + cols.map(function (c) {
+    var s = slide("cols", title, head(kicker, title) + '<div class="sl-cols n' + cols.length + (cls ? " " + cls : "") + '">' + cols.map(function (c) {
       return '<section><h3>' + (c.icon || "") + esc(c.h) + "</h3>" + li(c.items) + "</section>";
     }).join("") + "</div>", notes);
+    if (cols.length >= 2) s.split = function () { var h = halves(cols); return [tCols(kicker, title, h[0], notes, cls), tCols(kicker, title, h[1], notes, cls)]; };
+    else if (cols.length === 1 && cols[0].items.length > 1) s.split = function () {
+      var h = halves(cols[0].items), c = cols[0];
+      return [tCols(kicker, title, [{ icon: c.icon, h: c.h, items: h[0] }], notes, cls), tCols(kicker, title, [{ icon: c.icon, h: c.h, items: h[1] }], notes, cls)];
+    };
+    return s;
   }
   function tCards(kicker, title, cards, notes) {
-    return slide("cards", title, head(kicker, title) + '<div class="sl-cards">' + cards.map(function (c) {
-      return '<article style="--c:' + c.color + '"><div class="sl-who">' + c.glyph + esc(c.who) + '<span>' + esc(c.range) + "</span></div><h3>" + esc(c.name) + "</h3><p>" + esc(c.text) + "</p></article>";
+    var s = slide("cards", title, head(kicker, title) + '<div class="sl-cards">' + cards.map(function (c) {
+      return '<article class="fitbox" style="--c:' + c.color + '"><div class="sl-who">' + c.glyph + '<span class="n">' + esc(c.who) + '</span><span class="r">' + esc(c.range) + "</span></div><h3>" + esc(c.name) + "</h3><p>" + esc(c.text) + "</p></article>";
     }).join("") + "</div>", notes);
+    if (cards.length > 1) s.split = function () { var h = halves(cards); return [tCards(kicker, title, h[0], notes), tCards(kicker, title, h[1], notes)]; };
+    return s;
   }
   function tTable(kicker, title, headRow, rows, notes) {
-    return slide("table", title, head(kicker, title) + '<table class="sl-table"><thead><tr>' + headRow.map(function (h) { return "<th>" + esc(h) + "</th>"; }).join("") + "</tr></thead><tbody>" +
+    var s = slide("table", title, head(kicker, title) + '<table class="sl-table"><thead><tr>' + headRow.map(function (h) { return "<th>" + esc(h) + "</th>"; }).join("") + "</tr></thead><tbody>" +
       rows.map(function (r) { return "<tr>" + r.map(function (c) { return "<td>" + c + "</td>"; }).join("") + "</tr>"; }).join("") + "</tbody></table>", notes);
+    if (rows.length > 1) s.split = function () { var h = halves(rows); return [tTable(kicker, title, headRow, h[0], notes), tTable(kicker, title, headRow, h[1], notes)]; };
+    return s;
+  }
+  function tBul(kicker, title, items, notes) {
+    var s = slide("bul", title, head(kicker, title) + li(items), notes);
+    if (items.length > 1) s.split = function () { var h = halves(items); return [tBul(kicker, title, h[0], notes), tBul(kicker, title, h[1], notes)]; };
+    return s;
+  }
+  function tProse(kicker, title, text, notes) {
+    return slide("bul", title, head(kicker, title) + '<p class="sl-lead2">' + esc(text) + "</p>", notes);
   }
   function tBrain(kicker, title, age, items, notes) {
     var fig = A.views.beyin && A.views.beyin.mini ? A.views.beyin.mini(age) : "";
     return slide("brain", title, head(kicker, title) + '<div class="sl-brain"><div class="sl-fig">' + fig + "</div>" + li(items) + "</div>", notes);
   }
   function tQuestions(kicker, qs) {
-    return slide("q", "Tartışma soruları", head(kicker, "Tartışma soruları") + '<ol class="sl-q">' + qs.map(function (q) { return "<li>" + esc(q) + "</li>"; }).join("") + "</ol>",
+    var s = slide("q", "Tartışma soruları", head(kicker, "Tartışma soruları") + '<ol class="sl-q">' + qs.map(function (q) { return "<li>" + esc(q) + "</li>"; }).join("") + "</ol>",
       "Sorular sayfadaki verilerden otomatik üretilmiştir; ders öncesinde gözden geçirip düzenleyebilirsiniz.");
+    if (qs.length > 1) s.split = function () { var h = halves(qs); return [tQuestions(kicker, h[0]), tQuestions(kicker, h[1])]; };
+    return s;
+  }
+  function tRefList(kicker, title, items, notes) {
+    var s = slide("refs", title, head(kicker, title) + '<ul class="sl-refs">' + items.join("") + "</ul>", notes);
+    if (items.length > 1) s.split = function () { var h = halves(items); return [tRefList(kicker, title, h[0], notes), tRefList(kicker, title, h[1], notes)]; };
+    return s;
   }
   function tRefs(kicker, keys, notes) {
-    var refs = keys.map(function (k) { return A.refs && A.refs[k]; }).filter(Boolean).slice(0, 9);
+    var refs = keys.map(function (k) { return A.refs && A.refs[k]; }).filter(Boolean);
     if (!refs.length) return null;
-    return slide("refs", "Kaynaklar", head(kicker, "Kaynaklar") + '<ul class="sl-refs">' + refs.map(function (r) { return "<li>" + esc(r.apa) + (r.doi ? ' <span>doi:' + esc(r.doi) + "</span>" : "") + "</li>"; }).join("") + "</ul>", notes);
+    return tRefList(kicker, "Kaynaklar", refs.map(function (r) { return "<li>" + esc(r.apa) + (r.doi ? ' <span>doi:' + esc(r.doi) + "</span>" : "") + "</li>"; }), notes);
   }
   function timelineSvg(t) {
     var items = t.stages.map(function (s, i) { return { from: s.from, to: s.to, s: s, i: i }; });
@@ -80,7 +108,7 @@
       if (b.msx) {
         var ex = [];
         DOM.forEach(function (d) { (b.msx[d[0]] || []).forEach(function (m) { ex.push("<b>" + esc(m[0]) + "</b> " + esc(m[1]) + ' <cite>' + esc(m[2]) + "</cite>"); }); });
-        if (ex.length) S.push(slide("bul", "Araştırma literatüründen ek basamaklar", head("Literatür", "Araştırma literatüründen ek basamaklar") + li(ex), "Bu basamaklar CDC listesinde yer almaz; kaynakları yanlarında belirtilmiştir."));
+        if (ex.length) S.push(tBul("Literatür", "Araştırma literatüründen ek basamaklar", ex, "Bu basamaklar CDC listesinde yer almaz; kaynakları yanlarında belirtilmiştir."));
       }
     } else if (b.ms) {
       S.push(tCols("Gelişim literatürü", "Gelişim basamakları", DOM.filter(function (d) { return b.ms[d[0]] && b.ms[d[0]].length; }).map(function (d) {
@@ -90,7 +118,7 @@
     S.push(tBrain("Nörobiyoloji", "Beyinde neler oluyor", U.bandAge(b), b.neuro.map(esc), String(b.clinic || "").replace(/<[^>]+>/g, "") + " " + A.brain.note));
     var lens = inBand(b);
     chunk(lens, 8).forEach(function (part, k, all) {
-      S.push(tCards("Kuramlar", "Kuramlar bu dönemi nasıl okur?" + (all.length > 1 ? " (" + (k + 1) + "/" + all.length + ")" : ""), part.map(function (x) {
+      S.push(tCards("Kuramlar", "Kuramlar bu dönemi nasıl okur?", part.map(function (x) {
         return { color: U.famColor(x.t.fam), glyph: U.famIcon(x.t.fam), who: shortWho(x.t), range: U.fmtRange(x.s.from, x.s.to), name: x.s.name, text: firstSentence(x.s.task) };
       }), part.map(function (x) { return shortWho(x.t) + " · " + x.s.name + ": " + (x.s.neuro && x.s.neuro !== "-" ? x.s.neuro : x.s.task); }).join("\n")));
     });
@@ -102,7 +130,7 @@
     }
     var exps = b.exps.map(function (id) { return expById[id]; }).filter(Boolean);
     chunk(exps, 6).forEach(function (part, k, all) {
-      S.push(tTable("Kanıt", "Bu döneme ait deneyler" + (all.length > 1 ? " (" + (k + 1) + "/" + all.length + ")" : ""), ["Yıl", "Çalışma", "Bulgu", "Durum"],
+      S.push(tTable("Kanıt", "Bu döneme ait deneyler", ["Yıl", "Çalışma", "Bulgu", "Durum"],
         part.map(function (e) { return [String(e.year), "<b>" + esc(e.title) + "</b><br><span>" + esc(e.who) + "</span>", esc(firstSentence(e.find)), U.statusPill(e.st)]; }),
         part.map(function (e) { return e.title + ": " + e.note; }).join("\n")));
     });
@@ -142,10 +170,10 @@
     });
     S.push(tCols("Değerlendirme", "Biyolojik bakış ve eleştiriler", [{ h: "Biyolojik bakış açısı", items: t.bio.map(function (x) { return esc(firstTwo(x)); }) }, { h: "Eleştiriler ve sınırlılıklar", items: t.crit.map(function (x) { return esc(firstTwo(x)); }) }],
       "Biyolojik bakış: " + t.bio.join(" ") + "\nEleştiriler: " + t.crit.join(" "), "dense"));
-    if (t.clinic) S.push(slide("bul", "Klinik uygulama", head("Klinik", "Klinik uygulama") + '<p class="sl-lead2">' + esc(t.clinic) + "</p>", ""));
+    if (t.clinic) S.push(tProse("Klinik", "Klinik uygulama", t.clinic, ""));
     var rel = A.relatedExps(t).map(function (id) { return expById[id]; });
     chunk(rel, 6).forEach(function (part, k, all) {
-      S.push(tTable("Kanıt", "Kanıtlar ve deneyler" + (all.length > 1 ? " (" + (k + 1) + "/" + all.length + ")" : ""), ["Yıl", "Çalışma", "İlişki", "Durum"],
+      S.push(tTable("Kanıt", "Kanıtlar ve deneyler", ["Yıl", "Çalışma", "İlişki", "Durum"],
         part.map(function (e) {
           var r = e.sup.indexOf(t.id) > -1 ? "destekler" : e.ch.indexOf(t.id) > -1 ? "sorgular" : "ilgili";
           return [String(e.year), "<b>" + esc(e.title) + "</b><br><span>" + esc(firstSentence(e.find)) + "</span>", r, U.statusPill(e.st)];
@@ -161,7 +189,7 @@
       qs.push("Kuramın varsayımları Türkiye'deki aile ve kültür bağlamında nasıl sınanmalı ya da uyarlanmalı?");
       S.push(tQuestions("Tartışma", qs));
     }
-    if (t.primary && t.primary.length) S.push(slide("refs", "Temel kaynaklar", head("Kaynaklar", "Temel kaynaklar") + '<ul class="sl-refs">' + t.primary.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul>", ""));
+    if (t.primary && t.primary.length) S.push(tRefList("Kaynaklar", "Temel kaynaklar", t.primary.map(function (p) { return "<li>" + esc(p) + "</li>"; }), ""));
     return { title: t.who + " · " + t.name, slides: S };
   }
   function compareDeck(ids, o) {
@@ -179,7 +207,7 @@
       if (cells.some(function (c) { return c !== "—"; })) rows.push(["<b>" + esc(b.range) + "</b><br><span>" + esc(b.name) + "</span>"].concat(cells));
     });
     chunk(rows, 5).forEach(function (part, k, all) {
-      S.push(tTable("Yaş satırları", "Evreler yan yana" + (all.length > 1 ? " (" + (k + 1) + "/" + all.length + ")" : ""), ["Yaş"].concat(ts.map(shortWho)), part, ""));
+      S.push(tTable("Yaş satırları", "Evreler yan yana", ["Yaş"].concat(ts.map(shortWho)), part, ""));
     });
     S.push(tCols("Değerlendirme", "Kanıt ve klinik karşılık", ts.map(function (t) {
       return { icon: U.famIcon(t.fam), h: shortWho(t), items: [U.meter(t.ev) + " " + esc(A.evidenceScale[t.ev]), esc(firstSentence(t.crit[0] || "")), "<b>Klinik:</b> " + esc(firstSentence(t.clinic || "-"))] };
@@ -211,24 +239,104 @@
     return ageDeck(spec.id, o);
   }
 
+  /* ---------- otomatik sığdırma ----------
+     1) Slayt gövdesi taşıyorsa yazı ölçeği (--fit) ikili aramayla en büyük sığan değere indirilir (alt sınır MIN).
+     2) Kendi kutusunda taşan kartlar (--cfit) ayrıca küçültülür (alt sınır CMIN).
+     3) Hâlâ sığmıyorsa ve içerik bölünebiliyorsa slayt ikiye bölünür ve aynı düzen yeniden uygulanır.
+     4) Bölünemeyen içerikte metin satır sayısına göre kısaltılır; tamamı konuşmacı notlarına eklenir.
+        Son çare olarak gövde kaydırılabilir yapılır; hiçbir metin görünmez biçimde kaybolmaz. */
+  var MIN = 0.6, CMIN = 0.72;
+  var slideEl = deck.querySelector(".slide");
+  function bodyFits(b) { return b.scrollHeight <= b.clientHeight + 1 && b.scrollWidth <= b.clientWidth + 1; }
+  function boxFits(x) { return x.scrollHeight <= x.clientHeight + 1 && x.scrollWidth <= x.clientWidth + 1; }
+  function search(set, test, lo) {
+    set(1); if (test()) return 1;
+    set(lo); if (!test()) return null;
+    var hi = 1;
+    for (var k = 0; k < 7; k++) { var m = (lo + hi) / 2; set(m); if (test()) lo = m; else hi = m; }
+    set(lo); return lo;
+  }
+  function fit(el) {
+    var b = el.querySelector(".sl-body");
+    var f = search(function (v) { el.style.setProperty("--fit", v.toFixed(3)); }, function () { return bodyFits(b); }, MIN);
+    if (f === null) return { ok: false, body: true, boxes: [] };
+    var failed = [];
+    [].forEach.call(el.querySelectorAll(".fitbox"), function (x) {
+      if (boxFits(x)) return;
+      var c = search(function (v) { x.style.setProperty("--cfit", v.toFixed(3)); }, function () { return boxFits(x); }, CMIN);
+      if (c === null) failed.push(x);
+    });
+    return { ok: !failed.length, body: false, boxes: failed, fit: f };
+  }
+  function clamp(el, r) {
+    var cut = [];
+    r.boxes.forEach(function (x) {
+      var p = x.querySelector("p"); if (!p) return;
+      var lh = parseFloat(getComputedStyle(p).lineHeight) || 16;
+      var avail = x.clientHeight - (p.offsetTop - x.offsetTop) - 4;
+      var lines = Math.max(1, Math.floor(avail / lh));
+      p.classList.add("clamped"); p.style.webkitLineClamp = String(lines); p.style.lineClamp = String(lines);
+      cut.push(p.textContent);
+    });
+    if (r.body) { el.style.setProperty("--fit", String(MIN)); el.querySelector(".sl-body").classList.add("scroll"); }
+    return cut;
+  }
+  function partLabel(s) {
+    var same = D.slides.filter(function (x) { return x.group === s.group; });
+    return same.length > 1 ? " (" + (same.indexOf(s) + 1) + "/" + same.length + ")" : "";
+  }
+  function paint(s) {
+    slideEl.className = "slide k-" + s.kind;
+    slideEl.style.removeProperty("--fit");
+    slideEl.innerHTML = '<div class="sl-body">' + s.html.replace("%%PART%%", partLabel(s)) + '</div><div class="sl-foot"><span>' + esc(D.title) + "</span><span>" + U.roman(Math.min(D.i + 1, 39)) + "</span></div>";
+  }
+  function layout() {
+    var s = D.slides[D.i], guard = 0;
+    paint(s);
+    var r = fit(slideEl);
+    while (!r.ok && s.split && guard++ < 6) {
+      var parts = s.split();
+      D.slides.splice(D.i, 1, parts[0], parts[1]);
+      s = D.slides[D.i]; paint(s); r = fit(slideEl);
+    }
+    /* bölme sonrası başlık numaraları değişir: yeniden çiz ve sığdır */
+    if (guard) { paint(s); r = fit(slideEl); }
+    s._cut = r.ok ? [] : clamp(slideEl, r);
+    return s;
+  }
+
+  /* Açılışta bütün slaytlar bir kez yerleştirilir: bölmeler önceden yapılır, numaralar ve slayt sayısı baştan kesinleşir */
+  function prepass() {
+    deck.querySelector(".deck-notes").hidden = !D.notes;
+    for (var k = 0; k < D.slides.length; k++) { D.i = k; layout(); }
+    D.i = 0;
+  }
+
   /* ---------- sunucu ---------- */
   function show() {
-    var s = D.slides[D.i];
-    deck.querySelector(".slide").className = "slide k-" + s.kind;
-    deck.querySelector(".slide").innerHTML = s.html + '<div class="sl-foot"><span>' + esc(D.title) + "</span><span>" + U.roman(Math.min(D.i + 1, 39)) + "</span></div>";
+    var n = deck.querySelector(".deck-notes");
+    n.hidden = !D.notes; /* not paneli sahneyi küçültür: ölçümden önce son hâline getirilir */
+    var s = layout();
     deck.querySelector(".deck-count").textContent = (D.i + 1) + " / " + D.slides.length;
     deck.querySelector(".deck-prog i").style.width = ((D.i + 1) / D.slides.length * 100) + "%";
-    var n = deck.querySelector(".deck-notes");
-    n.innerHTML = s.notes ? esc(s.notes).replace(/\n/g, "<br>") : '<span class="muted">Bu slayt için not yok.</span>';
-    n.hidden = !D.notes;
-    deck.classList.toggle("with-notes", D.notes);
+    var notes = (s.notes || "") + (s._cut && s._cut.length ? "\n\nSlaytta kısaltılan metin:\n" + s._cut.join("\n") : "");
+    n.innerHTML = notes ? esc(notes).replace(/\n/g, "<br>") : '<span class="muted">Bu slayt için not yok.</span>';
     deck.querySelector('[data-d="notes"]').setAttribute("aria-pressed", String(D.notes));
   }
+  /* not paneli açılıp kapanınca ya da ekran boyutu değişince slayt yeniden sığdırılır */
+  function setNotes(v) { D.notes = v; deck.classList.toggle("with-notes", v); show(); }
+  var rz = null;
+  function refit() { if (deck.hidden) return; clearTimeout(rz); rz = setTimeout(show, 120); }
+  window.addEventListener("resize", refit);
+  document.addEventListener("fullscreenchange", refit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(refit);
   function open(spec) {
     var built = build(spec);
     D.slides = built.slides; D.title = built.title; D.i = 0; D.notes = !!spec.notes;
     deck.hidden = false; document.documentElement.classList.add("deck-open");
+    deck.classList.toggle("with-notes", D.notes);
     deck.querySelector(".deck-title").textContent = built.title;
+    prepass();
     show();
     deck.focus();
   }
@@ -246,7 +354,7 @@
     if (!b) return;
     var d = b.dataset.d;
     if (d === "next") go(1); else if (d === "prev") go(-1); else if (d === "close") close();
-    else if (d === "notes") { D.notes = !D.notes; show(); } else if (d === "fs") fullscreen();
+    else if (d === "notes") setNotes(!D.notes); else if (d === "fs") fullscreen();
   });
   document.addEventListener("keydown", function (e) {
     if (deck.hidden) return;
@@ -255,7 +363,7 @@
     else if (k === "ArrowLeft" || k === "PageUp") { e.preventDefault(); go(-1); }
     else if (k === "Home") { D.i = 0; show(); } else if (k === "End") { D.i = D.slides.length - 1; show(); }
     else if (k === "Escape") close();
-    else if (k === "n" || k === "N") { D.notes = !D.notes; show(); }
+    else if (k === "n" || k === "N") setNotes(!D.notes);
     else if (k === "f" || k === "F") fullscreen();
   });
   var px = null;
@@ -293,7 +401,7 @@
     var t;
     if ((t = e.target.closest("[data-lt]"))) { L.type = t.dataset.lt; render(); }
     else if ((t = e.target.closest("#lsStart"))) open(spec());
-    else if ((t = e.target.closest("[data-goto]"))) { open(spec()); D.i = +t.dataset.goto; show(); }
+    else if ((t = e.target.closest("[data-goto]"))) { var g = +t.dataset.goto; open(spec()); D.i = Math.min(g, D.slides.length - 1); show(); }
   });
   view.addEventListener("change", function (e) {
     var id = e.target.id;
@@ -303,5 +411,13 @@
   });
 
   A.views.ders = { render: render };
-  A.deck = { open: open, close: close };
+  /* Özel ders akışları için (ve sığdırma düzeninin sınanması için) şablonlar ve doğrudan açma */
+  function openSlides(title, slides) {
+    D.slides = slides.slice(); D.title = title; D.i = 0; D.notes = false;
+    deck.hidden = false; document.documentElement.classList.add("deck-open"); deck.classList.remove("with-notes");
+    deck.querySelector(".deck-title").textContent = title;
+    prepass(); show(); deck.focus();
+  }
+  A.deck = { open: open, close: close, go: go, state: D, openSlides: openSlides,
+    templates: { cards: tCards, table: tTable, bullets: tBul, prose: tProse, cols: tCols } };
 })();
