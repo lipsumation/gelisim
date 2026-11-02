@@ -155,8 +155,8 @@ ul.ticks li::marker { color: var(--muted); }
 .age-head .range { font: 500 13px/1 var(--mono); color: var(--muted); letter-spacing: 0.04em; }
 .age-head h2 { font-size: clamp(28px, 3.6vw, 40px); margin-top: 6px; }
 .age-head .gist { grid-column: 1 / -1; max-width: 80ch; font-size: 16px; color: var(--muted); }
-.pager { display: flex; gap: 6px; }
-.pager button { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: 13px; }
+.pager { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.pager button:not(.btn) { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 0; padding: 6px 10px; cursor: pointer; font-size: 13px; }
 .pager button:disabled { opacity: 0.4; cursor: default; }
 
 .age-grid { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 16px; align-items: start; }
