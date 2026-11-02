@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ruhsal Gelişim Atlası</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Psikiyatri ve çocuk psikiyatrisi için gelişim kuramlarının yaş dönemlerine göre karşılaştırması: CDC basamakları, Gray's Anatomy levhaları üzerinde beyin gelişimi, psikopatoloji penceresi, vaka modu, ders ve sunum modu, doğrulanmış kaynaklarla deneyler.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <a href="#kapak" class="mast-title"><span class="eyebrow">Levha I · Psikiyatri ve çocuk psikiyatrisi için gelişim kaynağı</span><span class="mast-name">Ruhsal Gelişim Atlası</span></a>
+    <p class="stats" id="stats"></p>
+  </div>
+</header>
+
+<nav class="tabbar" aria-label="Görünümler">
+  <div class="wrap tabbar-inner">
+    <div class="tabs" role="tablist">
+      <a href="#kapak" class="tab" role="tab" data-view="kapak">Kapak</a>
+      <a href="#yas" class="tab" role="tab" data-view="yas">Yaş</a>
+      <a href="#kuram" class="tab" role="tab" data-view="kuram">Kuram</a>
+      <a href="#karsilastir" class="tab" role="tab" data-view="karsilastir">Karşılaştır</a>
+      <a href="#vaka" class="tab" role="tab" data-view="vaka">Vaka</a>
+      <a href="#beyin" class="tab" role="tab" data-view="beyin">Beyin levhaları</a>
+      <a href="#cizelge" class="tab" role="tab" data-view="cizelge">Çizelge</a>
+      <a href="#deneyler" class="tab" role="tab" data-view="deneyler">Deneyler</a>
+      <a href="#ders" class="tab" role="tab" data-view="ders">Ders ve sunum</a>
+      <a href="#kaynakca" class="tab" role="tab" data-view="kaynakca">Kaynakça</a>
+    </div>
+    <div class="families" id="familyFilter" aria-label="Kuram aileleri"></div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <section id="view-kapak" class="view" aria-label="Kapak" hidden>
+    <div id="coverWrap" class="cover"></div>
+  </section>
+
+  <section id="view-yas" class="view" aria-label="Yaş görünümü">
+    <div class="agestrip" id="ageStrip" role="listbox" aria-label="Yaş dönemleri"></div>
+    <div id="ageDetail"></div>
+  </section>
+
+  <section id="view-kuram" class="view" aria-label="Kuram görünümü" hidden>
+    <div class="theory-layout">
+      <aside class="theory-index" id="theoryIndex"></aside>
+      <article id="theoryDetail" class="theory-detail"></article>
+    </div>
+  </section>
+
+  <section id="view-karsilastir" class="view" aria-label="Karşılaştırma" hidden>
+    <div class="view-head"><h2>Kuramları karşılaştır</h2><p class="hint">İki ya da üç kuram seçin; evreleri aynı yaş satırlarında yan yana görünür. Hazır karşılaştırmalarda kısa bir akademik not da yer alır.</p></div>
+    <div id="cmpWrap"></div>
+  </section>
+
+  <section id="view-vaka" class="view" aria-label="Vaka modu" hidden>
+    <div class="view-head"><h2>Vaka modu</h2><p class="hint">Bebeklikten yaşlılığa eğitim amaçlı kurgusal vakalar. Vaka adım adım açılır: başvuru, öykü, gözlem ve ek bilgi. Ardından bulguların gelişimsel okuması, kuramların yorumu, beyin, ayırıcı tanı, değerlendirme araçları ve kanıta dayalı yaklaşım gelir.</p></div>
+    <div id="caseWrap"></div>
+  </section>
+
+  <section id="view-beyin" class="view" aria-label="Beyin haritası" hidden>
+    <div class="view-head"><h2>Beyin levhaları</h2><p class="hint">Gray's Anatomy'nin (1918) iki levhası üzerinde, seçilen yaşta bölgelerin şematik olgunlaşması. Yaşı kaydırıcıyla değiştirin ya da yaşam boyu oynatın; bir bölgeye dokunduğunuzda işlevi, olgunlaşma eğrisi, ilgili kuramlar, çalışmalar ve klinik bağlantısı açılır.</p></div>
+    <div id="brainWrap"></div>
+  </section>
+
+  <section id="view-cizelge" class="view" aria-label="Karşılaştırmalı çizelge" hidden>
+    <p class="hint">Her satır bir kuram, her çubuk bir basamak. Yaş ekseni bebeklikte genişletilmiştir: ilk yıllarda değişim çok hızlı olduğu için her sütun eşit genişlikte bir yaş dönemini temsil eder. Bir çubuğa tıklayınca kuramın ayrıntısı, bir sütun başlığına tıklayınca o yaşın ayrıntısı açılır. ◆ işareti az bilinen kuramları gösterir.</p>
+    <div class="chart-scroll"><div id="chart" class="chart"></div></div>
+  </section>
+
+  <section id="view-deneyler" class="view" aria-label="Deneyler ve kanıt" hidden>
+    <div class="exp-toolbar">
+      <label class="search"><span class="sr">Deney ara</span>
+        <input id="expSearch" type="search" placeholder="Deney, araştırmacı ya da bulgu ara">
+      </label>
+      <div class="seg" id="expStatus" role="group" aria-label="Kanıt durumu"></div>
+    </div>
+    <div class="legend" id="statusLegend"></div>
+    <p class="hint" id="expCount"></p>
+    <div id="expList" class="exp-grid"></div>
+  </section>
+
+  <section id="view-ders" class="view" aria-label="Ders ve sunum" hidden>
+    <div class="view-head"><h2>Ders ve sunum modu</h2><p class="hint">Bir ders türü ve konu seçin; atlas verilerinden 16:9 bir sunum üretilir. Konuşmacı notları ve tartışma soruları eklenebilir.</p></div>
+    <div id="lessonWrap"></div>
+  </section>
+
+  <section id="view-kaynakca" class="view" aria-label="Kaynakça" hidden>
+    <div class="view-head"><h2>Kaynakça</h2></div>
+    <div id="refWrap"></div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>0-5 yaş gelişim basamakları CDC'nin 2022'de revize edilen kontrol listelerinden çevrilmiştir (Zubler ve ark., 2022): basamaklar, çocukların en az %75'inin o yaşta ulaşması beklenen becerilerdir. Kuramların yaş aralıkları kuramcıların önerdiği yaklaşık değerlerdir; bireysel ve kültürel farklılıklar büyüktür. Beyin haritasındaki olgunlaşma endeksi şematiktir. Tanı ölçütleri için DSM-5-TR ve DC:0-5 el kitaplarının kendisine başvurulmalıdır. Bu kaynak eğitim amaçlıdır ve klinik değerlendirmenin yerini tutmaz.</p>
+  </div>
+</footer>
+
+<div id="tip" class="tip" role="tooltip" hidden></div>
+
+<div id="deck" class="deck" role="dialog" aria-modal="true" aria-label="Sunum" tabindex="-1" hidden>
+  <div class="deck-bar">
+    <span class="deck-title"></span>
+    <span class="deck-count"></span>
+    <div class="deck-btns">
+      <button type="button" data-d="prev" aria-label="Önceki slayt">←</button>
+      <button type="button" data-d="next" aria-label="Sonraki slayt">→</button>
+      <button type="button" data-d="notes" aria-pressed="false">Notlar</button>
+      <button type="button" data-d="fs">Tam ekran</button>
+      <button type="button" data-d="close">Kapat</button>
+    </div>
+  </div>
+  <div class="deck-stage"><div class="slide"></div></div>
+  <div class="deck-notes" hidden></div>
+  <div class="deck-prog"><i></i></div>
+</div>
+
+<script src="data/temel.js"></script>
+<script src="data/yaslar-1.js"></script>
+<script src="data/yaslar-2.js"></script>
+<script src="data/cdc.js"></script>
+<script src="data/yas-klinik.js"></script>
+<script src="data/kuramlar-1.js"></script>
+<script src="data/kuramlar-2.js"></script>
+<script src="data/kuramlar-3.js"></script>
+<script src="data/kuramlar-4.js"></script>
+<script src="data/kuramlar-5.js"></script>
+<script src="data/kuramlar-6.js"></script>
+<script src="data/kuramlar-7.js"></script>
+<script src="data/kuramlar-8.js"></script>
+<script src="data/kuramlar-9.js"></script>
+<script src="data/kuramlar-10.js"></script>
+<script src="data/kuram-klinik.js"></script>
+<script src="data/deneyler-1.js"></script>
+<script src="data/deneyler-2.js"></script>
+<script src="data/deneyler-3.js"></script>
+<script src="data/deneyler-4.js"></script>
+<script src="data/kaynaklar.js"></script>
+<script src="data/deneyler-5.js"></script>
+<script src="data/profil-1.js"></script>
+<script src="data/profil-2.js"></script>
+<script src="data/profil-3.js"></script>
+<script src="data/beyin.js"></script>
+<script src="data/karsilastirma.js"></script>
+<script src="data/vakalar-1.js"></script>
+<script src="data/vakalar-2.js"></script>
+<script src="data/portreler.js"></script>
+<script src="assets/util.js"></script>
+<script src="assets/view-brain.js"></script>
+<script src="assets/view-compare.js"></script>
+<script src="assets/view-refs.js"></script>
+<script src="assets/view-cover.js"></script>
+<script src="assets/view-case.js"></script>
+<script src="assets/view-deck.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
