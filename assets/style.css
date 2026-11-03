@@ -554,13 +554,13 @@ h2, h3, h4 { font-weight: 600; }
 .ch-group { display: flex; align-items: center; gap: 6px; }
 
 /* ===== Sade üst başlık (kapak dışındaki görünümlerde) ===== */
-.masthead .wrap { padding-block: 14px 12px; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 6px 24px; }
+.masthead .wrap { padding-block: 16px 14px; grid-template-columns: auto minmax(0, 1fr); align-items: end; gap: 10px 32px; }
 .mast-title { display: block; line-height: 0; text-decoration: none; color: var(--ink); justify-self: start; }
-.brand-img { display: block; height: clamp(84px, 9.5vw, 122px); width: auto; }
-.mast-meta { display: grid; gap: 10px; justify-items: end; text-align: right; padding-bottom: 6px; }
+.brand-img { display: block; width: clamp(280px, 36vw, 440px); max-width: 100%; height: auto; aspect-ratio: 890 / 348; }
+.mast-meta { display: grid; gap: 10px; justify-items: end; text-align: right; padding-bottom: 10px; min-width: 0; }
 .masthead .stats { justify-content: flex-end; font-size: 14px; }
 body[data-view="kapak"] .masthead { display: none; }
-@media (max-width: 760px) { .masthead .wrap { grid-template-columns: minmax(0, 1fr); } .masthead .stats { justify-content: flex-start; } .mast-meta { justify-items: start; text-align: left; padding-bottom: 0; } .brand-img { height: 74px; } }
+@media (max-width: 900px) { .masthead .wrap { grid-template-columns: minmax(0, 1fr); } .masthead .stats { justify-content: flex-start; } .mast-meta { justify-items: start; text-align: left; padding-bottom: 0; } .brand-img { width: min(100%, 400px); } }
 
 /* ===== KAPAK ===== */
 .cover { display: grid; gap: 26px; }
