@@ -11,14 +11,14 @@ Açmak için `index.html` dosyasını tarayıcıda açmanız yeterlidir (sunucu 
 | --- | --- |
 | **Kapak** | Başlık levhası; kuram ailelerinin yaşam boyu akış grafiği (her şeridin kalınlığı o yaşta evre tanımlayan kuram sayısı) ve ortalama kortikal olgunlaşma çizgisi; içindekiler ve atlasın özeti. |
 | **Yaş** | 15 yaş dönemi. 0-5 yaş için CDC 2022 kontrol listelerinin tamamı (12 yaş noktası, 159 basamak, Türkçe), araştırma literatüründen ek basamaklar, değerlendirme gerektiren durumlar, beyin gelişimi ve küçük beyin haritası, DSM-5-TR / DC:0-5 psikopatoloji penceresi, tarama ve değerlendirme araçları, kuramların o döneme bakışı, deneyler. |
-| **Kuram** | 42 kuram. Kuramcının Wikimedia Commons'tan portresi: kamu malı ya da CC0 (Freud, Klein, Anna Freud, Kohut, Erikson, Piaget, Vygotsky, Jung, Fonagy) ve atıfla CC BY / CC BY-SA (Winnicott, Kernberg, Gilligan, Vaillant, Carstensen, Steinberg, Casey, Cicchetti); uygun açık lisanslı portresi bulunmayan kuramcılar için monogram levhası. Freud, Erikson, Piaget, Kohlberg, Bowlby ve Vygotsky için ayrıntılı profil: kuramcının yaşamı ve zaman çizelgesi, temel kavramlar sözlüğü, evre başına ek alanlar ve özet tablo (Kohlberg'de Heinz ikilemine evrelere göre yanıtlar), kuramın gelişimi, klasik vaka ya da deney ve eleştirisi, klinik vinyet (kuramın formülasyonu ve güncel kanıta dayalı yaklaşım), sık yapılan yanlış anlamalar, ölçüm araçları. Ana fikir, gelişimin motoru, yöntem, kanıt düzeyi; evrelerin görevi, basamakları, olumlu ve olumsuz sonucu, nörobiyolojik karşılığı; biyolojik bakış; eleştiriler; klinik uygulama; deneyler (destekler / sorgular); temel kaynaklar. |
+| **Kuram** | 42 kuram. Kuramcının Wikimedia Commons'tan portresi: kamu malı ya da CC0 (Freud, Klein, Anna Freud, Kohut, Erikson, Piaget, Vygotsky, Jung, Fonagy) ve atıfla CC BY / CC BY-SA (Winnicott, Kernberg, Gilligan, Vaillant, Carstensen, Steinberg, Casey, Cicchetti); uygun açık lisanslı portresi bulunmayan kuramcılar için monogram levhası. Freud, Erikson, Piaget, Kohlberg, Bowlby, Vygotsky, Mahler, Klein, Winnicott, Stern, Anna Freud, Kohut ve Kernberg için ayrıntılı profil: kuramcının yaşamı ve zaman çizelgesi, temel kavramlar sözlüğü, evre başına ek alanlar ve özet tablo (Kohlberg'de Heinz ikilemine evrelere göre yanıtlar), kuramın gelişimi, klasik vaka ya da deney ve eleştirisi, klinik vinyet (kuramın formülasyonu ve güncel kanıta dayalı yaklaşım), sık yapılan yanlış anlamalar, ölçüm araçları. Ana fikir, gelişimin motoru, yöntem, kanıt düzeyi; evrelerin görevi, basamakları, olumlu ve olumsuz sonucu, nörobiyolojik karşılığı; biyolojik bakış; eleştiriler; klinik uygulama; deneyler (destekler / sorgular); temel kaynaklar. |
 | **Vaka** | Bebeklikten yaşlılığa 9 eğitim vakası (4 aylık bebekte ilişki sorunu ve annede doğum sonrası depresyon; 14 ayda otizm riski; 2,5 yaşta öfke nöbetleri; 4 yaşta seçici dilsizlik; 6 yaşta dikkat ve okuma güçlüğü; 9 yaşta yas ve ayrılık kaygısı; 14 yaşta kendine zarar verme; 19 yaşta kimlik arayışı ve klinik yüksek psikoz riski; 76 yaşta yas, depresyon ve bilişsel yakınma). Vaka adım adım açılır (başvuru, öykü, gözlem, ek bilgi; her adımda düşünme sorusu, öğrencinin ön formülasyonu için not alanı). Ardından bulguların gelişimsel okuması (beklenen / izlenmeli / kırmızı bayrak, 0-5 yaşta CDC kontrol listeleriyle karşılaştırma), 6 kuramın vakayı o yaştaki evresiyle okuması, beyin levhası, DSM-5-TR / DC:0-5 ayırıcı tanı tablosu, değerlendirme ve tarama araçları, kanıta dayalı yaklaşım, bütünleştirici formülasyon, klinik incelikler, ilgili çalışmalar, tartışma soruları ve doğrulanmış kaynaklar. Her vaka sunum olarak da açılır; yaş ve kuram sayfaları ilgili vakalara bağlanır. |
 | **Karşılaştır** | 2-3 kuramı aynı yaş satırlarında yan yana gösterir; isteğe bağlı nörobiyoloji sütunu; akademik notlu 13 hazır karşılaştırma. |
 | **Beyin levhaları** | Gray's Anatomy (1918) Şekil 726 ve 727 gravürleri üzerinde 18 bölge (serebellum ve beyin sapı aynı üslupta eklenmiş); yaş kaydırıcısı ve yaşam boyu oynatma; bölge işlevi, olgunlaşma eğrisi, zaman çizelgesi, ilgili kuramlar, çalışmalar ve klinik bağlantı; o yaşta en hızlı değişen bölgeler. |
 | **Çizelge** | Tüm kuramların evreleri ve yedi nörobiyolojik iz aynı yaş ekseninde. |
-| **Deneyler** | 105 çalışma (10'u kurama dayalı müdahale denemesi): yöntem, bulgu, desteklediği ve sorguladığı kuramlar, kanıt durumu, DOI ve PubMed bağlantıları. |
+| **Deneyler** | 109 çalışma (10'u kurama dayalı müdahale denemesi): yöntem, bulgu, desteklediği ve sorguladığı kuramlar, kanıt durumu, DOI ve PubMed bağlantıları. |
 | **Ders ve sunum** | Yaş dönemi, kuram, karşılaştırma, vaka ve yaşam boyu turu dersleri; 16:9 sunum, konuşmacı notları, otomatik tartışma soruları; klavye (←/→, N, F, Esc) ve kaydırma ile gezinme. Yaş, kuram, karşılaştırma ve vaka ekranlarında "Sun" düğmesi. |
-| **Kaynakça** | 181 doğrulanmış kaynak (DOI: Crossref, PMID: PubMed) ve kuramların temel eserleri. |
+| **Kaynakça** | 185 doğrulanmış kaynak (DOI: Crossref, PMID: PubMed) ve kuramların temel eserleri. |
 
 ## Kuramlar
 
@@ -33,7 +33,7 @@ Açmak için `index.html` dosyasını tarayıcıda açmanız yeterlidir (sunucu 
 
 ## Tasarım
 
-Gravür: 19. yüzyıl anatomi atlası üslubu (sepya mürekkep, fildişi kâğıt, levha çerçeveleri, Cormorant ve EB Garamond, küçük büyük harfler, eski üslup rakamlar). Koyu temada aynı atlas "gece levhası" olarak görünür. Her kuram ailesinin bir simgesi vardır; çizelgede seçili yaş çizgisi ve imleç kılavuzu, yaş değişiminde yumuşak geçiş bulunur.
+Logo ve amblem: halkalı bir gezegen gibi çizilmiş gravür beyin ve 'Ruhsal Gelişim Atlası' yazısı; üst bantta, kapakta, sekme çubuğunda ve sekme simgesinde (favicon) kullanılır. Açık temada koyu mürekkepli, koyu temada açık mürekkepli sürüm gösterilir. Gravür: 19. yüzyıl anatomi atlası üslubu (sepya mürekkep, fildişi kâğıt, levha çerçeveleri, Cormorant ve EB Garamond, küçük büyük harfler, eski üslup rakamlar). Koyu temada aynı atlas "gece levhası" olarak görünür. Her kuram ailesinin bir simgesi vardır; çizelgede seçili yaş çizgisi ve imleç kılavuzu, yaş değişiminde yumuşak geçiş bulunur.
 
 ## Kaynaklar ve yöntem notları
 
@@ -59,6 +59,7 @@ assets/view-cover.js     Kapak ve akış grafiği
 assets/view-deck.js      Ders kurucu ve sunum modu
 assets/view-case.js      Vaka modu
 assets/img/              Gray's Anatomy levhaları (kamu malı)
+assets/img/brand/        Logo (açık ve koyu sürüm), amblem ve sekme simgesi
 assets/img/portraits/    Kuramcı portreleri (Wikimedia Commons; kamu malı, CC0, CC BY, CC BY-SA)
 data/temel.js            Kuram aileleri, kanıt ölçeği, nörobiyolojik izler
 data/yaslar-*.js         Yaş dönemleri
@@ -66,7 +67,7 @@ data/cdc.js              CDC 2022 basamakları (Türkçe)
 data/yas-klinik.js       Ek basamaklar, psikopatoloji penceresi, tarama araçları
 data/kuramlar-*.js       Kuramlar ve evreleri
 data/kuram-klinik.js     İlk 29 kuramın klinik uygulaması ve temel eserleri
-data/profil-*.js         Ayrıntılı kuram profilleri (Freud, Erikson, Piaget, Kohlberg, Bowlby, Vygotsky)
+data/profil-*.js         Ayrıntılı kuram profilleri (Freud, Erikson, Piaget, Kohlberg, Bowlby, Vygotsky, Mahler, Klein, Winnicott, Stern, Anna Freud, Kohut, Kernberg)
 data/deneyler-*.js       Deneyler ve müdahale çalışmaları
 data/kaynaklar.js        Doğrulanmış kaynaklar (DOI / PMID)
 data/beyin.js            Beyin bölgeleri ve olgunlaşma eğrileri
