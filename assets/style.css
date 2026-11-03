@@ -950,3 +950,14 @@ html.deck-open, html.deck-open body { overflow: hidden; }
 .cover-title { line-height: 0; margin: 10px auto 4px; }
 .cover-logo { display: block; width: min(640px, 100%); height: auto; margin: 0 auto; }
 @media (max-width: 760px) { .tab-mark { width: 32px; height: 32px; } }
+
+/* ===== Künye ve lisans ===== */
+.foot-lic { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); display: grid; gap: 6px; }
+.foot-lic p { margin: 0; }
+.lic-main { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; color: var(--ink); }
+.lic-main cite { font-style: italic; }
+.lic-badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px 3px 4px; border: 1px solid var(--ink); color: var(--ink); text-decoration: none; font: 600 12px/1 var(--body); letter-spacing: 0.04em; white-space: nowrap; }
+.lic-badge span { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid currentColor; font: 700 10px/1 var(--body); letter-spacing: 0; }
+.lic-badge:hover { background: var(--sunk); }
+.lic-cite { font-size: 12.5px; }
+.sl-foot span:last-child { text-align: right; }

@@ -350,7 +350,7 @@
   function paint(s) {
     slideEl.className = "slide k-" + s.kind;
     slideEl.style.removeProperty("--fit");
-    slideEl.innerHTML = '<div class="sl-body">' + s.html.replace("%%PART%%", partLabel(s)) + '</div><div class="sl-foot"><span>' + esc(D.title) + "</span><span>" + U.roman(Math.min(D.i + 1, 39)) + "</span></div>";
+    slideEl.innerHTML = '<div class="sl-body">' + s.html.replace("%%PART%%", partLabel(s)) + '</div><div class="sl-foot"><span>' + esc(D.title) + "</span><span>" + (A.meta ? "© " + A.meta.year + " " + esc(A.meta.author) + " · " + esc(A.meta.license) + " · " : "") + U.roman(Math.min(D.i + 1, 39)) + "</span></div>";
   }
   function layout() {
     var s = D.slides[D.i], guard = 0;

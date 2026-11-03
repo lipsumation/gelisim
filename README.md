@@ -1,6 +1,10 @@
 # gelisim
 Farklı Kuramlara Göre Gelişim Basamakları
 
+[![Lisans: CC BY-NC-SA 4.0](https://img.shields.io/badge/Lisans-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.tr)
+
+© 2026 Mehmet Tekden, SBÜ
+
 **Ruhsal Gelişim Atlası**: psikiyatri ve çocuk psikiyatrisi asistanları ile uzmanları için hazırlanmış etkileşimli bir gelişim kaynağıdır. Klasik ve az bilinen gelişim kuramlarını aynı yaş ekseninde karşılaştırır, nörobiyolojik gelişimle eşleştirir ve kuramları sınayan deneyleri doğrulanmış kaynaklarıyla gösterir.
 
 Açmak için `index.html` dosyasını tarayıcıda açmanız yeterlidir (sunucu ya da kurulum gerekmez). GitHub Pages ile de yayınlanabilir.
@@ -71,11 +75,41 @@ data/profil-*.js         Ayrıntılı kuram profilleri (Freud, Erikson, Piaget, 
 data/deneyler-*.js       Deneyler ve müdahale çalışmaları
 data/kaynaklar.js        Doğrulanmış kaynaklar (DOI / PMID)
 data/beyin.js            Beyin bölgeleri ve olgunlaşma eğrileri
+data/kunye.js            Yazar, lisans ve önerilen atıf (sayfa altı ve slayt alt bilgisi)
 data/karsilastirma.js    Hazır karşılaştırmalar ve notlar
 data/vakalar-*.js        Eğitim vakaları ve vaka kaynakları
 data/portreler.js        Kuramcı portrelerinin kaynak ve lisans bilgileri
 ```
 
 İçerik eklemek için ilgili `data/` dosyasına aynı biçimde yeni bir kayıt eklemek yeterlidir; sayfa yeni kaydı tüm görünümlere otomatik olarak yerleştirir.
+
+## Lisans ve atıf
+
+© 2026 Mehmet Tekden, SBÜ.
+
+**Ruhsal Gelişim Atlası**, [Creative Commons Atıf-GayriTicari-AynıLisanslaPaylaş 4.0 Uluslararası Lisansı (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.tr) ile lisanslanmıştır. Lisansın tam metni [`LICENSE`](LICENSE) dosyasındadır. Lisans, içerikle birlikte sitenin kodunu da kapsar.
+
+Bu lisansla:
+
+- **Paylaşabilirsiniz:** içeriği her ortamda ve biçimde kopyalayıp dağıtabilirsiniz.
+- **Uyarlayabilirsiniz:** içeriği değiştirebilir, dönüştürebilir ve üzerine inşa edebilirsiniz (örneğin slaytları kendi dersiniz için düzenlemek ya da çevirmek).
+
+Şu koşullarla:
+
+- **Atıf:** yazara uygun atıf yapmalı, lisansa bağlantı vermeli ve değişiklik yaptıysanız bunu belirtmelisiniz.
+- **Gayriticari:** içeriği ticari amaçlarla kullanamazsınız. Ticari kullanım için yazarın yazılı izni gerekir.
+- **Aynı lisansla paylaş:** içeriği değiştirir ya da üzerine inşa ederseniz, katkılarınızı aynı lisansla dağıtmalısınız.
+
+### Önerilen atıf
+
+> Tekden, M. (2026). *Ruhsal Gelişim Atlası: Psikiyatri ve çocuk psikiyatrisi için gelişim kaynağı* [Çevrimiçi eğitim kaynağı]. https://github.com/lipsumation/gelisim
+
+### Lisans dışında kalan içerikler
+
+- **Kuramcı portreleri** (`assets/img/portraits/`): Wikimedia Commons'tan kendi lisanslarıyla (kamu malı, CC0, CC BY, CC BY-SA) kullanılmıştır. Fotoğrafçı, lisans ve kaynak bilgileri `data/portreler.js` dosyasında, her portrenin altında ve sitenin Kaynakça › Görseller ve atıflar bölümündedir. CC BY-SA lisanslı portrelerin uyarlamaları CC BY-SA ile paylaşılır.
+- **Gray's Anatomy levhaları** (`assets/img/gray726.png`, `gray727.png`): Henry Vandyke Carter, 1918; kamu malı.
+- **Logo ve amblem** (`assets/img/brand/`): tüm hakları saklıdır; bu lisansın kapsamında değildir.
+- **CDC gelişim basamakları**: CDC'nin "Learn the Signs. Act Early." kontrol listelerinin Türkçe çevirisidir; özgün metin CDC'ye aittir (Zubler ve ark., 2022).
+- Kaynakçada anılan makaleler, kitaplar ve tanı el kitapları kendi yazarlarına ve yayıncılarına aittir; sitede bunların yalnızca özetleri ve kaynak bilgileri yer alır.
 
 Bu kaynak eğitim amaçlıdır ve klinik değerlendirmenin yerini tutmaz.
