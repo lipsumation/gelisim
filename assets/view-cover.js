@@ -98,7 +98,7 @@
     U.$("coverWrap").innerHTML =
       '<div class="cover-plate">' +
       '<div class="cover-top"><span>Levha I</span><span>Psikiyatri ve çocuk psikiyatrisi için</span><span>MMXXVI</span></div>' +
-      '<h1 class="cover-title">Ruhsal Gelişim Atlası</h1>' +
+      '<h1 class="cover-title"><img class="cover-logo logo-light" src="assets/img/brand/logo.svg" alt="Ruhsal Gelişim Atlası" width="890" height="348" loading="lazy" decoding="async"><img class="cover-logo logo-dark" src="assets/img/brand/logo-acik.svg" alt="Ruhsal Gelişim Atlası" width="890" height="348" loading="lazy" decoding="async"></h1>' +
       '<p class="cover-sub">Doğum öncesinden yaşlılığa: ' + A.theories.length + " kuram, " + U.NB + " yaş dönemi, beynin olgunlaşması ve kanıt</p>" +
       '<figure class="cover-fig"><div class="stream-wrap" id="streamWrap">' + streamSvg() + '<div class="sweep" aria-hidden="true"></div><div class="guide" id="streamGuide" hidden><span></span></div></div>' +
       "<figcaption>Her şerit bir kuram ailesidir; kalınlığı, o yaşta kaç kuramın bir evre tanımladığını gösterir. Üstteki ince çizgi ortalama kortikal olgunlaşmadır. Bir yaşı açmak için grafiğe dokunun.</figcaption></figure>" +
