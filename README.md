@@ -1,4 +1,4 @@
-# gelisim
+# Ruhsal Gelişim Atlası
 Farklı Kuramlara Göre Gelişim Basamakları
 
 [![Lisans: CC BY-NC-SA 4.0](https://img.shields.io/badge/Lisans-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.tr)
